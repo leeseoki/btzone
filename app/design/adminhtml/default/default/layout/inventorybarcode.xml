@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorybarcode
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+    <!-- Search Attribute -->
+    <inventorybarcodeadmin_adminhtml_searchbarcode_index>
+        <reference name="head">
+            <action method="removeItem">
+                <type>js</type>
+                <name>mage/adminhtml/loader.js</name>
+                <params />
+            </action> 
+            <action method="addItem">
+                <type>js</type>
+                <name>magestore/adminhtml/inventory/loader.js</name>
+                <params />
+            </action>            
+        </reference>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        
+        <reference name="content">
+            <block type="inventorybarcode/adminhtml_searchbarcode" name="searchbarcode" />
+        </reference>
+    </inventorybarcodeadmin_adminhtml_searchbarcode_index>
+    
+    <!-- Barcode Attribute -->
+    <inventorybarcodeadmin_adminhtml_barcodeattribute_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorybarcode/adminhtml_barcodeattribute" name="barcodeattribute" />
+        </reference>
+    </inventorybarcodeadmin_adminhtml_barcodeattribute_index>
+    
+    <inventorybarcodeadmin_adminhtml_barcodeattribute_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcodeattribute_new>
+    
+    <inventorybarcodeadmin_adminhtml_barcodeattribute_edit>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcodeattribute_edit>
+    
+     <!-- Barcode -->
+    <inventorybarcodeadmin_adminhtml_barcode_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorybarcode/adminhtml_barcode" name="barcode" />
+        </reference>
+    </inventorybarcodeadmin_adminhtml_barcode_index>       
+    
+    <inventorybarcodeadmin_adminhtml_barcode_new>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcode_new>
+    
+    <inventorybarcodeadmin_adminhtml_barcode_edit>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcode_edit>
+    
+    <inventorybarcodeadmin_adminhtml_barcode_products>
+        <block type="core/text_list" name="root">                 
+            <block type="inventorybarcode/adminhtml_barcode" name="barcode_informarion" template="inventorybarcode/barcode/information.phtml" />       
+            <block type="inventorybarcode/adminhtml_barcode_edit_tab_products" name="barcode.edit.tab.products"/>            
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>barcode.edit.tab.products</grid_block_name>
+                    <data_callback>getSelectedProducts</data_callback>
+                    <hidden_input_name>barcode_products</hidden_input_name>
+                    <reload_param_name>barcode_products</reload_param_name>
+                </action>     
+                     
+            </block>
+        </block>
+    </inventorybarcodeadmin_adminhtml_barcode_products>
+    
+    <inventorybarcodeadmin_adminhtml_barcode_productsgrid>
+        <block type="core/text_list" name="root">
+            <block type="inventorybarcode/adminhtml_barcode_edit_tab_products" name="barcode.edit.tab.products"/>
+        </block>
+    </inventorybarcodeadmin_adminhtml_barcode_productsgrid>   
+    
+    <inventorybarcodeadmin_adminhtml_barcode_history>        
+        <block type="core/text_list" name="root">
+            <block type="inventorybarcode/adminhtml_barcode_edit_tab_history" name="barcode.edit.tab.history"/>
+        </block>
+    </inventorybarcodeadmin_adminhtml_barcode_history>
+    <inventorybarcodeadmin_adminhtml_barcode_newfrompo>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcode_newfrompo>
+    <inventorybarcodeadmin_adminhtml_barcode_prepare>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+    </inventorybarcodeadmin_adminhtml_barcode_prepare>
+
+    <inventorybarcodeadmin_adminhtml_barcode_productsfrompo>
+        <block type="core/text_list" name="root">                 
+            <block type="inventorybarcode/adminhtml_barcode" name="barcode_informarion" template="inventorybarcode/barcode/informationfrompo.phtml" />       
+            <block type="inventorybarcode/adminhtml_barcodefrompo_edit_tab_products" name="barcode.edit.tab.productsfrompo"/>            
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <action method="initSerializerBlock">
+                    <grid_block_name>barcode.edit.tab.productsfrompo</grid_block_name>
+                    <data_callback>getSelectedProducts</data_callback>
+                    <hidden_input_name>barcode_products</hidden_input_name>
+                    <reload_param_name>barcode_products</reload_param_name>
+                </action>     
+                     
+            </block>
+        </block>
+    </inventorybarcodeadmin_adminhtml_barcode_productsfrompo>
+    
+    <inventorybarcodeadmin_adminhtml_barcode_productsgridfrompo>
+        <block type="core/text_list" name="root">
+            <block type="inventorybarcode/adminhtml_barcodefrompo_edit_tab_products" name="barcode.edit.tab.productsfrompo"/>
+        </block>
+    </inventorybarcodeadmin_adminhtml_barcode_productsgridfrompo> 
+     
+    <inventorybarcodeadmin_adminhtml_barcode_massprint>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="content">
+            <block type="inventorybarcode/adminhtml_barcode" name="barcode_informarion" template="inventorybarcode/printbarcode/massprint.phtml" />       
+        </reference>
+    </inventorybarcodeadmin_adminhtml_barcode_massprint>  
+     
+    <inventorybarcodeadmin_adminhtml_printbarcode_massprintbarcode>
+        <reference name="root">
+			<action method="setTemplate">
+				<template>inventorybarcode/printbarcode/printform.phtml</template>
+			</action>
+		</reference>
+    </inventorybarcodeadmin_adminhtml_printbarcode_massprintbarcode>  
+    <inventorybarcodeadmin_adminhtml_printbarcode_printbarcode>
+		<reference name="root">
+			<action method="setTemplate">
+				<template>inventorybarcode/printbarcode/printform.phtml</template>
+			</action>
+		</reference>
+    </inventorybarcodeadmin_adminhtml_printbarcode_printbarcode>
+</layout>

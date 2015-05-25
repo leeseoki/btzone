@@ -1,0 +1,122 @@
+<style>
+    @media print {
+        .header{
+            display:none !important;
+        }
+        .notification-global{
+            display:none !important;
+        }
+        .inventory-nav-bar{
+            display:none !important;
+        }
+        #inventory-title{
+            display:none !important;
+        }
+        .footer{
+            display:none !important;
+        }
+        .button-print{
+            display:none !important;
+        }
+    }
+</style>
+<?php $params = $this->getRequest()->getParams(); ?>
+<?php if(isset($params['barcodeId']) && $params['barcodeId']){
+	$barcodeIds = array($params['barcodeId']);
+}else if(isset($params['barcodeIds']) && $params['barcodeIds']){
+	$barcodeIds = explode(',', $params['barcodeIds']); 
+}
+?>
+<?php $type = $params['type'];?>
+<?php $qty = $params['number_of_barcode'];?>
+<?php
+        $printingFormat = $params['printing_format'];
+        switch ($printingFormat){
+            case 'A4':
+                    $pageWidth = 8.3;
+                    break;
+            case 'A5':
+                    $pageWidth = 5.8;
+                    break;
+            case 'A6':
+                    $pageWidth = 4.1;
+                    break;
+            case 'A7':
+                    $pageWidth = 2.9;
+                    break;
+            case 'A8':
+                    $pageWidth = 2.0;
+                    break;
+            default:
+                    $pageWidth = 8.3;
+                    break;
+        }
+?>
+<?php $template = $params['barcode_template'];?>
+<?php
+        $customize = 0;
+        $heightImage = 0;
+        if(isset($params['customize']) && $params['customize']){
+            $customize = 1;
+            $heightImage = $params['heigth_barcode'];
+        }
+?>
+<div style-="width:100%; float:left;" class="button-print">
+<button style="padding: 5px; width: 90px; font-size: 16px; margin: 10px;" onclick="printbarcode()" type="button"><?php echo $this->__('Print') ?></button>
+</div>
+<div style="width:<?php echo $pageWidth?>in; float:left;">
+    <?php foreach($barcodeIds as $barcodeId):?>
+        <div style="width: 100%; float:left;">
+            <?php $barcode = Mage::getModel('inventorybarcode/barcode')->load($barcodeId);?>
+            <?php for($i = 0; $i<$qty; $i++):?>
+                <?php if($template==1):?>
+                    <img name="barcode_images" src="<?php echo Mage::helper("adminhtml")->getUrl('inventorybarcodeadmin/adminhtml_printbarcode/getimage/',array('type' => $type, 'text' => $barcode->getBarcode(), 'customize' => $customize, 'heigth_barcode' => $heightImage, 'font_size' => 10)); ?>" />
+                <?php endif;?>
+                <?php if($template==2):?>
+                    <div style="display: inline-block; float:left;">
+                    <span style="float: left; display: inline-block; font-size: 12px; text-align: left; margin-left: 14px;"><?php echo $barcode->getProductName()?></span>
+                    <br/>
+                    <img name="barcode_images" src="<?php echo Mage::helper("adminhtml")->getUrl('inventorybarcodeadmin/adminhtml_printbarcode/getimage/',array('type' => $type, 'text' => $barcode->getBarcode(), 'customize' => $customize, 'heigth_barcode' => $heightImage, 'font_size' => 10)); ?>" />
+                    </div>
+                <?php endif;?>
+                <?php if($template==3):?>
+                    <div style="display: inline-block; float:left;">
+                    <?php $product = Mage::getModel('catalog/product')->load($barcode->getProductEntityId());?>
+                   
+                        <img name="barcode_images" src="<?php echo Mage::helper("adminhtml")->getUrl('inventorybarcodeadmin/adminhtml_printbarcode/getimage/',array('type' => $type, 'text' => $barcode->getBarcode(), 'customize' => $customize, 'heigth_barcode' => $heightImage, 'font_size' => 10)); ?>" />
+                        <br/>
+                  <div style="display: inline-block; float: left; text-align: left;">
+                    <ul style="float: left; list-style: outside none none; margin: 0px 0px 0px 14px; font-size: 12px;">
+                      <li><?php echo $product->getName()?></li>
+                      <li><?php echo $this->__('Size: ')?>
+                          <?php if($product->getResource()->getAttribute('shirt_size')->getFrontend()->getValue($product) && $product->getResource()->getAttribute('shirt_size')->getFrontend()->getValue($product)!='No'){echo $product->getResource()->getAttribute('shirt_size')->getFrontend()->getValue($product);}?>
+                          <?php if($product->getResource()->getAttribute('shoe_size')->getFrontend()->getValue($product) && $product->getResource()->getAttribute('shoe_size')->getFrontend()->getValue($product)!='No'){echo $product->getResource()->getAttribute('shoe_size')->getFrontend()->getValue($product);}?>
+                          <?php if($product->getResource()->getAttribute('ram_size')->getFrontend()->getValue($product) && $product->getResource()->getAttribute('ram_size')->getFrontend()->getValue($product)!='No'){echo $product->getResource()->getAttribute('ram_size')->getFrontend()->getValue($product);}?>
+                      </li>
+                      <li><?php echo $this->__('Color: ')?><?php echo $product->getResource()->getAttribute('color')->getFrontend()->getValue($product)?></li>
+                    </ul>
+                  </div>
+                <div style="display: inline-block; float: left; text-align: left;">
+                  <span style="text-align: right; float: right; font-size: 20px; margin-right: 13px; margin-top: 11px;"><?php echo Mage::helper('core')->currency($product->getPrice())?></span>
+                </div>
+                </div>
+                <?php endif;?>
+                <?php if($template==4):?>
+                    <div style="display: inline-block; float:left;">
+                        <?php $product = Mage::getModel('catalog/product')->load($barcode->getProductEntityId());?>
+                     <span style="float: left; font-size: 12px; text-align: left; display: inline-block; margin-left: 13px;"><?php echo $product->getName()?></span>
+                    <span style="font-size: 17px; float: left; text-align: left; margin-left: 10px; display: inline-block;"><?php echo Mage::helper('core')->currency($product->getPrice())?></span>
+                    <br/>
+                          <img name="barcode_images" src="<?php echo Mage::helper("adminhtml")->getUrl('inventorybarcodeadmin/adminhtml_printbarcode/getimage/',array('type' => $type, 'text' => $barcode->getBarcode(), 'customize' => $customize, 'heigth_barcode' => $heightImage, 'font_size' => 10)); ?>" />
+                    </div>
+                <?php endif;?>
+            <?php endfor;?>
+        </div>
+    <?php endforeach;?>
+</div>
+
+<script type="text/javascript">
+    function printbarcode(){
+        window.print();
+    }
+</script>

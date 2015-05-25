@@ -1,0 +1,167 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     meigeetheme_default
+ * @copyright   Copyright (c) 2010-2014 MeigeeTeam. (http://www.meigeeteam.com)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php
+	$meigee_blacknwhite_general = MAGE::helper('ThemeOptionsBlacknwhite')->getThemeOptionsBlacknwhite('meigee_blacknwhite_general');
+	$customlogo = $meigee_blacknwhite_general['customlogo'];
+	$mediaurl = MAGE::helper('ThemeOptionsBlacknwhite')->getThemeOptionsBlacknwhite('mediaurl');
+	$loginAjaxStatus = $meigee_blacknwhite_general['loginajax']['status'];
+	$customer = Mage::getSingleton('customer/session');
+	$stickyStatus = $meigee_blacknwhite_general['header']['floatingheader'];
+	$stickyClose = $meigee_blacknwhite_general['header']['floatingheader_close'];
+	$stickyTime = $meigee_blacknwhite_general['header']['floatingheader_time'];
+	$stickyCookie = Mage::getModel('core/cookie')->get("blacknwhiteSticky");
+	$stickyOptions = $meigee_blacknwhite_general['header']['floatingheader_options'];
+	$toplinks = $meigee_blacknwhite_general['toplinks'];
+?>
+<div class="header-wrapper <?php if($stickyStatus){echo str_replace(',', ' ', $stickyOptions);} ?>">
+	<header id="header"<?php if($stickyStatus and substr_count($stickyOptions, 'sticky-logo') == 0){echo ' class="no-sticky-logo"';} ?>>
+		<!-- BEGIN: Top header -->
+		<div class="top_header">
+			<div class="container_12">
+				<div class="row clearfix">
+					<!-- Box choose language -->
+					<?php echo $this->getChildHtml('store_language') ?>
+					<!-- Top static menu -->
+					<div class="header-top-right">
+						<ul class="top_links">
+							<li class="link_help">
+								<a href="#">TT Trợ giúp</a>
+								<div class="help_content">
+									<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('help_info')->toHtml() ?>
+								</div>
+							</li>
+							<li><a href="<?php echo $this->getUrl('customer/account')?>"> Tài khoản </a></li> 
+							<li><a href="<?php echo Mage::getUrl('checkout/cart') ?>"> Giỏ hàng </a></li>
+							<li><a href="<?php echo Mage::getUrl('onepage') ?>"> Thanh toán </a></li>
+							<li class="link_branch"><a href="#">Nhà cung cấp </a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- END: Top header -->
+
+		<div class="container_12">
+			<div class="row clearfix">
+				<div class="grid_12">
+					<?php if ($customlogo['logo_status'] == 0): ?>
+						<h2 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getLogoSrc() ?>" <?php echo MAGE::helper('ThemeOptionsBlacknwhite/Retina')->getRetinaData('logo'); ?> alt="<?php echo $this->getLogoAlt() ?>" /></a></h2>
+						<?php else:?>
+						<h2 class="logo"><strong><?php echo $customlogo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $customlogo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$customlogo['logo']; ?>" <?php echo MAGE::helper('ThemeOptionsBlacknwhite/Retina')->getRetinaData('logo_custom'); ?> alt="<?php echo $customlogo['logo_alt']; ?>" /></a></h2>
+					<?php endif; ?>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<!-- BEGIN: Top menu -->
+		<div class="top_menu">
+			<div class="container_12">
+				<div class="row clearfix">
+					<ul>
+						<li><a href="#">Nữ</a></li>
+						<li><a href="#">Nam</a></li>
+						<li><a href="#">Trẻ em</a></li>
+						<li><a href="#">Khám phá</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- END: Top menu -->
+
+		<div class="topline<?php if($stickyClose){echo ' sticky-close-box';} ?>">
+			<div class="container_12">
+				<div class="grid_12">
+					<div class="row clearfix">
+						<?php if ($customlogo['small_logo_status'] == 0): ?>
+							<h2 class="small_logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="small-logo"><img src="<?php echo $this->getSkinUrl('images/small_logo.png') ?>" <?php echo MAGE::helper('ThemeOptionsBlacknwhite/Retina')->getRetinaData('small_logo'); ?> alt="<?php echo $this->getLogoAlt() ?>" /></a></h2>
+							<?php else:?>
+							<h2 class="small_logo"><strong><?php echo $customlogo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $customlogo['logo_alt']; ?>" class="small-logo"><img src="<?php echo $mediaurl.$customlogo['small_logo']; ?>" <?php echo MAGE::helper('ThemeOptionsBlacknwhite/Retina')->getRetinaData('small_logo_custom'); ?> alt="<?php echo $customlogo['logo_alt']; ?>" /></a></h2>
+						<?php endif; ?>
+						<?php echo $this->getChildHtml('topMenu') ?>
+						<div class="menu-button"><?php echo MAGE::helper('ThemeOptionsBlacknwhite')->getIcon('mobilemenu'); ?><span><?php echo $this->__('Menu'); ?></span></div>
+						<span class="wishlist-items"><?php echo $this->helper('wishlist')->getItemCount() ?></span>
+						<?php echo $this->getChildHtml('cart_sidebar') ?>
+						<?php if($stickyClose): ?>
+						<a href="javascript:void(0);" class="sticky-close"><i class="fa fa-times"></i></a>
+						<?php endif; ?>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</header>
+</div>
+<?php if (Mage::getSingleton('cms/page')->getIdentifier() == 'home' && Mage::app()->getFrontController()->getRequest()->getRouteName() == 'cms'): ?>
+	<?php if ($static_html = $this->getChildHtml('blacknwhite_home_text_blocks')): ?>
+		<div class="home-text-blocks">
+			<div class="container_12">
+				<div class="row clearfix">
+					<div class="grid_12">
+						<div class="row clearfix">
+							<?php echo $static_html; ?>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	<?php endif; ?>
+<?php endif; ?>
+<?php echo $this->getChildHtml('header_slider_container') ?>
+<?php if($this->getChildHtml('topContainer')): ?>
+<div class="container_12 header-position">
+	<div class="row clearfix">
+		<div class="grid_12">
+			<?php echo $this->getChildHtml('topContainer'); ?>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<?php endif; ?>
+<?php if($loginAjaxStatus): ?>
+	<script type="text/javascript">
+		/* Login ajax */
+		jQuery('.top-link-login').on('click', function(){
+			<?php if (Mage::app()->getStore()->isCurrentlySecure()): ?>
+			ajaxLogin("<?php echo $this->getUrl('meigeeactions/login/', array('_secure'=>true)) ?>", false);
+			<?php else : ?>
+			ajaxLogin("<?php echo $this->getUrl('meigeeactions/login/', array('_secure'=>false)) ?>", false);
+			<?php endif; ?>
+			return false;
+		});
+	</script>
+<?php endif; ?>
+<?php if($stickyClose and !$stickyCookie): ?>
+<script type="text/javascript">
+jQuery('.sticky-close').on('click', function(){
+	sticky.hide();
+	jQuery(window).off('scroll.sticky');
+	
+	jQuery.cookie('blacknwhiteSticky', 'true', {
+		expires: <?php echo $stickyTime; ?>,
+		path: '/'
+	});
+});
+</script>
+<?php endif; ?>
+<?php if($stickyCookie): ?>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	sticky.hide();
+	jQuery(window).off('scroll.sticky');
+});
+</script>
+<?php endif; ?>

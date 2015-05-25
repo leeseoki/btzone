@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * MageGiant
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the MageGiant.com license that is
+ * available through the world-wide-web at this URL:
+ * http://magegiant.com/license-agreement/
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    MageGiant
+ * @package     MageGiant_GiantPoints
+ * @copyright   Copyright (c) 2014 MageGiant (http://magegiant.com/)
+ * @license     http://magegiant.com/license-agreement/
+ */
+-->
+<layout version="0.1.0">
+    <giantpoints_default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magegiant/tinybox2/style.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magegiant/giantpoints.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magegiant/tinybox2.js</script>
+            </action>
+        </reference>
+    </giantpoints_default>
+    <!--Reward Rule-->
+    <giantpointsadmin_adminhtml_rule_index>
+        <reference name="content">
+            <block type="giantpoints/adminhtml_rule" name="reward_rule"/>
+        </reference>
+    </giantpointsadmin_adminhtml_rule_index>
+    <!--/Reward Rule-->
+
+    <!-- Earning rate-->
+    <giantpointsadmin_adminhtml_earning_rate_index>
+        <reference name="content">
+            <block type="giantpoints/adminhtml_earning_rate" name="earning_rate"/>
+        </reference>
+    </giantpointsadmin_adminhtml_earning_rate_index>
+    <giantpointsadmin_adminhtml_earning_rate_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="giantpoints/adminhtml_earning_rate_grid" name="giantpoints_earning"/>
+        </block>
+    </giantpointsadmin_adminhtml_earning_rate_grid>
+    <!--/End Earning rate-->
+    <!--Spending Rate-->
+    <giantpointsadmin_adminhtml_spending_rate_index>
+        <reference name="content">
+            <block type="giantpoints/adminhtml_spending_rate" name="spending_rate"/>
+        </reference>
+    </giantpointsadmin_adminhtml_spending_rate_index>
+    <giantpointsadmin_adminhtml_spending_rate_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="giantpoints/adminhtml_spending_rate_grid" name="giantpoints_spending"/>
+        </block>
+    </giantpointsadmin_adminhtml_spending_rate_grid>
+    <!--/Spending Rate-->
+
+
+    <!--Transaction-->
+    <giantpointsadmin_adminhtml_transaction_index>
+        <reference name="content">
+            <block type="giantpoints/adminhtml_transaction" name="giant_transactions"/>
+        </reference>
+    </giantpointsadmin_adminhtml_transaction_index>
+    <giantpointsadmin_adminhtml_transaction_edit>
+        <update handle="giantpoints_default"/>
+    </giantpointsadmin_adminhtml_transaction_edit>
+    <giantpointsadmin_adminhtml_transaction_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="giantpoints/adminhtml_transaction_grid" name="giant_transactions"/>
+        </block>
+    </giantpointsadmin_adminhtml_transaction_grid>
+    <giantpointsadmin_adminhtml_transaction_customer>
+        <block type="core/text_list" name="root">
+            <block type="adminhtml/template" template="magegiant/giantpoints/transaction/customer/header.phtml" name="transaction.popup.header"/>
+            <block type="giantpoints/adminhtml_transaction_edit_customer_grid" name="transaction.popup.grid"/>
+            <block type="giantpoints/adminhtml_transaction_edit_customer_popup" name="transaction.popup.popup">
+                <action method="initSerializerBlock">
+                    <grid_name>transaction.popup.grid</grid_name>
+                    <hidden_input_name>selected_customer_id</hidden_input_name>
+                </action>
+            </block>
+        </block>
+    </giantpointsadmin_adminhtml_transaction_customer>
+    <giantpointsadmin_adminhtml_transaction_customergrid>
+        <block type="core/text_list" name="root">
+            <block type="giantpoints/adminhtml_transaction_edit_customer_grid" name="transaction.popup.customer"/>
+        </block>
+    </giantpointsadmin_adminhtml_transaction_customergrid>
+    <!--/Transaction-->
+
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints" name="giantpoints_tab"
+                   template="magegiant/giantpoints/customer/tab/giantpoints.phtml">
+                <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints_balance" name="giantpoints_balance"
+                       template="magegiant/giantpoints/customer/tab/giantpoints/balance.phtml"/>
+                <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints_balanceUpdate"
+                       name="giantpoints_balanceupdate"
+                       template="magegiant/giantpoints/customer/tab/giantpoints/balanceUpdate.phtml"/>
+                <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints_notifications"
+                       name="giantpoints_notifications"
+                       template="magegiant/giantpoints/customer/tab/giantpoints/notifications.phtml"/>
+                <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints_history" name="giantpoints_history"
+                       template="magegiant/giantpoints/customer/tab/giantpoints/history.phtml">
+                    <block type="giantpoints/adminhtml_customer_edit_tabs_giantpoints_history_grid"
+                           name="giantpoints_history_grid"/>
+                </block>
+            </block>
+            <action method="addTab">
+                <name>Reward Points</name>
+                <block>giantpoints_tab</block>
+            </action>
+        </reference>
+    </adminhtml_customer_edit>
+    <!-- Create Order on Backend -->
+    <adminhtml_sales_order_create_index>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magegiant/giantpoints.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magegiant/giantpoints/adminhtml/giantpoints.js</script>
+            </action>
+            <!-- Custom JS for Backend -->
+            <action method="addItem">
+                <type>skin_js</type>
+                <name>js/magegiant/giantpoints.js</name>
+                <params/>
+            </action>
+        </reference>
+        <reference name="items_grid">
+            <block type="giantpoints/adminhtml_order_create_form" template="magegiant/giantpoints/order/create/form.phtml" name="giantpoints.spending.form"/>
+        </reference>
+    </adminhtml_sales_order_create_index>
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="items_grid">
+            <block type="giantpoints/adminhtml_order_create_form" template="magegiant/giantpoints/order/create/form.phtml" name="giantpoints.spending.form"/>
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+    <adminhtml_sales_order_create_load_block_items>
+        <reference name="items_grid">
+            <block type="giantpoints/adminhtml_order_create_form" template="magegiant/giantpoints/order/create/form.phtml" name="giantpoints.spending.form"/>
+        </reference>
+    </adminhtml_sales_order_create_load_block_items>
+    <!--/Create Order on Backend-->
+
+
+    <!--Order Totals-->
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="giantpoints/adminhtml_totals_order_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="giantpoints/adminhtml_totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="giantpoints/adminhtml_totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="giantpoints/adminhtml_totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <adminhtml_sales_order_invoice_print>
+        <reference name="invoice_totals">
+            <block type="giantpoints/adminhtml_totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_invoice_print>
+    <adminhtml_sales_order_invoice_email>
+        <reference name="invoice_totals">
+            <block type="giantpoints/adminhtml_totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_invoice_email>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/adminhtml_totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+        <reference name="submit_before">
+            <block type="giantpoints/adminhtml_totals_creditmemo_form_added" name="giantpoints.total.earned" template="magegiant/giantpoints/totals/creditmemo/form/added.phtml"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/adminhtml_totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+        <reference name="submit_before">
+            <block type="giantpoints/adminhtml_totals_creditmemo_form_added" name="giantpoints.total.earned" template="magegiant/giantpoints/totals/creditmemo/form/added.phtml"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/adminhtml_totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <!--/Order Totals-->
+    <!--Js Color Admin-->
+    <adminhtml_system_config_edit>
+        <reference name="head">
+            <action method="addJs">
+                <file>jscolor/jscolor.js</file>
+            </action>
+        </reference>
+    </adminhtml_system_config_edit>
+    <!--/Js Color Admin-->
+</layout>

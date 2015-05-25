@@ -1,0 +1,434 @@
+.megamenu-pc #nav-menu-pc{
+    position : relative !important;
+    font-size: 13px;
+    margin: 0 auto;    
+    width: 100%;
+    display:block;
+    height:62px;
+/*    border-bottom: 1px solid #999;*/
+    background: #ececec;
+}
+.megamenu-pc #nav-menu-pc li{
+    float:left;text-align:left;
+}
+.megamenu-pc #nav-menu-pc li ul li{float:none;}
+.megamenu-pc #nav-menu-pc div ul li {background:none !important;}
+.megamenu-pc #nav-menu-pc  a.megamenu-lable{
+    font-weight:bold !important;
+    padding:3px 25px 2px 28px !important;
+    float:left;
+    text-decoration:none;
+    line-height:50px !important;
+    text-transform:uppercase !important;
+}
+.megamenu-pc #nav-menu-pc  a.megamenu-lable:hover{color:#ffa800 !important;}
+.megamenu-pc #nav-menu-pc li.active  a.megamenu-lable{
+    background-color:#222 !important;
+    color:#ffa800 !important;
+    width: 100%;
+}
+.megamenu-pc #nav-menu-pc .magestore-megamenu li a{
+    background: none repeat scroll 0 0 transparent !important;
+    color: #666666 !important;
+    font-size: 11px !important;
+    height:auto !important;
+    text-align:left !important;
+    text-decoration:none !important;
+}
+#nav-menu-pc .magestore-megamenu{
+    display:none;
+    left: 0;    
+    width:100%;   
+    margin-top: -1px;
+    padding:0 ;	
+    background:none;
+    top:55px;
+    position: absolute;
+    z-index:1000;
+}
+.megamenu-pc #nav-menu-pc .magestore-megamenu .sub-menu h1{
+    padding: 10px 0px 5px 10px;
+}
+.megamenu-pc #nav-menu-pc .magestore-megamenu .sub-menu{
+    left: 0 !important;   
+    width:100%;
+    height: auto !important;
+    float: left !important; 
+    position: static  !important;
+    /*padding:0 0 10px !important;*/
+    background: #fff;
+}
+.megamenu-pc #nav-menu-pc .magestore-megamenu .list-categories-megamenu {
+    border: 1px solid #ececec;
+}
+.megamenu-pc #nav-menu-pc button.button{
+    border: 1px solid #F79343;
+    color: #fff;
+    float: none;
+    font-size: 21px;
+    height: 25px;
+    width: 94px;
+    padding:0 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    display: inline-block;
+    letter-spacing: -1px;
+    outline: medium none;
+    position: relative;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    background: #fe8900; /* non-CSS3 default background */
+    background: -webkit-gradient(linear, left top, left bottom, from(#feb900), to(#fe8900));
+    background: -moz-linear-gradient(#feb900, #fe8900);
+    background: -ms-linear-gradient(#feb900, #fe8900);
+    background: linear-gradient(#feb900, #fe8900);
+    font-size:12px;
+    -pie-background: linear-gradient(#feb900, #fe8900);
+}
+.megamenu-pc #nav-menu-pc button.button:hover {
+    background: #CE662B;
+    background: -webkit-gradient(linear, left top, left bottom, from(#F3C812), to(#CE662B));
+    background: -moz-linear-gradient(#F3C812, #CE662B);
+    background: -ms-linear-gradient(#F3C812, #CE662B);
+    background: linear-gradient(#F3C812, #CE662B);
+    -pie-background: linear-gradient(#F3C812, #CE662B);
+}
+.megamenu-pc #nav-menu-pc button.button:active {
+    color: #ccc;
+    border: solid 1px #1D74B9; /* border */
+    background: -webkit-gradient(linear, left top, left bottom, from(#003061), to(#0059b2));
+    background: -moz-linear-gradient(#003061, #0059b2);
+    background: -ms-linear-gradient(#003061, #0059b2);
+    background: linear-gradient(#003061, #0059b2);
+    -pie-background: linear-gradient(#003061, #0059b2);	
+}
+
+/* --------------------- Block home-----------------*/
+.megamenu-pc #nav-menu-pc  .block-megamenu  ul.block-home{	
+    float: left;
+    margin: 0 !important;
+    padding: 10px 2% !important;
+    width: 100%;
+}
+.megamenu-pc #nav-menu-pc  ul.block-home li{float:left !important;margin-bottom:15px !important; background:none !important;}	
+.megamenu-pc #nav-menu-pc  ul.block-home li label{
+    float:left;
+    width:100%;
+    text-align:left;
+    padding:0 0 10px;
+    font-weight:bold;
+    text-transform:uppercase;
+    border-bottom-width:1px;
+    border-bottom-style:dashed;
+    margin-bottom:10px;
+}
+.megamenu-pc #nav-menu-pc  ul.block-home li.first{
+    width:40%;
+    padding-left:10px !important;
+    padding-right:10px !important;
+    border-right-width:1px !important;    
+    text-align:left !important;
+}	
+.megamenu-pc #nav-menu-pc  ul.block-home li.first img{border:1px solid #d5d5d5;}	
+.megamenu-pc #nav-menu-pc  ul.block-home li.last{
+    width:60%;
+    padding-left: 15px !important;
+}
+.megamenu-pc #nav-menu-pc  ul.block-home li.last span{
+    line-height:20px;
+    padding:0 0 10px 0;
+    float:left;
+    width:100%;
+}
+
+/* -----------------------------Grid Category-----------------------------------*/
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu{}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu h1{
+    float:left;
+    width:100%;
+    margin:0;
+    padding:10px 10px;
+    border-bottom:1px dashed #D5D5D5;
+}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu ul.level0-megamenu{
+    float:left;
+    width:100%;
+    padding:10px 2%  ;
+    margin:0;
+}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu ul.level0-megamenu li.level1-megamenu{
+    float:left !important;
+    width:21% !important;
+    padding:0 10px !important;
+    /*margin:10px  0 0 0 !important;*/    
+}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu ul.level0-megamenu li.featured{
+    width:29% !important;
+    float:right !important;
+    border:none !important;
+    padding:0 0 0 10px !important;
+}	
+.megamenu-pc #nav-menu-pc .grid-categories-megamenu li .level1-title{
+    float:left;
+    width:100%;
+    padding:10px 0;
+    border-bottom:1px dashed #d5d5d5;overflow-x:hidden;
+}
+.megamenu-pc #nav-menu-pc .grid-categories-megamenu li .level1-title-f {
+    float:left;
+    width:100%;
+    padding:10px 0;
+    border-bottom:1px dashed #d5d5d5;overflow-x:hidden;
+}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu li .level1-title strong{
+    margin:0;
+    float:left;
+    width:100%;
+    text-transform:uppercase;
+    font-weight:bold;
+}	
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu li .level1-title-f strong{
+    margin:0;
+    float:left;
+    width:100%;
+    text-transform:uppercase;
+    font-weight:bold;
+}
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu li ol.level2-megamenu{
+    float:left;
+    width:100%;
+    padding:10px 0;
+}	
+.megamenu-pc #nav-menu-pc  .grid-categories-megamenu li ol li{}
+.megamenu-pc #nav-menu-pc .grid-categories-megamenu li.featured .level1-content{
+    float:left;
+    width:100%;
+    padding:15px 0 !important;
+} 
+.megamenu-pc #nav-menu-pc  li.featured .level1-content a.product-image{float:left;width:110px;margin:0;}
+.megamenu-pc #nav-menu-pc  li.featured .level1-content .product-shop{float:left;width:100px;padding-left:10px;}
+.megamenu-pc #nav-menu-pc  li.featured .level1-content .product-shop h1.product-name{font-weight:bold;border:none;}
+.megamenu-pc #nav-menu-pc  li.featured .level1-content .product-shop span{float:left;width:100%;padding:5px 0 0;height:35px;overflow:hidden;}
+.megamenu-pc #nav-menu-pc  li.featured .level1-content .product-shop .price-box{float:left;width:100%;padding: 5px 0;}
+.megamenu-pc #nav-menu-pc  li.featured .level1-content .product-shop .price{font-size:18px;color:#000;}
+
+
+/* -------------------------------------------------------------------*/
+
+/* ----------------------------- list Category----------------------------------*/
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu{
+    float: left !important;
+    margin: 0 !important;
+    padding: 10px 2% !important;
+    width: 100% !important;
+}
+/*.megamenu-pc #nav-menu-pc .list-categories-megamenu h1.block-title{
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px 10px;
+    border-bottom: 1px dashed #D5D5D5;
+    text-transform: uppercase;
+    border-top: none;
+    font-size: 14px;
+}*/
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li.level1-megamenu{
+    float: left !important;
+    margin: 10px 0 0 !important;
+    padding: 0 10px !important;
+    width: 150px !important;
+}
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li.level1-megamenu-f{
+    float: left !important;
+    margin: 10px 0 0 !important;
+    padding: 0 10px !important;
+    width: 150px !important;
+}
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li.featured{
+    width:220px !important;
+    float:left !important;
+    border:none !important;
+    padding:0 0 0 5px !important;
+}	
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li ul.level2-megamenu,
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li ul.level2-megamenu ol,
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li ul.level2-megamenu li .level1-title{float:left;width:100%;}
+/*.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li ul.level2-megamenu li .level1-title{border-top:1px dashed #d5d5d5;padding-top:5px;}*/
+.megamenu-pc #nav-menu-pc .list-categories-megamenu ul.level0-megamenu li ul.level2-megamenu li.first .level1-title{border-top:none;padding-top:0;}
+.megamenu-pc #nav-menu-pc .list-categories-megamenu li .level1-title strong{
+    padding: 5px 0 !important;
+    margin:0 0 5px !important;
+    float:left !important;
+    width:100% !important;
+    text-transform:uppercase !important;
+    font-weight:bold !important;
+    border-bottom:1px dashed #d5d5d5 !important;
+}	
+.megamenu-pc #nav-menu-pc li.featured .product-item{float:left;width:100%;padding:15px 0 !important;}
+.megamenu-pc #nav-menu-pc li.featured .product-item a{float:left;width:110px;margin:0;}
+.megamenu-pc #nav-menu-pc li.featured .product-item .product-shop{float:left;width:105px !important;padding: 0 0 0 5px !important;}
+.megamenu-pc #nav-menu-pc li.featured .product-item .product-shop strong.product-name{font-weight:bold;border:none !important;}
+.megamenu-pc #nav-menu-pc li.featured .product-item .product-shop span{float:left;width:100%;padding: 0;height:30px;overflow:hidden;}
+.megamenu-pc #nav-menu-pc li.featured .product-item .product-shop .price-box{float:left;width:100%;padding:0;}
+.megamenu-pc #nav-menu-pc li.featured .product-item .product-shop .price{font-size:18px;color:#000;}
+/* -------------------------------------------------------------------*/
+
+/* -----------------------------Grid Product----------------------------------*/
+
+.megamenu-pc #nav-menu-pc .products-megamenu-grid  ul.level0-megamenu{
+    float: left;
+    margin: 0;
+    padding: 10px 2%;
+    width: 100%;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item{
+    float:left;
+    width:20%;
+    padding-left: 1%;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item.last{border:none;}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item strong.product-name{
+    /*border-bottom: 1px dashed #D5D5D5;*/
+    float: left;
+    font-weight: bold;
+    padding: 5px 0;
+    text-transform: uppercase;
+    width: 95%;
+    font-size: 11px;
+    text-align: center;
+}	
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item a.product-image{
+    float:left;
+    text-align: center !important;
+    width: 95%;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item a.product-image img{
+    width: 100%;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop{float:left;padding:10px 10%;text-align:center; width: 100%;}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop label{float:left;padding-right:10px;}	
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop .price{font-size:18px;color:#000;padding:0;width:auto;}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop span{width:100%;padding:5px 0 0;text-align:center;}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop .price-box{float:left;width:100%;padding:0 ;}
+.megamenu-pc #nav-menu-pc .products-megamenu-grid li.item .product-shop button{}
+
+
+/* -------------------------------------------------------------------*/
+
+/* ----------------------------- List Product-----------------------------------*/
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu{
+    float: left !important;
+    margin: 0 !important;
+    padding: 10px 10px !important;
+    /*width: 96% !important;*/
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu li.level1-megamenu{float:left !important;width:69%;}	
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu li.level1-megamenu strong{
+    border-bottom: 1px dashed #D5D5D5 !important;
+    float: left !important;
+    font-weight: bold !important;
+    margin: 0 0 5px !important;
+    padding: 5px 0 15px !important;
+    text-transform: uppercase !important;
+    width: 98% !important;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu li.level1-megamenu ul.level2-megamenu{float:left;}
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu li.level1-megamenu ul.level2-megamenu li{float:left;width:100%;padding:0;margin:0;}
+.megamenu-pc #nav-menu-pc .products-megamenu-list  ul.level0-megamenu li.level1-megamenu ul.level2-megamenu li a{float:left;line-height:25px;}
+.megamenu-pc #nav-menu-pc .products-megamenu-list ul.level0-megamenu li.featured{
+    width:29% !important;
+    float:right !important;
+    border:none !important;
+    padding:0 0 0 1% !important;
+}
+.megamenu-pc #nav-menu-pc .products-megamenu-list ul.level0-megamenu li.featured  .level1-title h2{
+    border-bottom: 1px dashed #D5D5D5 !important;
+    float: left !important;
+    font-weight: bold !important;
+    padding:15px 0 5px;
+    margin:0 0 10px;
+    text-transform: uppercase !important;
+    width: 100% !important;
+}
+/* ----------------------------- Contact-----------------------------------*/	
+.megamenu-pc #nav-menu-pc   ul.block-contact{
+    float: left !important;
+    margin: 0 !important;
+    padding: 10px 2% !important;
+    width: 100% !important;
+}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.first{
+    float:left !important;
+    width:310px !important;
+    border-right:1px solid #d5d5d5 !important; 
+    padding:15px 15px 0  0 !important;
+    margin:0  0 15px ;
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last{
+    float:left;
+    width: 100%;
+    box-sizing: content-box;
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last #contactForm{
+    padding-right: 40px;
+    padding-left: 40px;
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact li  h1.block-title{
+    float: left;
+    width: 100%;
+    padding: 10px 0 5px;
+    margin: 0 0 15px;
+    border-bottom: 1px dashed #D5D5D5;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-top: none;
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact li.first .address{
+    float:left !important;
+    width:70% !important;
+    margin:0 0 15px !important; 
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact li.first .map{
+    float:left !important;
+    width:100% !important;
+}
+.megamenu-pc #nav-menu-pc   ul.block-contact  li.last  .contact-form{float:left !important;width:100% !important;}
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last  span{
+    float:left !important;
+    width:100% !important;
+    padding:0 !important;
+}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last  .input-box {float:left !important;width:100% !important;padding:15px 0 !important;}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last  .input-box .input{float:left !important;width:160px !important;margin-right:10px !important;}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last  .input-box .input input{
+    width:160px !important;
+    border-radius:5px;
+    height:25px !important;
+    border:1px solid #d5d5d5 !important;
+    background:#efefef !important;
+}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last .comment{float:left !important;width:100% !important;padding:10px 0 !important; }	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last .comment label{float:left !important;width:100% !important;}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last .comment textarea{
+    width:100% !important;
+    float:left !important;
+    height:150px !important;
+    background:#efefef !important;
+}	
+.megamenu-pc #nav-menu-pc   ul.block-contact li.last .comment .button-set{float:left !important;width:100% !important;padding:10px 0 0 !important;text-align:right;}	
+.megamenu-pc div .footer-megamenu{
+    float:left;
+    width:100%;
+    border-top: 1px dashed #D5D5D5;
+    padding: 10px;
+    /*text-transform: uppercase;*/
+}
+.megamenu-pc div .header-megamenu {
+    float:left;
+    width:100%;
+    border-bottom: 1px dashed #D5D5D5;
+    padding: 10px; 
+    /*text-transform: uppercase;*/
+}
+

@@ -1,0 +1,115 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the magegiant.com license that is
+ * available through the world-wide-web at this URL:
+ * http://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (http://magegiant.com/)
+ * @license     http://magegiant.com/license-agreement/
+ */
+?>
+<?php $_currentPoint = $this->getCurrentPoint(); ?>
+
+<?php if ($this->canRefundSpentPoints()): ?>
+    <p>
+        <label
+            for="creditmemo_refund_spent_points"><?php echo $this->__('Return spent points to customer’ balance (%s)', Mage::helper('giantpoints')->addLabelForPoint($this->getMaxSpentPointRefund(), $this->getCreditmemo()->getStoreId())) ?></label>
+        <input type="text" name="creditmemo[refund_spent_points]"
+               value="<?php echo $_currentPoint->getSpentRefundPoints(); ?>"
+               id="creditmemo_refund_spent_points" class="input-text not-nagetive-amount"
+               style="width: 60px; text-align: right; margin-left: 10px;"
+               onchange="checkCreditmemoRefundSpentPoints(this)"/>
+        <script type="text/javascript">
+            function checkCreditmemoRefundSpentPoints(el) {
+                var maxPoints = <?php echo $this->getMaxSpentPointRefund() ? $this->getMaxSpentPointRefund() : '0' ?>;
+                if (el.value < 0) {
+                    el.value = 0;
+                }
+                if (el.value > maxPoints) {
+                    el.value = maxPoints;
+                }
+            }
+        </script>
+    </p>
+<?php endif ?>
+
+<?php if ($this->canRefundReferralEarnedPoints()): ?>
+    <p>
+        <label
+            for="creditmemo_refund_referral_earned_points"><?php echo $this->__('Get back referral earned points from customer’s balance (%s)', Mage::helper('giantpoints')->addLabelForPoint($this->getMaxReferralEarnedRefund(), $this->getCreditmemo()->getStoreId())) ?></label>
+        <input type="text" name="creditmemo[refund_referral_earned_points]"
+               value="<?php echo $_currentPoint->getReferralRefundPoints() ?>"
+               id="creditmemo_refund_referral_earned_points"
+               class="input-text not-nagetive-amount" style="width: 60px; text-align: right; margin-left: 10px;"
+               onchange="checkCreditmemoRefundReferalEarnedPoints(this)"/>
+        <script type="text/javascript">
+            function checkCreditmemoRefundReferalEarnedPoints(el) {
+                var maxPoints = <?php echo $this->getMaxReferralEarnedRefund() ? $this->getMaxReferralEarnedRefund() : '0' ?>;
+                if (el.value < 0) {
+                    el.value = 0;
+                }
+                if (el.value > maxPoints) {
+                    el.value = maxPoints;
+                }
+            }
+        </script>
+    </p>
+<?php endif ?>
+
+<?php if ($this->canRefundInviteeEarnedPoints()): ?>
+    <p>
+        <label
+            for="creditmemo_refund_invitee_earned_points"><?php echo $this->__('Get back invitee earned points from customer’s balance (%s)', Mage::helper('giantpoints')->addLabelForPoint($this->getMaxInviteeEarnedRefund(), $this->getCreditmemo()->getStoreId())) ?></label>
+        <input type="text" name="creditmemo[refund_invitee_earned_points]"
+               value="<?php echo $_currentPoint->getInviteeRefundPoints() ?>"
+               id="creditmemo_refund_invitee_earned_points"
+               class="input-text not-nagetive-amount" style="width: 60px; text-align: right; margin-left: 10px;"
+               onchange="checkCreditmemoRefundInviteeEarnedPoints(this)"/>
+        <script type="text/javascript">
+            function checkCreditmemoRefundInviteeEarnedPoints(el) {
+                var maxPoints = <?php echo $this->getMaxInviteeEarnedRefund() ? $this->getMaxInviteeEarnedRefund() : '0' ?>;
+                if (el.value < 0) {
+                    el.value = 0;
+                }
+                if (el.value > maxPoints) {
+                    el.value = maxPoints;
+                }
+            }
+        </script>
+    </p>
+<?php endif ?>
+
+
+<?php if ($this->canRefundRateEarnedPoints()): ?>
+    <p>
+        <label
+            for="creditmemo_refund_rate_earned_points"><?php echo $this->__('Get back earned points from customer’s balance (%s)', Mage::helper('giantpoints')->addLabelForPoint($this->getMaxRateEarnedRefund(), $this->getCreditmemo()->getStoreId())) ?></label>
+        <input type="text" name="creditmemo[refund_rate_earned_points]"
+               value="<?php echo $_currentPoint->getRateRefundPoints() ?>" id="creditmemo_refund_rate_earned_points"
+               class="input-text not-nagetive-amount" style="width: 60px; text-align: right; margin-left: 10px;"
+               onchange="checkCreditmemoRefundRateEarnedPoints(this)"/>
+        <script type="text/javascript">
+            function checkCreditmemoRefundRateEarnedPoints(el) {
+                var maxPoints = <?php echo $this->getMaxRateEarnedRefund() ? $this->getMaxRateEarnedRefund() : '0' ?>;
+                if (el.value < 0) {
+                    el.value = 0;
+                }
+                if (el.value > maxPoints) {
+                    el.value = maxPoints;
+                }
+            }
+        </script>
+    </p>
+<?php endif ?>
+

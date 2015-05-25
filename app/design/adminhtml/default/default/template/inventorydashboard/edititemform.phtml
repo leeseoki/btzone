@@ -1,0 +1,166 @@
+<!-- dashboard tabs -->
+<?php if ($id = $this->getItemId()): ?>
+    <div class="form-dropdown screen" id="edit_add_tab_chart">
+        <form method="post" id="edit_chart_form" action="<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savechart') ?>">        
+            <input type="hidden" name="form_key" value="<?php echo $this->getFormKey() ?>" />
+            <input type="hidden" name="item_id" value="<?php echo $id ?>" />
+
+            <?php
+            $resource = Mage::getSingleton('core/resource');
+            $readConnection = $resource->getConnection('read_write');
+            $item = Mage::getModel('inventorydashboard/items')->load($id);
+            $report_code = $item->getReportCode();
+            $sql = 'Select distinct(`type`) from ' . $resource->getTableName('erp_inventory_dashboard_report_type') . ' where `report_code` = \'' . $report_code . '\'';
+            $results = $readConnection->fetchAll($sql);
+            foreach ($results as $result) {
+                $type = $result['type'];
+            }
+            ?>
+            <div class="field-table" style="background-color: #efefef;">
+                <div style="padding-left:100px;">
+                    <ul class="field-row">
+                        <label style="width:210px;font-size: 15px;"></label>
+                        <h3><?php echo $this->__('Edit chart %s', $item->getName()) ?></h3>
+                    </ul>
+                    <br/>
+                    <ul class="field-row clear">
+                        <li>
+                            <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart name') ?>&nbsp;<span class="required">*</span></label>
+                        </li>
+                        <li>
+                            <input class="required-entry input-text required-entry" type="text" value="<?php echo $item->getName() ?>" style="width:410px;" name="chart_name" maxlength="50" id="chart_name" />                                        
+                        </li>
+                    </ul>          
+                    <br/>
+                    <ul class="field-row clear">
+                        <li>
+                            <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Report Type') ?>&nbsp;<span class="required">*</span></label>
+                        </li>                
+                        <li>                        
+                            <select name="group_type" id="group_type" onchange="return changeSelectGroupTypeEdit(this);" class="required-entry required-entry select">
+                                <?php $groupTypes = Mage::helper('inventorydashboard')->getGroupType(); ?>
+                                <?php if ($groupTypes): ?>
+                                    <?php foreach ($groupTypes as $groupType): ?>
+                                        <option value="<?php echo $groupType['type'] ?>" <?php if ($groupType['type'] == $type) echo 'selected'; ?>><?php echo $this->__($groupType['title']) ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif ?>
+                            </select>
+                        </li>
+                    </ul>
+                    <ul class="field-row clear">
+                        <li>
+                            <select name="sales_report_edit" id="sales_report_edit" onchange="changeSalesChartTypeEdit();" class="required-entry required-entry select" <?php if ($type == 'sales') {
+                                echo 'style="display:inline-block"';
+                            } else {
+                                echo 'style="display:none"';
+                            } ?>>
+                                <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType('sales'); ?>
+                                <?php if ($reportTypes): ?>
+                                    <?php $option_selected = 1; ?>
+                                    <?php foreach ($reportTypes as $reportType): ?>
+                                        <option value="<?php echo $reportType['report_code'] ?>" <?php if ($option_selected == 1 || $reportType['report_code'] == $report_code) echo 'selected' ?>><?php echo $this->__($reportType['name']) ?></option>
+                                        <?php $option_selected++ ?>
+                                    <?php endforeach;
+                                    unset($option_selected); ?>
+                                <?php endif ?>
+                            </select>
+                            <select name="warehouse_report_edit" id="warehouse_report_edit" onchange="changeWarehouseChartTypeEdit();" class="" <?php if ($type == 'warehouse') {
+                                echo 'style="display:inline-block"';
+                            } else {
+                                echo 'style="display:none"';
+                            } ?>>
+                                <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType('warehouse'); ?>
+                                <?php if ($reportTypes): ?>
+                                    <?php ?>
+                                    <?php foreach ($reportTypes as $reportType): ?>
+                                        <option value="<?php echo $reportType['report_code'] ?>" <?php if ($reportType['report_code'] == $report_code) {
+                                echo 'selected';
+                            } ?>><?php echo $this->__($reportType['name']) ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif ?>
+                            </select>
+                            <select name="product_report_edit" id="product_report_edit" onchange="changeProductChartTypeEdit();" class="" <?php if ($type == 'product') {
+                                echo 'style="display:inline-block"';
+                            } else {
+                                echo 'style="display:none"';
+                            } ?>>
+                                <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType('product'); ?>
+                                <?php if ($reportTypes): ?>
+                                    <?php foreach ($reportTypes as $reportType): ?>
+                                        <option value="<?php echo $reportType['report_code'] ?>" <?php if ($reportType['report_code'] == $report_code) {
+                                echo 'selected';
+                            } ?>><?php echo $this->__($reportType['name']) ?></option>
+                                    <?php endforeach; ?>
+    <?php endif ?>
+                            </select>
+                            <select name="supplier_report_edit" id="supplier_report_edit" onchange="changeSupplierChartTypeEdit();" class="" <?php if ($type == 'supplier') {
+        echo 'style="display:inline-block"';
+    } else {
+        echo 'style="display:none"';
+    } ?>>
+                                <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType('supplier'); ?>
+                                <?php if ($reportTypes): ?>
+                                    <?php foreach ($reportTypes as $reportType): ?>
+                                        <option value="<?php echo $reportType['report_code'] ?>" <?php if ($reportType['report_code'] == $report_code) {
+                                echo 'selected';
+                            } ?>><?php echo $this->__($reportType['name']) ?></option>
+                                    <?php endforeach; ?>
+                                <?php endif ?>
+                            </select>
+                            <select name="report_type_edit" id="report_type_edit" onchange="changeSelectChartTypeEdit();" class="" <?php if ($type == 'unknown') {
+                                echo 'style="display:inline-block"';
+                            } else {
+                                echo 'style="display:none"';
+                            } ?>>
+    <?php $reportTypes = Mage::helper('inventorydashboard')->getReportType('unknown'); ?>
+    <?php if ($reportTypes): ?>
+                            <?php foreach ($reportTypes as $reportType): ?>
+                                        <option value="<?php echo $reportType['report_code'] ?>" <?php if ($reportType['report_code'] == $report_code) {
+                        echo 'selected';
+                    } ?>><?php echo $this->__($reportType['name']) ?></option>
+        <?php endforeach; ?>
+    <?php endif ?>
+                            </select>
+
+                        </li>
+                    </ul>
+                    <ul class="field-row clear">
+                        <li>
+                            <select name="attribute_sales_report_edit" id="attribute_sales_report_edit" onchange="" class="" style="display:none">
+    <?php
+    $report = Mage::getModel('inventoryreports/reporttype');
+    $attributes = $report->getOrderAttributeOptions();
+    ?>
+    <?php if ($attributes): ?>
+        <?php foreach ($attributes as $key => $attribute): ?>
+                                        <option value="<?php echo $key ?>"><?php echo $this->__($attribute) ?></option>
+        <?php endforeach; ?>
+    <?php endif ?>
+                            </select>
+                        </li>
+                    </ul>
+                    <br/>
+                    <ul class="field-row clear">
+                        <li>
+                            <label for="chartName" style="font-size: 15px;"><?php echo $this->__('Chart Type') ?>&nbsp;<span class="required">*</span></label>
+                        </li>
+    <?php echo Mage::helper('inventorydashboard')->getDefaultChartType($item->getChartCode()); ?>
+                    </ul>        
+                    <br/>
+                    <ul class="submit-row clear">
+                        <label></label>
+                        <li>
+                            <button type="button" onclick="submitEditChartForm();" style="width:80px;height:32px;float:left; margin-right: 14px;" class="" value="Add">
+                                <span><?php echo $this->__('Save') ?></span>
+                            </button>
+                            <a class="button-grey cancel" onclick="cancelEditChartForm();
+                                    return false;"><?php echo $this->__('Cancel') ?></a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>            
+        </form>
+    </div>
+    <?php
+ endif ?>

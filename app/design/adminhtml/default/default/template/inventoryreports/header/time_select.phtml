@@ -1,0 +1,107 @@
+<script type="text/javascript">
+    function showCustomTime(custom_option) {
+        if (custom_option.value == 'range') {
+            document.getElementById('otherOpt').style.display = "inline-block";
+        }
+        if (custom_option.value != 'range') {
+            document.getElementById('otherOpt').style.display = "none";
+        }
+    }
+</script>
+<script type="text/javascript">
+    function onChange(obj, show) {
+        var el = document.getElementById("otherOpt");
+        var el1 = document.getElementById("otherOpt1");
+        if (obj.checked == show) {
+            el.style.display = '';
+            el1.style.display = 'none';
+        } // Show Options
+        else {
+            el.style.display = 'none';
+            el1.style.display = '';
+        }
+    }
+</script>
+
+
+<?php
+$filterData = new Varien_Object();
+$requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+$report_radio_select = $requestData['report_radio_select'];
+$display = Mage::helper('inventoryreports')->checkDisplay($report_radio_select);
+?>
+<div class="entry-edit" <?php if($display == 0){echo "style='display:none'";}?>>
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__("Report's Criteria") ?></h4>
+    </div>
+    <div id="otherOpt1" >
+        <div id="date_picker_form" class="fieldset ">
+            <div  class="input-box">
+                <label for="time">
+                    <strong><?php echo $this->__('Select Time: ') ?>&nbsp;&nbsp;</strong>
+                </label>
+                <select name="select_time" id="select_time" onchange="return showCustomTime(this);">                            
+                    <?php 
+                    if($requestData['report_radio_select'] == 'supply_needs_by_warehouse_products'){$options = $this->getTimeSupplyneedOptions();}
+                    else{$options = $this->getTimeSelectOptions();}
+                    ?>
+                    <?php foreach ($options as $key => $option): ?>
+                        <?php
+                        $selected = false;
+                        if (isset($requestData['select_time']) && $key == $requestData["select_time"]) {
+                            $selected = true;
+                        }
+                        ?>
+                        <option <?php if ($selected) {
+                            echo 'selected';
+                        } ?> value="<?php echo $key ?>"><?php echo $option; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <div id="otherOpt" style="display:none" >
+                    <!--form id="filter-form" action="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" method="POST"-->
+                    <label>&nbsp; &nbsp;&nbsp; &nbsp;<strong><?php echo $this->__('From:'); ?></strong> </label>
+                    &nbsp; &nbsp;
+                    <input name="date_from" id="date_from" type="text" size="20" value="<?php if(!empty($requestData['date_from'])){echo $requestData['date_from'];}else{echo $filterData->getDateFrom();} ?>">
+                    <img title="Select date" id="btn-date-picker-from" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . 'adminhtml/default/default/images/grid-cal.gif'; ?>" class="v-middle">
+                    <label><strong>&nbsp; &nbsp;<?php echo $this->__('To:'); ?></strong> </label>
+                    &nbsp; &nbsp;
+                    <input name="date_to" id="date_to" type="text" size="20" value="<?php if(!empty($requestData['date_to'])){echo $requestData['date_to'];}else{echo $filterData->getDateTo();} ?>">
+                    <img title="Select date" id="btn-date-picker-to" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN) . 'adminhtml/default/default/images/grid-cal.gif'; ?>" class="v-middle">          
+                    <!--form-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    Calendar.setup({
+        inputField: 'date_from',
+        ifFormat: "%Y-%m-%d",
+        daFormat: "%Y-%m-%d",
+        button: 'btn-date-picker-from',
+        align: 'Bl',
+        singleClick: true
+    });
+    Calendar.setup({
+        inputField: 'date_to',
+        ifFormat: "%Y-%m-%d",
+        daFormat: "%Y-%m-%d",
+        button: 'btn-date-picker-to',
+        align: 'Bl',
+        singleClick: true
+    });
+
+    //]]>
+</script>
+
+<?php if(!empty($requestData['select_time']) && $requestData['select_time'] == 'range'){?>
+    <script type="text/javascript">
+        document.getElementById('otherOpt').style.display = "inline-block";
+    </script>
+<?php }?>
+

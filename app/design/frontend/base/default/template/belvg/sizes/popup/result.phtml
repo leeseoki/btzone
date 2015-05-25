@@ -1,0 +1,221 @@
+<?php
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+/**********************************************
+ *        MAGENTO EDITION USAGE NOTICE        *
+ **********************************************/
+/* This package designed for Magento COMMUNITY edition
+ * BelVG does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BelVG does not provide extension support in case of
+ * incorrect edition usage.
+/**********************************************
+ *        DISCLAIMER                          *
+ **********************************************/
+/* Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future.
+ **********************************************
+ * @category   Belvg
+ * @package    Belvg_Sizes
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+
+$sizes = $this->getSizes();
+$helper = Mage::helper('sizes');
+
+?>
+<div id="sizes_result_calculate">
+    <?php if($sizes): ?>
+    <div id="sizes_result_buttons">
+        <button class="button" title="Calculate Size" type="button" id="sizes_calculate">
+            <span>
+                <span><?php echo $this->__('Calculate your size') ?></span>
+            </span>
+        </button>
+    </div>
+    <div id="sizes_result_text">
+        <?php if($sizes['optimal']): ?>
+            <?php echo $helper->getMessage('result_success') ?><br><br>
+        <button class="button optimal_sizes" title="<?php echo $sizes['optimal'] ?>" type="button" id="optimal_size">
+            <span>
+                <span><?php echo $sizes['optimal'] ?></span>
+            </span>
+        </button><br><br>
+        <?php echo $helper->getMessage('notice') ?>
+        <br><br>
+        <?php endif; ?>
+        
+        <?php if($sizes['gt'] || $sizes['lt']): ?>
+            <?php echo $helper->getMessage('result_variants') ?><br><br>
+            
+        <?php if($sizes['gt']): ?>
+        <?php foreach($sizes['gt'] as $size): ?>
+        <button class="button optimal_sizes" title="<?php echo $size['value'] ?>" type="button" id="optimal_size">
+            <span>
+                <span><?php echo $size['value'] ?></span>
+            </span>
+        </button><?php echo $this->__(' may be a bit bigger in the ') . $this->__($size['dim']) ?><br>
+        <?php endforeach; ?>
+        <?php endif; ?>
+        
+        <?php if($sizes['lt']): ?>
+        <?php foreach($sizes['lt'] as $size): ?>
+        <button class="button optimal_sizes" title="<?php echo $size['value'] ?>" type="button" id="optimal_size">
+            <span>
+                <span><?php echo $size['value'] ?></span>
+            </span>
+        </button><?php echo $this->__(' may be a bit smaller in the ') . $this->__($size['dim']) ?><br>
+        <?php endforeach; ?>
+        <?php endif; ?>
+        
+        <br><br><?php echo $helper->getMessage('notice') ?>
+        <?php endif; ?>
+        
+        <?php if(!$sizes['optimal'] && !$sizes['gt'] && !$sizes['lt']): ?>
+        <br><br><?php echo $helper->getMessage('result_fail') ?>
+        <?php endif; ?>
+    </div>    
+        
+        
+        
+    <?php else: ?>
+    <div id="sizes_result_text">
+        <?php echo $helper->getMessage('start') ?>
+    </div>
+    <div id="sizes_result_buttons">
+        <button class="button" title="Calculate Size" type="button" id="sizes_calculate">
+            <span>
+                <span><?php echo $this->__('Calculate your size') ?></span>
+            </span>
+        </button>
+    </div>
+    <?php endif; ?>
+    </div>
+</div>
+<script type="text/javascript">
+    jQblvg('#sizes_calculate').click( function() {
+        jQblvg('#sizes_result_calculate').addClass('loading').html('Loading');
+        jQblvg.ajax({
+            type: 'POST',
+            url: '<?php echo $this->getUrl("sizes/front/popup/") ?>',
+            data: jQblvg('#sizes_fields').serialize(),
+            cache: false,
+            success: function (result){
+                jQblvg('#sizesPopup').html(result);
+            }
+        });
+    });
+    jQblvg('.optimal_sizes').click( function() {
+        jQblvg.fancybox.close();
+        value = jQblvg(this).attr('title'); //console.log(value);
+        if (typeof attr_id == 'string') {
+            jQblvg('#attribute'+attr_id+' option').each( function(){
+                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == value ) {
+                    tmp_el = jQblvg(this); 
+                }
+            });
+        } else {
+            jQblvg('#select_'+opt_id+' option').each( function(){
+                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == value ) {
+                    tmp_el = jQblvg(this);
+                }
+            });
+        }
+        if (tmp_el.length!=0) {
+            tmp_el.attr("selected", "selected");
+            if (typeof attr_id == 'string') {
+                $('attribute'+attr_id).simulate('change');
+            } else {
+                $('select_'+opt_id).simulate('change');
+            }
+            tmp_el.parent().addClass('highlight_selection');
+            setTimeout( function() { tmp_el.parent().removeClass('highlight_selection') }, 2000);
+        };
+    });
+
+    //check available sizes
+    jQblvg('.optimal_sizes').each( function() {
+        tmp_el = jQblvg(this);
+        tmp_el.addClass('disabled').attr('disabled','disabled');
+        if (typeof attr_id == 'string') {
+            jQblvg('#attribute'+attr_id+' option').each( function() { 
+                if (jQblvg(this).text() == tmp_el.attr('title')) {
+                    tmp_el.removeClass('disabled').removeAttr('disabled');
+                }                                
+            });
+        } else {
+            jQblvg('#select_'+opt_id+' option').each( function() { 
+                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == tmp_el.attr('title')) {
+                    tmp_el.removeClass('disabled').removeAttr('disabled');
+                }                                
+            });
+        }
+    });
+
+;(function(){
+  
+  var eventMatchers = {
+    'HTMLEvents': /^(?:load|unload|abort|error|select|change|submit|reset|focus|blur|resize|scroll)$/,
+    'MouseEvents': /^(?:click|mouse(?:down|up|over|move|out))$/
+  }
+  var defaultOptions = {
+    pointerX: 0,
+    pointerY: 0,
+    button: 0,
+    ctrlKey: false,
+    altKey: false,
+    shiftKey: false,
+    metaKey: false,
+    bubbles: true,
+    cancelable: true
+  }
+  
+  Event.simulate = function(element, eventName) {
+    var options = Object.extend(defaultOptions, arguments[2] || { });
+    var oEvent, eventType = null;
+    
+    element = $(element);
+    
+    for (var name in eventMatchers) {
+      if (eventMatchers[name].test(eventName)) { eventType = name; break; }
+    }
+
+    if (!eventType)
+      throw new SyntaxError('Only HTMLEvents and MouseEvents interfaces are supported');
+
+    if (document.createEvent) {
+      oEvent = document.createEvent(eventType);
+      if (eventType == 'HTMLEvents') {
+        oEvent.initEvent(eventName, options.bubbles, options.cancelable);
+      }
+      else {
+        oEvent.initMouseEvent(eventName, options.bubbles, options.cancelable, document.defaultView,
+          options.button, options.pointerX, options.pointerY, options.pointerX, options.pointerY,
+          options.ctrlKey, options.altKey, options.shiftKey, options.metaKey, options.button, element);
+      }
+      element.dispatchEvent(oEvent);
+    }
+    else {
+      options.clientX = options.pointerX;
+      options.clientY = options.pointerY;
+      oEvent = Object.extend(document.createEventObject(), options);
+      element.fireEvent('on' + eventName, oEvent);
+    }
+    return element;
+  }
+  
+  Element.addMethods({ simulate: Event.simulate });
+})();
+
+
+
+</script>

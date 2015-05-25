@@ -1,0 +1,8 @@
+<?php
+    $store = $this->getStore();
+    if(!$store)
+        $store = Mage::app()->getStore()->getId();
+//    $directionConfig = Mage::getStoreConfig('megamenu/general/menu_type',$store);
+    $this->setTemplate('megamenu/effects/topmenu.phtml');
+    echo $this->toHtml();  
+?>

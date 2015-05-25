@@ -1,0 +1,121 @@
+<?php
+    $id_box = $this->getIdBox();
+    $collection = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelecT('*')->addAttributeToFilter('type_id', array('nin' => array('configurable', 'bundle', 'grouped')));
+    $data = array();
+    foreach($collection as $row){
+        $time = '';
+        $count = 0;
+        $totalTime = 0;
+        $now = time(); // or your date as well
+        if(Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')){
+            $is_barcode = 1;
+            $resource = Mage::getSingleton('core/resource');        
+            $readConnection = $resource->getConnection('core_read');
+            $results = '';
+            $purchaseOrderIds = array();
+            if($condorder){
+                $sql = 'SELECT distinct(`purchaseorder_purchase_order_id`) FROM '.$resource->getTableName('inventorybarcode/barcode').' where (`product_entity_id` = '.$row->getEntityId().
+                                                                                                        ') and (`supplier_supplier_id` = '. $condorder .') and (`qty` > '. 0 .')'; 
+            }else{
+                $sql = 'SELECT distinct(`purchaseorder_purchase_order_id`) FROM '.$resource->getTableName('inventorybarcode/barcode').' where (`product_entity_id` = '.$row->getEntityId().
+                                                                                                        ') and (`qty` > '. 0 .')';     
+            }
+            $results = $readConnection->query($sql);            
+            if($results){
+                foreach($results as $result){            
+                    $purchaseOrderIds[] = $result['purchaseorder_purchase_order_id'];
+                }
+            }
+            $purchaseOrders = Mage::getModel('inventorypurchasing/purchaseorder')
+                                            ->getCollection()
+                                            ->addFieldToFilter('purchase_order_id',array('in'=>$purchaseOrderIds));
+            $count += $purchaseOrders->getSize();
+            $notPurchases = Mage::getModel('inventorybarcode/barcode')
+                                    ->getCollection()
+                                    ->addFieldToFilter('purchaseorder_purchase_order_id','')
+                                    ->addFieldToFilter('qty',array('gt'=>0));
+            $count += $notPurchases->getSize();
+            foreach($purchaseOrders as $purchaseOrder){
+                $your_date = strtotime($purchaseOrder->getPurchaseOn());
+                $datediff = $now - $your_date;
+                $totalTime += floor($datediff/(60*60*24));
+                $time = 1;
+            }
+            $time = round($totalTime/$count,1);
+            $data[$row->getEntityId()] = $time;
+        }
+        
+        else{
+        $is_barcode = 0;
+        $deliveries = Mage::getModel('inventorypurchasing/purchaseorder_delivery')
+                ->getCollection()
+                ->addFieldToFilter('product_id',$row->getEntityId());
+        foreach($deliveries as $delivery){            
+            $count++;            
+            $your_date = strtotime($delivery->getDeliveryDate());
+            $datediff = $now - $your_date;
+            $time = 1;
+            $totalTime += floor($datediff/(60*60*24));
+        }
+        $time = round($totalTime/$count,1);
+        $data[$row->getEntityId()] = $time;
+        }
+    }   //Endforeach
+    
+    arsort($data);
+    if(count($data) > 7){
+    $count_data = 1;
+    $results = array();
+    foreach($data as $id => $value){
+        if($i>=7)
+        continue;
+        $results[$id] = $value;
+        $i++;
+    }
+    }
+?>
+<?php
+    $series = '';
+    $i = 0;
+    foreach ($results as $id => $value) {
+        if ($i != 0)
+            $series .= ',';
+                $series .= '[\'' . Mage::getModel('catalog/product')->load($id)->getName() . ' (' . $value . ' days)\',' . $value . ']';
+        $i++;
+    }
+?>
+                        <!-- report by product pie -->
+<div class="chart-parent-div">
+    <script type="text/javascript">
+            $(function () {
+                $_('#<?php echo $id_box?>').highcharts({
+                    chart: {
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 50,
+                            beta: 0
+                        }
+                    },
+                    title: {
+                        text: 'Warehousing Time by Product'
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            depth: 30,
+                        }
+                    },
+                    series: [{
+                        type: 'pie',
+                        data: [
+                            <?php echo $series;?>
+                        ]
+                    }]
+                });
+            });
+        </script>
+    <div id="<?php echo $id_box?>" class="chart-child-div" ></div>
+</div>

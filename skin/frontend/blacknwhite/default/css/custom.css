@@ -1,0 +1,244 @@
+/**
+*
+* Feel free to add your own css rules here.
+*
+*/
+
+/* Top header ===============================  */
+.top_header {
+	background: #f3f6fc;
+}
+
+header#header .sbHolder a {
+	background: none;
+	border: 0 none;
+	color: #000;
+}
+
+header#header .form-language a:hover {
+	background: none;
+}
+
+header#header a.sbSelector {
+	padding: 7px 7px 5px;
+}
+
+header#header .quick-access {
+	padding: 0;
+}
+
+header#header .links::before {
+	border-left: 0 none;
+}
+
+header#header .customer-name, header#header .links li a {
+	background: none;
+	color: #000;
+}
+
+header#header .customer-name, header#header .links li:focus,
+header#header .customer-name, header#header .links li:hover {
+	background: none;
+}
+
+header#header .customer-name, header#header .links li a:active,
+header#header .customer-name, header#header .links li a:focus,
+header#header .customer-name, header#header .links li a:hover {
+	background: none;
+	color: rgb(255, 19, 65);
+}
+
+header#header .customer-name, header#header .links li a,
+header#header .quick-access.simple-list .links li a.top-link-login:hover, header#header .customer-name:hover, header#header .links li a:hover {
+	background: none !important;
+}
+
+.link_help {
+	float: left;
+}
+
+.link_branch {
+	float: right;
+}
+
+header#header .quick-access {
+	float: left;
+}
+
+.top_links li {
+	display: inline-block;
+	padding: 7px 10px;
+}
+
+header#header a {
+	color: #000;
+}
+
+header#header a:active,
+header#header a:focus,
+header#header a:hover {
+	color: rgb(255, 19, 65);
+}
+
+.link_help {
+	position: relative;
+}
+
+li.link_help:focus,
+li.link_help:hover {
+	background: #fff778;
+}
+
+.help_content {
+	border: 1px solid #000;
+	background: #fff;
+	color: #333;
+	min-width: 300px;
+	left: -9999px;
+	top: 32px;
+	padding: 5px 10px 10px;
+	position: absolute;
+	text-align: center;
+	text-transform: uppercase;
+	z-index: 9999;
+}
+
+li.link_help:focus .help_content,
+li.link_help:hover .help_content {
+	left: -123px;
+}
+
+.block_help .block_title {
+	border-bottom: 8px solid #ccc;
+	margin: 0 0 20px;
+	padding: 0 0 10px;
+}
+
+.block_help .block_title strong {
+	color: #666666;
+	border-bottom: 2px solid #ccc;
+	display: inline-block;
+	font-weight: normal;
+	margin: 0 0 10px;
+	padding: 0 30px 8px;
+}
+
+.block_help .block_title p {
+	margin: 0 0 8px;
+	font-size: 110%;
+}
+
+.block_help .block_content {
+	color: #000;
+	font-size: 110%;
+	margin: 0 0 20px;
+}
+
+.block_help .block_content strong {
+	display: block;
+	padding: 10px 0 25px;
+}
+
+.block_help .block_content p {
+	margin: 0 0 8px;
+}
+
+.block_help .block_action {
+	margin: 0 0 10px;
+}
+
+.block_help .block_action a.button {
+	background: #000;
+	color: #fff !important;
+	display: block;
+	padding: 10px 0;
+	width: 100%;
+}
+
+.block_help .block_action a.button:active,
+.block_help .block_action a.button:focus,
+.block_help .block_action a.button:hover {
+	background: rgb(255, 19, 65);
+}
+/* Top menu ===============================  */
+.top_menu li {
+	display: inline-block;
+	padding: 7px 15px;
+}
+
+.top_menu li a {
+	color: #000;
+	text-transform: uppercase;
+}
+
+.top_menu li a:active,
+.top_menu li a:hover,
+.top_menu li a:focus {
+	color: #000 !important;
+	border-bottom: 1px solid #000;
+	text-decoration: none;
+}
+
+/* Top line ============================== */
+header#header .topline {
+	background: #000;
+}
+
+header#header .topline .grid_12 {
+	border: 0 none;
+}
+
+.topmenu {
+	float: left;
+}
+
+/* Footer ============================= */
+#footer {
+	border-top: 0 none;
+	background: #000;
+}
+
+.block_newsletter {
+	border-bottom: 2px solid #fff;
+	color: #fff;
+	margin: 0 0 2px;
+	padding: 30px 0;
+}
+
+.block_newsletter strong {
+	display: block;
+    font-size: 30px;
+    font-weight: 300;
+    padding: 14px 0;
+    text-align: center;
+}
+
+.block_newsletter .form-list li {
+	display: inline-block;
+	margin: 0 20px 0 0;
+}
+
+.block_newsletter .form-list li input {
+	margin: -3px 5px 0 0;
+}
+
+#mc_embed_signup_scroll {
+	background: #fff;
+	padding: 8px;
+}
+
+.mc-field-group input {
+	padding: 5px 15px;
+}
+
+.mc-field-group input.input-text {
+	border: 0 none;
+	width: 80%;
+}
+
+.mc-field-group input.button {
+	background: #898989;
+	border: 0px none;
+	color: #fff;
+	text-transform: uppercase;
+}

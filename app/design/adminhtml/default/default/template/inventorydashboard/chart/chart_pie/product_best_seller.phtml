@@ -1,0 +1,94 @@
+<?php
+$series = array();
+$id = $this->getIdBox();
+$requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+$reportCode = $this->getReportCode();
+if (empty($requestData)) {
+    $requestData = array();
+    $resource = Mage::getSingleton('core/resource');
+    $readConnection = $resource->getConnection('core_read');
+    $installer = Mage::getModel('core/resource');
+    $sql = 'SELECT default_time_range
+        FROM ' . $installer->getTableName("erp_inventory_dashboard_report_type") . '
+        WHERE report_code = "' . $reportCode . '"';
+    $results = $readConnection->fetchAll($sql);
+    $requestData['report_radio_select'] = $reportCode;
+    foreach ($results as $time) {
+        $requestData['select_time'] = $time['default_time_range'];
+    }
+}
+$gettime = Mage::Helper('inventoryreports')->getTimeSelected($requestData);
+$product_name = array();
+$final_sold = array();
+$resource = Mage::getSingleton('core/resource');
+$readConnection = $resource->getConnection('core_read');
+$installer = Mage::getModel('core/resource');
+
+$sql = 'SELECT product_id, sku, name, price, sum(qty_ordered) as total_ordered, sum(qty_canceled) as total_canceled, sum(qty_refunded) as total_refunded, (sum(qty_ordered) - sum(qty_canceled) - sum(qty_refunded)) as final_sold
+    FROM ' . $installer->getTableName("sales_flat_order_item") . '
+    WHERE created_at BETWEEN "' . $gettime['date_from'] . '" AND "' . $gettime['date_to'] . '" AND product_type NOT IN ("configurable", "bundle", "grouped")
+    GROUP BY sku
+    ORDER BY final_sold DESC 
+    ';
+
+$results = $readConnection->fetchAll($sql);
+if (isset($sql)) {
+    $checkResult = 0;
+    foreach ($results as $result) {
+        if ($checkResult > 7) {
+            $limit = 7;
+            break;
+        }
+        if ($result['final_sold'] == NULL || $result['final_sold'] <= 0) {
+            $limit = $checkResult;
+            continue;
+        }
+        $checkResult++;
+    }
+    if (isset($limit)) {
+        $sql .= 'LIMIT ' . $limit . '';
+        $results = $readConnection->fetchAll($sql);
+    }
+}
+?>
+<!-- report by product pie -->
+<div class="chart-parent-div">
+    <?php
+    $series = '';
+    $i = 0;
+    foreach ($results as $result) {
+        if ($i != 0)
+            $series .= ',';
+        $series .= '[\'' . $result['name'] . ' (' . (int) $result['final_sold'] . ' items sold)\',' . (int) $result['final_sold'] . ']';
+        $i++;
+    }
+    ?>
+    <script type="text/javascript">
+        $(function () {
+            $_('#<?php echo $id ?>').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 50
+                    }
+                },
+                title: {
+                    text: '<?php echo $this->__('Total Qty. Sold by Bestseller') ?>',
+                },
+                plotOptions: {
+                    pie: {
+                        depth: 30
+                    }
+                },
+                series: [{
+                        data: [
+<?php echo $series; ?>
+                        ]
+                    }]
+            });
+        });
+    </script>
+
+    <div id="<?php echo $id ?>" class="chart-child-div" ></div>
+</div>

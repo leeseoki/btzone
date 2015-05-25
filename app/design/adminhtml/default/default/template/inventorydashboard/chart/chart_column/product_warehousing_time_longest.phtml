@@ -1,0 +1,152 @@
+<?php
+$id_box = $this->getIdBox();
+$collection = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelecT('*')->addAttributeToFilter('type_id', array('nin' => array('configurable', 'bundle', 'grouped')));
+$data = array();
+foreach ($collection as $row) {
+    $time = '';
+    $count = 0;
+    $totalTime = 0;
+    $now = time(); // or your date as well
+    if (Mage::helper('core')->isModuleEnabled('Magestore_Inventorybarcode')) {
+        $is_barcode = 1;
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $results = '';
+        $purchaseOrderIds = array();
+        if ($condorder) {
+            $sql = 'SELECT distinct(`purchaseorder_purchase_order_id`) FROM ' . $resource->getTableName('inventorybarcode/barcode') . ' where (`product_entity_id` = ' . $row->getEntityId() .
+                    ') and (`supplier_supplier_id` = ' . $condorder . ') and (`qty` > ' . 0 . ')';
+        } else {
+            $sql = 'SELECT distinct(`purchaseorder_purchase_order_id`) FROM ' . $resource->getTableName('inventorybarcode/barcode') . ' where (`product_entity_id` = ' . $row->getEntityId() .
+                    ') and (`qty` > ' . 0 . ')';
+        }
+        $results = $readConnection->query($sql);
+        if ($results) {
+            foreach ($results as $result) {
+                $purchaseOrderIds[] = $result['purchaseorder_purchase_order_id'];
+            }
+        }
+        $purchaseOrders = Mage::getModel('inventorypurchasing/purchaseorder')
+                ->getCollection()
+                ->addFieldToFilter('purchase_order_id', array('in' => $purchaseOrderIds));
+        $count += $purchaseOrders->getSize();
+        $notPurchases = Mage::getModel('inventorybarcode/barcode')
+                ->getCollection()
+                ->addFieldToFilter('purchaseorder_purchase_order_id', '')
+                ->addFieldToFilter('qty', array('gt' => 0));
+        $count += $notPurchases->getSize();
+        foreach ($purchaseOrders as $purchaseOrder) {
+            $your_date = strtotime($purchaseOrder->getPurchaseOn());
+            $datediff = $now - $your_date;
+            $totalTime += floor($datediff / (60 * 60 * 24));
+            $time = 1;
+        }
+        $time = round($totalTime / $count, 1);
+        $data[$row->getEntityId()] = $time;
+    } else {
+        $is_barcode = 0;
+        $deliveries = Mage::getModel('inventorypurchasing/purchaseorder_delivery')
+                ->getCollection()
+                ->addFieldToFilter('product_id', $row->getEntityId());
+        foreach ($deliveries as $delivery) {
+            $count++;
+            $your_date = strtotime($delivery->getDeliveryDate());
+            $datediff = $now - $your_date;
+            $time = 1;
+            $totalTime += floor($datediff / (60 * 60 * 24));
+        }
+        $time = round($totalTime / $count, 1);
+        $data[$row->getEntityId()] = $time;
+    }
+}   //Endforeach
+
+arsort($data);
+if (count($data) > 7) {
+    $count_data = 1;
+    $results = array();
+    foreach ($data as $id => $value) {
+        if ($i >= 7)
+            continue;
+        $results[$id] = $value;
+        $i++;
+    }
+}
+?>
+<?php
+foreach ($results as $id => $value) {
+    $product_name[] = Mage::getModel('catalog/product')->load($id)->getName();
+    $total_inventory[] = $value;
+}
+$i = 0;
+$categories = '[';
+foreach ($product_name as $name_value) {
+    if ($i != 0) {
+        $categories .= ',';
+    }
+    $categories .= '"' . $name_value . '"';
+    $i++;
+}
+$categories .= ']';
+//            Zend_debug::dump($categories);
+$j = 0;
+$series['inventory_product']['name'] = $this->__('Warehousing Time by Product');
+$series['inventory_product']['data'] = '[';
+foreach ($total_inventory as $number_value) {
+    if ($j != 0) {
+        $series['inventory_product']['data'] .= ',';
+    }
+    $series['inventory_product']['data'] .= $number_value;
+    $j++;
+}
+$series['inventory_product']['data'] .= ']';
+//            Zend_debug::dump($series);
+?>
+
+<div class="chart-parent-div">
+    <script type="text/javascript">
+        $(function () {
+            $_('#<?php echo $id_box ?>').highcharts({
+            chart: {
+            type: 'column',
+                    margin: 70,
+                    options3d: {
+                    enabled: true,
+                            alpha: 20,
+                            beta: 1,
+                            depth: 50
+                    }
+            },
+                    title: {
+                    text:  '<?php echo $this->__('Warehousing Time by Product') ?>'
+                    },
+                    legend: {
+                    enabled:false
+                    },
+                    plotOptions: {
+                    column: {
+                    depth: 30
+                    }
+                    },
+                    xAxis: {
+                    categories: <?php echo $categories ?>
+                    },
+                    yAxis: {
+                    opposite: true
+                    },
+                    series: [
+<?php $count = 0; ?>
+<?php foreach ($series as $serie): ?>
+    <?php if (!$count == 0) echo ','; ?>
+    <?php $count++; ?>
+                        {
+                            name: '<?php echo $serie['name']; ?>',
+                                    data: <?php echo $serie['data']; ?>
+                            }
+<?php endforeach; ?>
+                        ]
+            }
+            );
+        });
+    </script>
+    <div class="chart-child-div" id="<?php echo $id_box ?>" ></div>
+</div>

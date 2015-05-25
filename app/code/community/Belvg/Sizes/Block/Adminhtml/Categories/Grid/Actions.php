@@ -1,0 +1,4 @@
+<?php
+class Belvg_Sizes_Block_Adminhtml_Categories_Grid_Actions extends Mage_Adminhtml_Block_Sales_Items_Abstract
+{
+}

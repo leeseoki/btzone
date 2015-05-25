@@ -1,0 +1,37 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+
+/**
+ *
+ * @see Magegiant_GiantPoints_Block_Toplinks_Label
+ */
+
+// using special template to control all space on HTML
+
+// HTML
+?>
+<?php
+if ($this->getPointsSummary() != ""):?>
+    <p style="color: #ffffff">
+        <?php echo $this->__("You have %s", '<a id="toplink_point_balance" href="' . $this->getUrl('giantpoints/index') . '">' . $this->getPointsSummary() . '</a>');
+        ?>
+    </p>
+<?php endif ?>

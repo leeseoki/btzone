@@ -1,0 +1,47 @@
+<div id="inventory_report_content" class="inventory_report_content">
+    <?php
+    if ($this->getRequest()->getParam('top_filter')) {
+        $filterData = new Varien_Object();
+        $requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+        $reportcode = $requestData['report_radio_select'];
+    }
+    ?>
+    <?php
+    if ($this->getRequest()->getParam('type_id') == 'supplier') {
+        echo $this->getChildHtml('report_supplier_chart');
+        echo $this->getChildHtml('report_supplier_suppliergrid');
+    }
+    ?>
+
+    <?php
+    if ($this->getRequest()->getParam('type_id') == 'warehouse') {
+        echo $this->getChildHtml('report_warehouse_chart');
+        echo $this->getChildHtml('report_warehouse_warehousegrid');
+    }
+    ?>
+    
+    <?php
+    if ($this->getRequest()->getParam('type_id') == 'product') {
+        echo $this->getChildHtml('report_product_chart');
+        echo $this->getChildHtml('report_product_productgrid');
+    }
+    ?>
+    
+    <?php
+    if ($this->getRequest()->getParam('type_id') == 'sales') {
+        echo $this->getChildHtml('report_order_chart');
+        switch ($reportcode) {
+            default: 
+                echo $this->getChildHtml('report_order_grid');
+                break;
+            case 'invoice':
+                echo $this->getChildHtml('report_order_grid_invoice');
+                break;
+            case 'refund' :
+                echo $this->getChildHtml('report_order_grid_creditmemo');
+                break;
+        }
+        
+    }
+    ?>
+</div>

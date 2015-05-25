@@ -1,0 +1,90 @@
+<?php $id = $this->getIdBox() ?>
+<?php $chart = Mage::getModel('inventorydashboard/items')->load($id) ?>
+<?php     
+    $resource = Mage::getSingleton('core/resource');        
+    $readConnection = $resource->getConnection('core_read');
+    $results = '';
+    $sql = 'SELECT `warehouse_id`,sum(`qty_shipped`) as `total_shipped` FROM '.$resource->getTableName('erp_inventory_warehouse_shipment').' group by `warehouse_id`';     
+    $results = $readConnection->query($sql);
+    $warehouseShipment = array();
+    if($results){
+        foreach($results as $result){            
+            $warehouseShipment[$result['warehouse_id']] = $result['total_shipped'];
+        }
+    }
+    $warehouseCollection = Mage::getModel('inventoryplus/warehouse')->getCollection();    
+    $i = 0;    
+    $categories = '[';
+    $series['warehouse']['name'] = $this->__('Qty. shipped');
+    $series['warehouse']['data'] = '[';    
+    foreach($warehouseCollection as $warehouse){
+        $qtyShipped = 0;
+        if(isset($warehouseShipment[$warehouse->getId()]))
+            $qtyShipped = $warehouseShipment[$warehouse->getId()];
+        if($i!=0){
+            $categories .= ',';
+            $series['warehouse']['data'] .= ',';
+        }
+        $categories .= '\''.$warehouse->getWarehouseName().'\'';
+        $series['warehouse']['data'] .= floatval($qtyShipped);         
+        $i++;
+    }
+    $categories .= ']';
+    $series['warehouse']['data'] .= ']';
+?>
+<div class="chart-parent-div">
+<script type="text/javascript">
+$(function () {
+    $_('#<?php echo $id ?>').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '<?php echo $chart->getName() ?>',
+            x: -20 //center
+        },
+        subtitle: {
+//            text: 'Source: WorldClimate.com',
+//            x: -20
+        },
+        xAxis: {
+            categories: <?php echo $categories ?>
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '<?php echo $this->__('Qty. shipped') ?>'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.0f} <?php echo $this->__('item(s)') ?></b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [
+            <?php $count = 0; ?>
+            <?php foreach($series as $serie): ?>
+                <?php if(!$count == 0) echo ','; ?>
+                <?php $count++; ?>    
+                {
+                    name: '<?php echo $serie['name']; ?>',
+                    data: <?php echo $serie['data']; ?>
+                }
+            <?php endforeach; ?>
+        ]
+    });
+});
+</script>
+
+
+<div id="<?php echo $id ?>" class="chart-child-div"></div>
+</div>

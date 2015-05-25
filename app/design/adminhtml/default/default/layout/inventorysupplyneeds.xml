@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magestore
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magestore
+ * @package     Magestore_Inventorysupplyneeds
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+-->
+<layout version="0.1.0">
+    <inventorysupplyneedsadmin_adminhtml_inventorysupplyneeds_index>
+        <update handle="inventoryplusadmin_adminhtml_inventory_menu" />
+        <reference name="head">
+            <action method="addJs">
+                <script>magestore/inventory/tinybox.js</script>
+            </action>
+            <action method="addJs">
+                <script>magestore/inventorysupplyneeds/supplyneeds.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet>css/magestore/inventory.css</stylesheet>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="inventorysupplyneeds/adminhtml_inventorysupplyneeds" name="inventory_supplyneeds" />
+            <block type="inventorysupplyneeds/adminhtml_inventorysupplyneeds" name="inventory_supplyneeds_additional" template="inventorysupplyneeds/qtysave.phtml" />
+        </reference>
+    </inventorysupplyneedsadmin_adminhtml_inventorysupplyneeds_index>
+    <inventorysupplyneedsadmin_adminhtml_inventorysupplyneeds_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="inventorysupplyneeds/adminhtml_inventorysupplyneeds_grid" name="inventory.adminhtml.supplyneeds.grid"/>
+        </block>
+    </inventorysupplyneedsadmin_adminhtml_inventorysupplyneeds_grid>
+    
+</layout>

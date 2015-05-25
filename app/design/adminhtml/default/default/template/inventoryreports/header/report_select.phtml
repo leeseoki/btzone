@@ -1,0 +1,22 @@
+<?php
+    $requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+    $attribute = false;
+    $reportcode = $requestData['report_radio_select'];
+    if($reportcode == 'order_attribute'){
+        $attribute = $requestData['attribute_select'];
+    }
+?>
+
+
+<div class="report_select_div">
+    <input id="report_radio_select" type="hidden" name="report_radio_select" value="<?php echo $reportcode ?>">
+    <?php if($attribute): ?>
+        <input id="attribute_select" type="hidden" name="attribute_select" value="<?php echo $attribute ?>">
+    <?php endif;?>
+</div>
+<style type="text/css">
+    .report_select_list{
+        display: table-cell;
+        vertical-align: middle;
+    }
+</style>

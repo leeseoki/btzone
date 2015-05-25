@@ -1,0 +1,262 @@
+<?php
+    $this_item = $this->getData('menu_item');
+    $menu_id = $this_item['megamenu_id'];
+    $columnNumber = $this->getColumnNumber();
+    $colunnSize = $this->getColumnSize();
+    $size = '100% !important';
+    $hasFeatured = 0;
+    $featuredWidth = 0;
+
+    $featuredWidth = 0;
+    if ($this->hasFeaturedProducts()) {
+        $hasFeatured = 1;
+        $featuredWidth = 220;
+        $featuredProducts = $this->getFeaturedProducts();
+    } elseif ($this->hasFeaturedCategories()) {
+        $hasFeatured = 1;
+        $featuredWidth = 220;
+        $featuredCategories = $this->getFeaturedCategories();
+    }
+    
+    if (count($this->getParentCategories()) < $columnNumber) {
+        if ($hasFeatured) {
+            $columnNumber = count($this->getParentCategories()) + 1;
+        } else {
+            $columnNumber = count($this->getParentCategories());
+        }
+    }
+    
+    if (count($this->getParentCategories()) % $columnNumber == 0)
+        $line = count($this->getParentCategories()) / $columnNumber;
+    else
+        $line = ceil(count($this->getParentCategories()) / $columnNumber);
+    
+    $i = 0;
+    $j = 0;
+    $col = 1;
+    $colAdd = count($this->getParentCategories()) % $columnNumber; /* number col add more 1 item */
+    $itemAdd = floor(count($this->getParentCategories()) / $columnNumber); /* min item per col */
+?>
+<div class="list-categories-megamenu sub-menu" 
+     style="border:<?php echo $this->getCustomStyle('border_size') ?>px solid #<?php echo $this->getCustomStyle('border_color') ?> !important;
+            background:#<?php echo $this->getCustomStyle('background_color') ?> !important;
+            width: <?php echo $size; ?>px !important;" >
+    <?php if (count($this->getParentCategories())): ?>
+        <?php if ($this->getHeaderContent()) :?>
+        <div class = "header-megamenu" 
+             style="color:#<?php echo $this->getCustomStyle('text_color'); ?>;
+                    font-size:<?php echo $this->getCustomStyle('text_font_size'); ?>px; 
+                    font-family: <?php echo $this->getCustomStyle('text_font'); ?> !important;">			
+            <?php
+            $text = $this->getTemplateBlock($this->getHeaderContent());
+//            $newtext = $this->limitString($text, 200);
+            echo $text;
+            ?>
+        </div>
+        <?php endif;?>
+    
+        <ul class="level0-megamenu" id="list-category" 
+            style="width: 100% !important;">
+            <div class="gc-categories-box" style="float:left;">
+                <?php foreach ($this->getParentCategories() as $category): ?>
+                <li class="level1-megamenu" 
+                    style="min-width:<?php echo $colunnSize; ?>px !important;
+                            <?php if ($columnNumber == 1): ?>border-right:none !important<?php endif; ?>">
+                    <ul class="level2-megamenu">
+                        <?php $children = $this->getChildrenCollection($category); ?>
+                        <li>
+                            <div class="level1-title">
+                                <a href="<?php echo $category->getUrl(); ?>">
+                                    <strong style="color:#<?php echo $this->getCustomStyle('subtitle_color'); ?>;
+                                            font-size:<?php echo $this->getCustomStyle('subtitle_font_size'); ?>px;
+                                            font-family: <?php echo $this->getCustomStyle('subtitle_font'); ?> !important;
+                                            <?php if(!count($children)):?>border-bottom:none !important<?php endif;?>">
+                                        <?php echo $category->getName(); ?>
+                                    </strong>					
+                                </a>
+                            </div>
+                            <ol  class="level3-megamenu">
+                                <?php if (count($children)): ?>
+                                    <?php foreach ($children as $child): ?>
+                                        <li>
+                                            <a style="color:#<?php echo $this->getCustomStyle('link_color'); ?> !important;
+                                               font-size:<?php echo $this->getCustomStyle('link_font_size'); ?>px !important;
+                                               font-family: <?php echo $this->getCustomStyle('link_font'); ?> !important;" 
+                                               href="<?php echo $child->getUrl(); ?>"
+                                               onmouseover="mm(this).attr('style', 'color: #<?php echo $this->getCustomStyle('hover_color'); ?> !important; font-size:<?php echo $this->getCustomStyle('link_font_size'); ?>px !important; font-family: <?php echo $this->getCustomStyle('link_font'); ?> !important;')" 
+                                               onmouseout= "mm(this).attr('style', 'color: #<?php echo $this->getCustomStyle('link_color'); ?> !important; font-size:<?php echo $this->getCustomStyle('link_font_size'); ?>px !important; font-family: <?php echo $this->getCustomStyle('link_font'); ?> !important;')"
+                                           >
+                                                <span><?php echo $child->getName() ?></span>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </ol>
+                        </li>
+                    </ul>
+                </li>
+                <?php endforeach; ?>
+            </div>
+            <?php if ($this->hasFeaturedItem()) :?>   
+            <div class="gc-featured-box" style="float:right;">
+            <?php if ($this->hasFeaturedProducts() && count($featuredProducts)): ?>
+                <li class="level1-megamenu-f featured" style="width:100% !important">
+                    <div class="level1-title">
+                        <strong style="color:#<?php echo $this->getCustomStyle('subtitle_color'); ?>;
+                                    font-size:<?php echo $this->getCustomStyle('subtitle_font_size'); ?>px;
+                                    font-family: <?php echo $this->getCustomStyle('subtitle_font'); ?> !important;">
+                            <?php echo $this->__('Featured Products'); ?>
+                        </strong>					
+                    </div>
+                    <ul class="level2-megamenu">
+                        <?php foreach ($featuredProducts as $featuredProduct): ?>
+                            <li class="product-item">
+                                <a class="product-image" href="<?php echo $featuredProduct->getProductUrl(); ?>">
+                                    <img title="<?php echo Mage::helper('megamenu')->htmlEscape($featuredProduct->getName()); ?>"src="<?php echo $this->getImagePath($featuredProduct, 110);?>" width="110"/>
+                                </a>
+                                <div class="product-shop">
+                                    <a href="<?php echo $featuredProduct->getProductUrl(); ?>">
+                                        <strong class="product-name"
+                                                style="font-size:<?php echo $this->getCustomStyle('link_font_size'); ?>px;
+                                                    color:#<?php echo $this->getCustomStyle('link_color'); ?>;
+                                                    font-family: <?php echo $this->getCustomStyle('link_font'); ?> !important;">
+                                            <?php echo $featuredProduct->getName(); ?>
+                                        </strong>
+                                    </a>
+                                    <?php echo Mage::getBlockSingleton('catalog/product')->getPriceHtml($featuredProduct, true) ?>
+                                    <button class="button" onclick="window.location.href = '<?php echo $featuredProduct->getProductUrl(); ?>'"><?php echo $this->__('View Detail'); ?></button>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php elseif ($this->hasFeaturedCategories() && count($featuredCategories)): ?>
+                <li class="level1-megamenu-f featured" style="width:100% !important">
+                    <div class="level1-title">
+                        <strong style="color:#<?php echo $this->getCustomStyle('subtitle_color'); ?>;
+                                    font-size:<?php echo $this->getCustomStyle('subtitle_font_size'); ?>px;
+                                    font-family: <?php echo $this->getCustomStyle('subtitle_font'); ?> !important;">
+                            <?php echo $this->__('Featured Categories'); ?>
+                        </strong>					
+                    </div>
+                    <ul class="level2-megamenu">
+                        <?php foreach ($featuredCategories as $featuredCategory): ?>
+                            <li class="product-item">
+                                <a class="product-image" href="<?php echo $featuredCategory->getUrl(); ?>">
+                                    <img title="<?php echo Mage::helper('megamenu')->htmlEscape($featuredCategory->getName()); ?>"src="<?php echo $featuredCategory->getImageUrl(); ?>" width="110"/>
+                                </a>
+                                <div class="product-shop">
+                                    <a href="<?php echo $featuredCategory->getUrl(); ?>">
+                                        <strong class="product-name"
+                                                style="font-size:<?php echo $this->getCustomStyle('link_font_size'); ?>px;
+                                                    color:#<?php echo $this->getCustomStyle('link_color'); ?>;
+                                                    font-family: <?php echo $this->getCustomStyle('link_font'); ?> !important;">
+                                            <?php echo $featuredCategory->getName(); ?>
+                                        </strong>
+                                    </a>
+                                    <button class="button" onclick="window.location.href = '<?php echo $featuredCategory->getUrl(); ?>'">
+                                        <?php echo $this->__('View Detail'); ?>
+                                    </button>
+                                </div>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+            <?php endif; ?>
+            </div>
+            <?php endif;?>
+        </ul>
+    
+        <?php if ($this->getFooterContent()) :?>
+        <div class="footer-megamenu" 
+             style="color:#<?php echo $this->getCustomStyle('text_color'); ?>;
+                    font-size:<?php echo $this->getCustomStyle('text_font_size'); ?>px;
+                    font-family: <?php echo $this->getCustomStyle('text_font'); ?> !important;">
+            <?php echo $this->getTemplateBlock($this->getFooterContent()) ?>
+        </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</div>
+<?php
+$_template_map = '<div class="megamenu-template-map">';
+$_template_map .= '<div class="layout-nav">';
+$_template_map .= '</div>';
+$_template_map .= '<div class="megamenu-template-map-header">';
+$_template_map .= '<a onmouseover="hoveronLayout(this)" onmouseout="hoveroutLayout(this)" href="#buttonsheader">Header</a>';
+$_template_map .= '<div>&nbsp;</div></div>';
+$_template_map .= '<div class="megamenu-template-map-main">';
+$_template_map .= '<a onmouseover="hoveronLayout(this)" onmouseout="hoveroutLayout(this)" href="#categories">Main Content</a>';
+$_template_map .= '<div>&nbsp;</div></div>';
+$_template_map .='<div id="layout_feature">';
+$_template_map .= '<a onmouseover="hoveronLayout(this)" onmouseout="hoveroutLayout(this)" href="#featured_type">';
+$_template_map .='<span>Featured Content</span>';
+$_template_map .='</a><div>&nbsp;</div></div>';
+$_template_map .= '<div class="megamenu-template-map-footer">';
+$_template_map .= '<a onmouseover="hoveronLayout(this)" onmouseout="hoveroutLayout(this)" href="#buttonsfooter">Footer</a>';
+$_template_map .= '<div>&nbsp;</div></div>';
+$_template_map .= '</div>';
+?>
+<?php
+$header = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s.';
+$footer = '';
+$this->setDefaultHeaderFooter($header, $footer);
+$this->setDefaultGeneralStyle('#ffffff', '#D5D5D5', 1); // (background_color, border_color,border_size)
+$this->setDefaultTitleStyle('#ffffff', '#000000', 'Arial,Helmet,Freesans,sans-serif', '11'); // (title_color, title_background_color, title_font, title_font_size)
+$this->setDefaultSubtitleStyle('#000000', 'Arial,Helmet,Freesans,sans-serif', 11); // (subtitle_color, subtitle_font, subtitle_font_size)
+$this->setDefaultLinkStyle('#666666', '#3f58a3', 'Arial,Helmet,Freesans,sans-serif', 11); // (link_color, hover_color, link_font, link_font_size)
+$this->setDefaultTextStyle('#666666', 'Arial,Helmet,Freesans,sans-serif', 11); // (text_color, text_font, text_font_size)
+$this->setDefaultContentGeneral(600, 4, 180); // megamenu_size,column_number,column_size
+/* add title */
+$this->addTitle('Categories');
+/* add map */
+$this->setTemplateMap($_template_map);
+$this->setTemplateFileName('category_listing_02');
+?>
+
+<script>
+    mm('.list-categories-megamenu').parent().parent().mouseenter(function() {
+        var li_id = mm(this).attr('id');
+    var li_id = mm(this).attr('id');
+    if (li_id == 'nav-<?php echo $menu_id;?>') {
+        var gc_min_col_size = <?php echo $colunnSize;?>;
+        var gc_has_featured = <?php echo $hasFeatured;?>;
+        var gc_max_cols = <?php echo $columnNumber;?>;
+        var gc_1_col_width = 96/gc_max_cols;
+        var gc_menu_width = mm('.topmenu').innerWidth();
+            gc_menu_width *= 0.96;      
+        if (gc_menu_width/gc_max_cols >= gc_min_col_size) {
+            if (gc_has_featured) {
+                mm('#'+li_id+' .gc-featured-box').css('width', gc_1_col_width+"%");
+                mm('#'+li_id+' .gc-categories-box').css('width', 96-gc_1_col_width+"%");
+                mm('#'+li_id+' .level1-megamenu').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:"+100/(gc_max_cols-1)+"% !important;");
+                mm('#'+li_id+' .featured').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:100% !important;");
+                mm('#'+li_id+' .gc-featured-box').show();
+            } else {
+                mm('#'+li_id+' .gc-categories-box').css('width', "96%");
+                mm('#'+li_id+' .level1-megamenu').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:"+100/(gc_max_cols)+"% !important;");
+            }
+        } else {
+            var gc_real_cols = Math.floor(gc_menu_width/gc_min_col_size);
+            if (gc_real_cols < 2) gc_real_cols = 1;
+            gc_1_col_width = 96/gc_real_cols;
+            if (gc_has_featured) {
+                mm('#'+li_id+' .gc-featured-box').css('width', gc_1_col_width+"%");
+                mm('#'+li_id+' .gc-categories-box').css('width', 96-gc_1_col_width+"%");
+                mm('#'+li_id+' .level1-megamenu').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:"+100/(gc_real_cols-1)+"% !important;");
+                mm('#'+li_id+' .featured').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:100% !important;");
+                mm('#'+li_id+' .gc-featured-box').show();
+            } else {
+                mm('#'+li_id+' .gc-categories-box').css('width', "96%");
+                mm('#'+li_id+' .level1-megamenu').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width:"+100/(gc_real_cols)+"% !important;");
+            }
+            if (gc_real_cols == 1) {
+                mm('#'+li_id+' .gc-featured-box').hide();
+                mm('#'+li_id+' .gc-categories-box').css('width', "96%");
+                mm('#'+li_id+' .level1-megamenu').css("cssText", mm('#'+li_id+' .level1-megamenu').attr('style')+"width: 100% !important;");
+            } else {
+                mm('#'+li_id+' .gc-featured-box').show();
+            }
+        }
+    }
+    });
+</script>

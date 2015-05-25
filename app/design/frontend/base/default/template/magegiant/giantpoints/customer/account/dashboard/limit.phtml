@@ -1,0 +1,36 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?>
+<?php if ($this->getBalanceLimit()): ?>
+    <dt>
+        <?php echo $this->__('Balance limitation:') ?>
+    </dt>
+    <dd>
+        <?php echo $this->__('Balance is limited at %s point(s)', $this->getBalanceLimit()); ?>
+    </dd>
+<?php endif; ?>
+<?php if ($this->getExpireDays()): ?>
+    <?php $day = $this->__('day'); ?>
+    <?php if ($this->getExpireDays() > 1) $day .= 's'; ?>
+    <dt class="expiration">
+        <?php echo $this->__('Each earned point(s) record expires in %s %s', '<span>' . $this->getExpireDays() . '</span>', $day) ?>
+    </dt>
+<?php endif; ?>

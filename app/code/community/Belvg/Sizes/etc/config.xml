@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+ *******************************************************************
+ * @category   Belvg
+ * @package    Belvg_Sizes
+ * @version    1.0.0
+ * @copyright  Copyright (c) 2010 - 2013 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+ -->
+<config>
+    <modules>
+        <Belvg_Sizes>
+            <version>1.0.0</version>
+        </Belvg_Sizes>
+    </modules>
+    <frontend>
+        <routers>
+            <sizes>
+                <use>standard</use>
+                <args>
+                    <module>Belvg_Sizes</module>
+                    <frontName>sizes</frontName>
+                </args>
+            </sizes>
+        </routers>
+        <layout>
+            <updates>
+                <sizes>
+                    <file>belvg/sizes.xml</file>
+                </sizes>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Belvg_Sizes>
+                    <files>
+                        <default>Belvg_Sizes.csv</default>
+                    </files>
+                </Belvg_Sizes>
+            </modules>
+        </translate>
+    </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <sizes>
+                    <file>belvg/sizes.xml</file>
+                </sizes>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Belvg_Sizes>
+                    <files>
+                        <default>Belvg_Sizes.csv</default>
+                    </files>
+                </Belvg_Sizes>
+            </modules>
+        </translate>
+        <events>
+            <catalog_product_save_after>
+                <observers>
+                    <belvg_save_product_data>
+                        <type>singleton</type>
+                        <class>sizes/observer_product</class>
+                        <method>saveData</method>
+                    </belvg_save_product_data>
+                </observers>
+            </catalog_product_save_after>
+        </events>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Belvg_Sizes before="Mage_Adminhtml">Belvg_Sizes_Adminhtml</Belvg_Sizes>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <global>
+        <resources>
+            <sizes_setup>
+                <setup>
+                    <module>Belvg_Sizes</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </sizes_setup>
+            <sizes_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </sizes_write>
+            <sizes_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </sizes_read>
+        </resources>
+        <models>
+            <sizes>
+                <class>Belvg_Sizes_Model</class>
+                <resourceModel>sizes_mysql4</resourceModel>
+            </sizes>
+            <sizes_mysql4>
+                <class>Belvg_Sizes_Model_Mysql4</class>
+                <entities>
+                    <cat>
+                        <table>belvg_sizes_cat</table>
+                    </cat>
+                    <cat_labels>
+                        <table>belvg_sizes_cat_labels</table>
+                    </cat_labels>
+                    <dem>
+                        <table>belvg_sizes_dem</table>
+                    </dem>
+                    <dem_labels>
+                        <table>belvg_sizes_dem_labels</table>
+                    </dem_labels>
+                    <standards>
+                        <table>belvg_sizes_standards</table>
+                    </standards>
+                    <standards_values>
+                        <table>belvg_sizes_standards_values</table>
+                    </standards_values>   
+                    <main>
+                        <table>belvg_sizes_main</table>
+                    </main>
+                    <products>
+                        <table>belvg_sizes_products</table>
+                    </products>
+                </entities>
+            </sizes_mysql4>
+        </models>
+        <blocks>
+            <sizes>
+                <class>Belvg_Sizes_Block</class>
+            </sizes>
+        </blocks>
+        <helpers>
+            <sizes>
+                <class>Belvg_Sizes_Helper</class>
+            </sizes>
+        </helpers>
+    </global>
+    <default>
+        <sizes>
+            <settings>
+                <enabled>0</enabled>
+                <unit_sizes>mm</unit_sizes>
+                <attributes>0</attributes>
+                <options>0</options>
+            </settings>
+            <popup>
+                <margin>5</margin>
+                <padding>5</padding>
+                <close_btn>1</close_btn>
+                <events_effect>fade</events_effect>
+                <events_speed>normal</events_speed>
+            </popup>
+            <messages>
+                <start><![CDATA[Please set all required dimensions<br>and click]]></start>
+                <result_success><![CDATA[Your optimal size is:]]></result_success>
+                <result_variants><![CDATA[Your optimal size is not defined<br>You can choose your optimal size<br>according to the following information:]]></result_variants>
+                <result_fail><![CDATA[Unfortunately there are no optimal sizes]]></result_fail>
+                <notice><![CDATA[Please click to size icon for choose this size.<br>If icon is inactive - this size is out of stock<br>at the moment]]></notice>
+            </messages>
+            <calculation>
+                <tolerance>1</tolerance>
+                <qty>0</qty>
+            </calculation>
+        </sizes>
+    </default>
+    <sizes>
+        <unitsizes>
+            <mm>
+                <label>mm</label>
+                <multiplier>1</multiplier>
+                <decimals>0</decimals>
+            </mm>
+            <inches>
+                <label>inches</label>
+                <multiplier>0.04</multiplier>
+                <decimals>1</decimals>
+            </inches>
+            <cm>
+                <label>cm</label>
+                <multiplier>0.1</multiplier>
+                <decimals>0</decimals>
+            </cm>
+        </unitsizes>        
+    </sizes>
+    <jquery>
+        <compatibility>
+            <Belvg_Sizes>
+                <!--<v1_7_1/>
+                <v1_7_2/>            
+                <v1_8_0/>
+                <v1_8_1/>
+                <v1_8_2/>-->
+                <v1_8_3/>
+            </Belvg_Sizes>
+        </compatibility>
+    </jquery>
+</config>

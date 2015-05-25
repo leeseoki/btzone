@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <sizes>
+                        <title>Belvg Sizes Module</title>
+                        <sort_order>200</sort_order>
+                    </sizes>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <sizes>
+                                        <title>Belvg Sizes Configuration</title>
+                                        <sort_order>200</sort_order>
+                                    </sizes>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <catalog>
+                        <children>
+                            <sizes>
+                                <title>Belvg Sizes Controllers</title>
+                                <sort_order>200</sort_order>
+                                <children>
+                                    <sizes_categories>
+                                        <title>Categories</title>
+                                        <sort_order>10</sort_order>
+                                    </sizes_categories>
+                                    <sizes_standards>
+                                        <title>Standards</title>
+                                        <sort_order>20</sort_order>
+                                    </sizes_standards>
+                                </children>
+                            </sizes>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <catalog>
+            <children>
+                <sizes>
+                    <title>Sizes</title>
+                    <children>
+                        <sizes_categories>
+                            <title>Categories</title>
+                            <action>adminhtml/sizes_categories</action>
+                            <sort_order>10</sort_order>
+                        </sizes_categories>
+                        <sizes_standards>
+                            <title>Standards</title>
+                            <action>adminhtml/sizes_standards</action>
+                            <sort_order>20</sort_order>
+                        </sizes_standards>
+                    </children>
+                </sizes>
+            </children>
+        </catalog>
+    </menu>
+</config>

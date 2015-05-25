@@ -1,0 +1,59 @@
+<?php
+$requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+$reportCode = $this->getReportCode();
+$id_box = $this->getIdBox();
+if(empty($requestData)){
+    $requestData = array();
+    $resource = Mage::getSingleton('core/resource');
+    $readConnection = $resource->getConnection('core_read');
+    $installer = Mage::getModel('core/resource');
+    $sql = 'SELECT default_time_range
+    FROM '.$installer->getTableName("erp_inventory_dashboard_report_type").'
+    WHERE report_code = "'.$reportCode.'"';
+    $results = $readConnection->fetchAll($sql);
+    $requestData['report_radio_select'] = $reportCode;
+    foreach($results as $time){$requestData['select_time'] = $time['default_time_range'];}
+}
+$dataCollection = Mage::helper('inventoryreports/order')->getOrderReportCollection($requestData);
+if (is_array($dataCollection)) {
+    $collection = $dataCollection['collection'];
+} else {
+    $collection = $dataCollection;
+}
+?>
+<?php if (count($collection) > 0): ?>
+            <!-- report by supplier pie -->
+<?php
+    $pieData = Mage::helper('inventorydashboard')->getChartPieData($collection, $requestData);
+    $series = $pieData['series'];
+?>
+<div class="chart-parent-div">
+        <script type="text/javascript">
+            $(function () {
+                $_('#<?php echo $id_box?>').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 50
+                    }
+                },
+                title: {
+                    text: '<?php echo $this->__('Sales Report By Invoice') ?>',
+                },
+                plotOptions: {
+                    pie: {
+                        depth: 30
+                    }
+                },
+                series: [{
+                    data: [
+                        <?php echo $series;?>
+                    ]
+                }]
+                });
+            });
+        </script>
+    <div id="<?php echo $id_box?>" class="chart-child-div" ></div>
+</div>
+<?php endif; ?>

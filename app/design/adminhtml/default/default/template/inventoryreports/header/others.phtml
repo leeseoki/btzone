@@ -1,0 +1,63 @@
+<?php $type = $this->getTypeId(); 
+$filterData = new Varien_Object();
+$requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+$display = Mage::helper('inventoryreports')->checkDisplay($requestData['report_radio_select']);
+?>
+<div id="report_others" class="entry-edit" <?php if($display == 0){echo "style='display:none'";}?>>
+    <div class="fieldset">
+        <?php if ($type == 'warehouse'): ?>
+            <?php $warehouse_collection = Mage::getModel('inventoryplus/warehouse')->getCollection(); ?>
+            <div  class="input-box" style="float: left;padding-right: 1%">
+                <label for="warehouse">
+                    <strong><?php echo $this->__('Select Warehouse: ') ?>&nbsp;&nbsp;</strong>
+                </label>
+                <select name="warehouse_select" id="warehouse_select">
+                    <?php // if($requestData['report_radio_select'] != 'total_stock_different_when_physical_stocktaking_by_warehouse'){?>
+                    <option value="0" <?php if($display == 2){echo "style='display: none'";}?>><?php echo $this->__('All Warehouses'); ?></option>
+                    <?php // }?>
+                    <?php foreach ($warehouse_collection as $warehouse_value) { ?>
+                        <option <?php if (isset($requestData['warehouse_select']) && $requestData['warehouse_select']==$warehouse_value->getWarehouseId()) {
+                            echo 'selected';
+                        } ?> value="<?php echo $warehouse_value->getWarehouseId(); ?>"><?php echo $warehouse_value->getWarehouseName(); ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        <?php elseif ($type == 'supplier'): ?>
+            <?php $supplier_collection = Mage::getModel('inventorypurchasing/supplier')->getCollection(); ?>
+            <div  class="input-box" style="float: left;padding-right: 1%">
+                <label for="supplier">
+                    <strong><?php echo $this->__('Select Supplier: ') ?>&nbsp;&nbsp;</strong>
+                </label>
+                <select name="supplier_select" id="supplier_select">
+                    <option value="0"><?php echo $this->__('All Suppliers'); ?></option>
+                    <?php foreach ($supplier_collection as $supplier_value) { ?>
+                        <option <?php if (isset($requestData['supplier_select']) && $requestData['supplier_select']==$supplier_value->getSupplierId()) {
+                            echo 'selected';
+                        } ?> value="<?php echo $supplier_value->getSupplierId(); ?>"><?php echo $supplier_value->getSupplierName(); ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        <?php endif; ?>
+        
+        <?php if ($type == 'product'): ?>
+        <?php if($requestData['report_radio_select'] == 'warehousing_time_longest'):?>
+        <?php $warehouse_collection = Mage::getModel('inventoryplus/warehouse')->getCollection(); ?>
+        <div  class="input-box" style="float: left;padding-right: 1%">
+            <label for="warehouse">
+                <strong><?php echo $this->__('Select Warehouse: ') ?>&nbsp;&nbsp;</strong>
+            </label>
+            <select name="warehouse_select" id="warehouse_select">
+                <?php foreach ($warehouse_collection as $warehouse_value) { ?>
+                    <option <?php if (isset($requestData['warehouse_select']) && $requestData['warehouse_select']==$warehouse_value->getWarehouseId()) {
+                        echo 'selected';
+                    } ?> value="<?php echo $warehouse_value->getWarehouseId(); ?>"><?php echo $warehouse_value->getWarehouseName(); ?></option>
+                
+                <?php }?>
+            </select>
+        </div>
+        <?php endif;?>
+        <?php endif;?>
+        <button onclick="filterForm();
+                return false;" ><?php echo $this->__('Show Report'); ?></button>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?>
+<?php if ($this->canShow()): ?>
+    <?php
+    $_helper       = Mage::helper('giantpoints');
+    $_helperConfig = Mage::helper('giantpoints/config');
+    $_giantPoints  = $this->getPoints();
+    ?>
+    <div>
+        <?php if ($_giantPoints->getPointAmount()): ?>
+            <ul class="giant-messages">
+                <li class="giantpoints-notice-msg">
+                    <ul>
+                        <li>
+                            <p><?php echo $this->__('Checkout now and earn %s', $_helper->addLabelForPoint($_giantPoints->getPointAmount())) ?></p>
+                        </li>
+                        <?php if ($_helperConfig->showDetailEarning()): ?>
+                            <li>
+                                <b><?php echo $this->__('Details: ') ?></b><br />
+                                <?php foreach ($_giantPoints->getInfo() as $info): ?>
+                                    <span class="detail-label">-&nbsp;<?php echo $info->getLabel() ?>:</span>
+                                    <?php echo $_helper->addLabelForPoint($info->getPointAmount()); ?>
+                                    <br />
+                                <?php endforeach; ?>
+                            </li>
+                        <?php endif; ?>
+                        <?php if ($this->customerIsGuest()): ?>
+                            <li>
+                                <?php echo $this->__('Applies only to registered customers, may vary when logged in.') ?>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+            </ul>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+

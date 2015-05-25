@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Belvg_Sizes>
+            <active>true</active>
+            <codePool>community</codePool>
+            <version>1.0.0</version>
+            <depends>
+                <Belvg_Jquery />
+            </depends>
+        </Belvg_Sizes>
+    </modules>
+</config>

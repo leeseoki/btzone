@@ -1,0 +1,67 @@
+<?php $helper = Mage::helper('sizes'); ?>
+<?php if ($helper->isEnabled() && $this->getDems()): ?>
+<script type="text/javascript">
+var attr_id = jQblvg.parseJSON('<?php echo $helper->getAttrToAttach() ?>');
+var opt_id = jQblvg.parseJSON('<?php echo $helper->getOptToAttach() ?>');
+var prod_id = <?php echo $this->getProduct()->getId() ?>;
+jQblvg(document).ready(function() {
+    jQblvg.ajax(
+        { type: 'POST',
+          url: '<?php echo $this->getUrl("sizes/front/popup/") ?>',
+          data: {
+              product_id: prod_id
+          },
+          cache: false,
+          success: function (result){
+              first = false;
+              attr_id.each( function(i) {
+                  tmp_el = jQblvg('#attribute'+i);
+                  if (tmp_el.length && !first) {
+                      attr_id = i;
+                      html = '<a href="#sizesPopup" id="sizesButtonLink">'+
+                                 '<div id="sizesButton">'+
+                                     '<div id="sizesPopup" style="display:none;">'+
+                                     '</div>'+
+                                 '</div>'+
+                             '</a>';                   
+                      tmp_el.parent().parent().prev().find('label').append(html);
+                      checkDisable(i);
+                      jQblvg('#product-options-wrapper select').change( function() { 
+                          checkDisable(i);
+                      });
+                      first = true;
+                  }
+              });
+              if (!first) {
+                  opt_id.each( function(i) {
+                      tmp_el = jQblvg('#select_'+i);
+                      if (tmp_el.length && !first) {
+                          opt_id = i;
+                          html = '<a href="#sizesPopup" id="sizesButtonLink">'+
+                                     '<div id="sizesButton">'+
+                                         '<div id="sizesPopup" style="display:none;">'+
+                                         '</div>'+
+                                     '</div>'+
+                                 '</a>';                   
+                          tmp_el.parent().parent().prev().find('label').append(html);
+                          first = true;
+                      }
+                  });
+              }
+              jQblvg('#sizesPopup').html(result);
+              jQblvg('#sizesButtonLink').fancybox(<?php echo $helper->getPopupConf() ?>);
+          }
+        }
+    );
+});
+
+function checkDisable(n)
+{
+    if (jQblvg('#attribute'+n).is(':disabled')) {
+        jQblvg('#sizesButtonLink').hide();
+    } else {
+        jQblvg('#sizesButtonLink').show();
+    }
+}
+</script>
+<?php endif; ?>

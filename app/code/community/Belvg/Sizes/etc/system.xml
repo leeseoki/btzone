@@ -1,0 +1,289 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <sizes translate="label">
+            <label>Sizes</label>
+            <tab>belvg</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings translate="label comment">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment><![CDATA[<div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">This module was developed by <a href="http://www.belvg.com" target="_blank">www.BelVG.com</a>.For docs & examples refer to the BelVG <a href="http://www.belvg.com" target="_blank">web site</a>.<br/>We have the largest selections of  <a href="http://store.belvg.com/extensions.html" target="_blank">extensions</a> and <a href="http://store.belvg.com/themes.html" target="_blank">themes</a> on Magento.</div>]]></comment>
+                    <fields>
+                        <enabled translate="label tooltip">
+                            <label>Enable for Frontend</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>enable/disable</b><br><br>
+                            Enable or disable module at frontend
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <unit_sizes translate="label tooltip">
+                            <label>Unit Sizes</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>mm/inches/cm</b><br><br>
+                            Specifies measure unit for frontend
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizes/source_units</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </unit_sizes>
+                        <attributes translate="label tooltip">
+                            <label>Attach to Attributes</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>multiselect</b><br><br>
+                            Specifies attributes to which is added to the button 'sizes'
+                            ]]>
+                            </tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sizes/source_attributes</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </attributes>
+                        <options translate="label tooltip">
+                            <label>Attach to Custom Options</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>multiselect</b><br><br>
+                            Specifies custom options to which is added to the button 'sizes'
+                            ]]>
+                            </tooltip>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sizes/source_options</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </options>
+                    </fields>
+                </settings>
+                <popup translate="label">
+                    <label>Popup Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>        
+                    </comment>
+                    <fields>
+                        <margin translate="label tooltip comment">
+                            <label>Margin</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>[0..&infin;]</b></br></br>
+                            Minimum space between viewport and popup window.
+                            ]]>
+                            </tooltip>
+                            <comment>in pixels</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-digits validate-greater-than-zero required-entry</validate>
+                        </margin>
+                        <padding translate="label tooltip comment">
+                            <label>Padding</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>[0..&infin;]</b></br></br>
+                            Space inside popup window around content.
+                            ]]>
+                            </tooltip>
+                            <comment>in pixels</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-digits validate-greater-than-zero required-entry</validate>
+                        </padding>
+                        <close_btn translate="label tooltip">
+                            <label>Close Button</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>enable/disable</b><br><br>If set to true, close button will be displayed
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </close_btn>
+                        <events_effect translate="label tooltip">
+                            <label><![CDATA[Events Effect]]></label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>elastic/fade/none</b><br><br>
+                            Animation effect for all events for popup window
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizes/source_effects</source_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </events_effect> 
+                        <events_speed translate="label tooltip">
+                            <label><![CDATA[Events Speed]]></label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>slow/normal/fast</b><br><br>
+                            The time it takes to complete all types of transitions for popup window  
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizes/source_speed</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </events_speed>
+                        <!--<switch translate="label comment">
+                            <label>Size Switching</label>
+                            <tooltip>Enable or disable module at frontend</tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </switch>-->
+                    </fields>
+                </popup>
+                <messages translate="label">
+                    <label>Messages</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>300</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>        
+                    </comment>
+                    <fields>
+                        <start translate="label tooltip comment">
+                            <label>Before Calculate</label>
+                            <comment>HTML is allowed</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>sizestextarea</validate>
+                        </start>
+                        <result_success translate="label tooltip comment">
+                            <label>Optimal Size</label>
+                            <comment>HTML is allowed</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>sizestextarea</validate>
+                        </result_success>                       
+                        <result_variants translate="label tooltip comment">
+                            <label>Another Sizes</label>
+                            <comment>HTML is allowed</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>sizestextarea</validate>
+                        </result_variants>                        
+                        <result_fail translate="label tooltip comment">
+                            <label>No Sizes</label>
+                            <comment>HTML is allowed</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>sizestextarea</validate>
+                        </result_fail>
+                        <notice translate="label tooltip comment">
+                            <label>Notice</label>
+                            <comment>HTML is allowed</comment>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>sizestextarea</validate>
+                        </notice>                       
+                    </fields>
+                </messages>
+                <calculation translate="label">
+                    <label>Calculation Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>400</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <comment>        
+                    </comment>
+                    <fields>
+                        <tolerance translate="label tooltip comment">
+                            <label>Size Tolerance</label>
+                            <tooltip>
+                            <![CDATA[
+                            <b>[1..100]</b><br><br>                            
+                            Tolerance of dimension in searching of optimal size
+                            ]]>
+                            </tooltip>
+                            <comment>in percents</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <validate>validate-digits-range digits-range-1-100 required-entry</validate>
+                        </tolerance>
+                        <qty translate="label tooltip comment">
+                            <label>Non-accurate dimensions</label>
+                            <tooltip>
+                            <![CDATA[
+                            The number of dimensions in measurement of which can be used size tolerance
+                            ]]>
+                            </tooltip>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizes/source_dimqty</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </qty>
+                    </fields>
+                </calculation>
+            </groups>
+        </sizes>
+    </sections>
+</config>

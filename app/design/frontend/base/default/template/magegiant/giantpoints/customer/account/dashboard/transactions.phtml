@@ -1,0 +1,73 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?>
+
+<?php $_collection = $this->getCollection() ?>
+<?php if (count($_collection)): ?>
+    <div class="box-account box-info box-giantpoints-history">
+        <div class="box-head">
+            <h2><?php echo $this->__('Transactions History') ?></h2>
+        </div>
+        <?php echo $this->getPagerHtml(); ?>
+        <table class="data-table" id="table-transactions-history">
+            <colgroup>
+                <col class="id"/>
+                <col class="title"/>
+                <col class="point_amount"/>
+                <col class="created_time"/>
+                <col class="expiration_date"/>
+                <col class="status"/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th><?php echo $this->__('Comment') ?></th>
+                <th><?php echo $this->__('Points') ?></th>
+                <th><?php echo $this->__('Change Date') ?></th>
+                <th><?php echo $this->__('Expiration Date') ?></th>
+                <th><?php echo $this->__('Status') ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php $id = 1; ?>
+            <?php foreach ($_collection as $_transaction): ?>
+                <tr>
+                    <td class="a-right"><?php echo $id ?></td>
+                    <td><?php echo $_transaction->getComment() ?></td>
+                    <td class="a-right"><?php echo $_transaction->getPointAmount() ?></td>
+                    <td><?php echo $this->formatTime($_transaction->getChangeDate(), 'medium', true) ?></td>
+                    <td>
+                        <?php if ($_transaction->getExpirationDate()): ?>
+                            <?php echo $this->formatTime($_transaction->getExpirationDate(), 'medium', true) ?>
+                        <?php else: ?>
+                            <?php echo $this->__('N/A') ?>
+                        <?php endif ?>
+                    </td>
+                    <td><?php echo $_transaction->getStatusLabel() ?></td>
+                </tr>
+                <?php $id++; ?>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">decorateTable('table-transactions-history');</script>
+        <?php echo $this->getPagerHtml(); ?>
+    </div>
+<?php endif ?>

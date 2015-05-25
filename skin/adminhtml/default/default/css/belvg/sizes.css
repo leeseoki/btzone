@@ -1,0 +1,56 @@
+.sizestextarea {
+    height: 4em !important;
+}
+
+.multi-input {
+    float: left !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}
+
+.multi-input input,
+.adminhtml-sizes-categories-edit #design_tabs_values_content .form-list .label,
+.adminhtml-sizes-categories-edit #design_tabs_values_content .form-list .label label {
+    width: 60px !important;
+}
+
+.adminhtml-sizes-dimensions-edit .icon-head,
+.adminhtml-sizes-dimensions-new  .icon-head ,
+.adminhtml-sizes-categories-edit .icon-head,
+.adminhtml-sizes-categories-new  .icon-head ,
+.adminhtml-sizes-categories-index .icon-head,
+.adminhtml-sizes-standards-edit .icon-head,
+.adminhtml-sizes-standards-new  .icon-head,
+.adminhtml-sizes-standards-index .icon-head {
+    background-image: url("../../images/belvg/sizes/fam_sizes.png");
+}
+
+#sizesGrid td {
+    vertical-align: middle;
+}
+
+.input-text.values-value {
+    width: 100px !important;
+    text-align: center;
+}
+
+.input-text.values-sort-order {
+    width: 70px !important;
+    text-align: center;
+}
+
+.input-text.values-value.new,
+.input-text.values-sort-order.new,
+.fieldset .changed {
+    background-color: #e0ffe0;
+}
+
+.adminhtml-sizes-standards-edit #values.fieldset .label,
+.adminhtml-sizes-standards-edit #values.fieldset .label label {
+    width: 0px;
+}
+
+.adminhtml-sizes-standards-edit #name.fieldset .label,
+.adminhtml-sizes-standards-edit #name.fieldset .label label {
+    width: auto;
+}

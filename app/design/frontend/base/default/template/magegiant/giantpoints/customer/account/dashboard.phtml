@@ -1,0 +1,68 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?>
+<div class="giantpoints-dashboard-container">
+    <div class="page-title">
+        <h1><?php echo $this->__('My Points and Rewards') ?></h1>
+    </div>
+
+    <div class="box-account box-info box-giantpoints-summary">
+        <div class="box-head">
+            <h2 class="box-title"><?php echo $this->__('Reward information') ?>
+                <?php if ($this->getInfoPageUrl()): ?>
+                    <span class="separator">|</span>
+                    <a class="learnmore" href="<?php echo $this->getInfoPageUrl() ?>"><?php echo $this->__('Learn more') ?></a>
+                <?php endif; ?>
+            </h2>
+        </div>
+        <div class="info-summary">
+            <dl class="box-content">
+                <dt>
+                    <?php echo $this->__('Your balance is') ?>
+                    <strong class="giantpoints-money">
+                        <?php echo $this->getBalanceText() ?>
+                        <?php if ($_pointMoney = $this->getPointMoney()): ?>
+                            (<?php echo $_pointMoney ?>)
+                        <?php endif ?>
+                    </strong>
+                </dt>
+                <?php echo $this->getChildHtml('dashboard_current_exchange') ?>
+                <?php echo $this->getChildHtml('dashboard_limit') ?>
+
+            </dl>
+        </div>
+    </div>
+    <!--Addition Data-->
+    <?php echo $this->getChildHtml('dashboard_addition') ?>
+    <!--View transaction history-->
+    <?php echo $this->getChildHtml('dashboard_transactions') ?>
+    <!--End-->
+    <!--Add form setting notificaton-->
+    <?php echo $this->getChildHtml('dashboard_setting') ?>
+    <!--Bottom link-->
+    <div class="buttons-set">
+        <p class="back-link">
+            <a href="<?php echo $this->getBackUrl() ?>">
+                <small>&laquo; </small>  <?php echo $this->__('Back') ?>
+            </a>
+        </p>
+    </div>
+</div>

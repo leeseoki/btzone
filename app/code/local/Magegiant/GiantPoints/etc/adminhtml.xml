@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magegiant
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the magegiant.com license that is
+ * available through the world-wide-web at this URL:
+ * http://magegiant.com/license-agreement/
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (http://magegiant.com/)
+ * @license     http://magegiant.com/license-agreement/
+ */
+-->
+<config>
+    <menu>
+        <giantpoints module="giantpoints" translate="title">
+            <title>Reward Points</title>
+            <sort_order>61</sort_order>
+            <children>
+                <earning module="giantpoints" translate="title">
+                    <title>Earning Rate</title>
+                    <sort_order>10</sort_order>
+                    <action>giantpointsadmin/adminhtml_earning_rate</action>
+                </earning>
+                <spending module="giantpoints" translate="title">
+                    <title>Spending Rate</title>
+                    <sort_order>10</sort_order>
+                    <action>giantpointsadmin/adminhtml_spending_rate</action>
+                </spending>
+                <transaction>
+                    <title>Transactions</title>
+                    <sort_order>40</sort_order>
+                    <action>giantpointsadmin/adminhtml_transaction</action>
+                </transaction>
+                <settings module="giantpoints" translate="title">
+                    <title>Settings</title>
+                    <sort_order>1000</sort_order>
+                    <action>adminhtml/system_config/edit/section/giantpoints</action>
+                </settings>
+            </children>
+        </giantpoints>
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <giantpoints module="giantpoints" translate="title">
+                                        <title>Reward Points</title>
+                                        <sort_order>71</sort_order>
+                                    </giantpoints>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                    <giantpoints module="giantpoints" translate="title">
+                        <title>Reward Points</title>
+                        <sort_order>71</sort_order>
+                        <children>
+                            <rule module="giantpoints" translate="title">
+                                <title>Reward Rule</title>
+                                <sort_order>1</sort_order>
+                            </rule>
+                            <earning module="giantpoints" translate="title">
+                                <title>Customer Earning</title>
+                                <sort_order>10</sort_order>
+                                <children>
+                                    <earning_rate>
+                                        <title>Earning Rate</title>
+                                        <sort_order>10</sort_order>
+                                    </earning_rate>
+                                </children>
+                            </earning>
+                            <spending module="giantpoints" translate="title">
+                                <title>Customer Spending</title>
+                                <sort_order>20</sort_order>
+                                <children>
+                                    <spending_rate>
+                                        <title>Spending Rate</title>
+                                        <sort_order>10</sort_order>
+                                    </spending_rate>
+                                </children>
+                            </spending>
+                            <referral>
+                                <title>Referral</title>
+                                <sort_order>30</sort_order>
+                                <children>
+                                    <config>
+                                        <title>Configuration</title>
+                                        <sort_order>10</sort_order>
+                                    </config>
+                                    <history>
+                                        <title>Invitation History</title>
+                                        <sort_order>20</sort_order>
+                                    </history>
+                                </children>
+                            </referral>
+                            <transaction>
+                                <title>Transactions</title>
+                                <sort_order>40</sort_order>
+                                <action>giantpointsadmin/adminhtml_transaction</action>
+                            </transaction>
+                            <settings module="giantpoints" translate="title">
+                                <title>Settings</title>
+                                <sort_order>1000</sort_order>
+                                <action>adminhtml/system_config/edit/section/giantpoints</action>
+                            </settings>
+                        </children>
+                    </giantpoints>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

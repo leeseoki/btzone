@@ -1,0 +1,107 @@
+/* ============ Giant Points Slider ============ */
+#giantpoints-slider-container {
+}
+
+#giantpoints-slider-container .button-action {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    text-indent: -9999px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    transition: all 0.3s ease 0s;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    outline: none !important;
+}
+
+#giantpoints-slider-container .button-action.zoom-in {
+    background-image: url(images/btn-plus.png);
+}
+
+#giantpoints-slider-container .button-action.zoom-out {
+    background-image: url(images/btn-minus.png);
+}
+
+#giantpoints-slider-container .button-action:hover {
+    opacity: 0.6;
+}
+
+#giantpoints-slider {
+    position: relative;
+    z-index: 9;
+    height: 18px;
+    margin: 12px auto 18px;
+    padding: 0 24px;
+    cursor: pointer;
+    float: left;
+}
+
+#giantpoints-slider-zoom-out {
+    position: absolute;
+    left: 1px;
+    top: 0px;
+}
+
+.giantpoints-handle {
+    position: absolute;
+    top: -1px;
+    width: 9px;
+    height: 22px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 10);
+    -moz-box-shadow: 0px 0px 6px rgba(0, 0, 0, 10);
+    -webkit-box-shadow: 0px 0px 1px rgba(0, 0, 0, 7);
+    background-color: rgb(244, 244, 244);
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px
+}
+
+.giantpoints-track {
+    position: relative;
+    height: 18px;
+    background: url('images/points-track.gif') -1px 0px repeat-x;
+
+}
+
+.giantpoints-track-bottom {
+    height: 6px;
+    width: 100%;
+    position: absolute;
+    top: 7px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px
+}
+
+#giantpoints-slider-zoom-in {
+    position: absolute;
+    right: 1px;
+    top: 0px;
+}
+
+.giantpoints-slider-label {
+    margin: 12px 0 0 5px;
+    float: left;
+}
+
+#giantpoints-login-msg, #giantpoints-needmore-msg {
+    clear: both;
+    min-height: 13px;
+    margin: 3px 0 0;
+    padding-left: 17px;
+    line-height: 13px;
+    background: url('images/validation_advice_bg.gif') 2px 0 no-repeat;
+    color: #eb340a;
+}
+
+#giantpoints-needmore-points {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/*====End Slider===*/

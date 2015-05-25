@@ -1,0 +1,39 @@
+<?php 
+/**
+ * Magegiant
+ * 
+ * NOTICE OF LICENSE
+ * 
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ * 
+ * DISCLAIMER
+ * 
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ * 
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+
+/**
+ * Giantpoints Account Dashboard
+ * 
+ * @see Magegiant_GiantPoints_Block_Account_Dashboard
+ */
+?>
+
+<?php if ($this->getCanShow()): ?>
+    <?php $rate = $this->getEarningRate() ?>
+    <?php if ($rate && $rate->getId()): ?>
+        <dd>
+            <?php echo $this->__('Each %s spent for your order will earn %s.',
+                '<strong class="giantpoints-money">' . $this->getCurrentMoney($rate) . '</strong>',
+                '<strong class="giantpoints-money">' . Mage::helper('giantpoints')->addLabelForPoint($rate->getPoints()) . '</strong>'
+            ) ?>
+        </dd>
+    <?php endif ?>
+<?php endif ?>

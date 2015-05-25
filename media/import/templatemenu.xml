@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+ <items>     
+    <item>
+	<template_id>1</template_id>
+ 	<name_template>What's new</name_template>
+	<description>Show new product</description>
+    <code_template><![CDATA[
+<ul class="whatnew">
+<li>
+<h1>Womens Lastest</h1>
+<ol>
+<li><a href="#"><span>New Arrival</span></a></li>
+<li><a href="#"><span>Online Exclusives<br /></span></a></li>
+<li><a href="#"><span>Pacsun vip card<br /></span></a></li>
+<li><a href="#"><span>Great deal</span></a></li>
+<li><a href="#"><span>Buyer ashley picks</span></a></li>
+<li><a href="#"><span>top 20 under $20</span></a></li>
+<li><a href="#"><span>360 look book<br /></span></a></li>
+</ol></li>
+<li>
+<h1>Womens new offer</h1>
+<ol>
+<li><a href="#"><span>Apparel</span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+<li><a href="#"><span>Accessorier and foot wear<br /></span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+<li><a href="#"><span>Shop all</span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+</ol></li>
+<li>
+<h1>Mens Lastest</h1>
+<ol>
+<li><a href="#"><span>New&nbsp; Arrival</span></a></li>
+<li><a href="#"><span>Online Exclusives<br /></span></a></li>
+<li><a href="#"><span>Pacsun vip card</span></a></li>
+<li><a href="#"><span>Great deal</span></a></li>
+<li><a href="#"><span>Swim shop</span></a></li>
+<li><a href="#"><span>Sandal</span></a></li>
+<li><a href="#"><span>Snap back</span></a></li>
+</ol></li>
+<li>
+<h1>Mens New offer</h1>
+<ol>
+<li><a href="#"><span>Apparel</span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+<li><a href="#"><span>Accessorier and foot wear<br /></span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+<li><a href="#"><span>Shop all</span></a></li>
+<li><a href="#"><span>Buy 1 get 1 50%</span></a></li>
+</ol></li>
+<li>
+<h1>Check it out</h1>
+<a href="#"><img src="{{media url="Check-it-out.gif"}}" alt="" /></a></li>
+</ul>	]]>		
+</code_template>
+	<name_image>menu1.jpg</name_image>	
+   </item>     
+    <item>
+	<template_id>2</template_id>
+ 	<name_template>Sale</name_template>
+	<description>Show sale product</description>
+    <code_template><![CDATA[
+	<ul class="sale">
+<li>
+<h1>Womens Sale</h1>
+<table id="nav-sale" class="data-table">
+<thead>
+<tr><th>&nbsp;</th><th class="right">Starting At</th></tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="odd right"><a href="#">9100vnd</a></td>
+</tr>
+<tr>
+<td><a href="#">Long Sleeve tees</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+</tbody>
+</table>
+<table id="nav-sale" class="data-table">
+<thead>
+<tr><th>&nbsp;</th><th class="right">Starting At</th></tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Long Sleeve tees</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td class="right"><a href="#">Shop All </a></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<h1>Mens Sale</h1>
+<table id="nav-sale" class="data-table">
+<thead>
+<tr><th>&nbsp;</th><th class="right">Starting At</th></tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Long Sleeve tees</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+</tbody>
+</table>
+<table id="nav-sale" class="data-table">
+<thead>
+<tr><th>&nbsp;</th><th class="right">Starting At</th></tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Long Sleeve tees</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td><a href="#">Teer</a></td>
+<td class="right"><a href="#">9.99$</a></td>
+</tr>
+<tr class="odd">
+<td class="odd"><a href="#">Teer</a></td>
+<td class="right odd"><a href="#">9.99$</a></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td class="right"><a href="#">Shop All </a></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="last">
+<div class="first">
+<h1>Womens new offers</h1>
+<ol>
+<li><a href="'#&quot;">Apparel</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+<li><a href="'#&quot;">Accessories &amp; footwear</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+</ol><ol>
+<li><a href="'#&quot;">Shop All</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+</ol></div>
+<div class="second">
+<h1>Mens new offers</h1>
+<ol>
+<li><a href="'#&quot;">Apparel</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+<li><a href="'#&quot;">Accessories</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+</ol><ol>
+<li><a href="'#&quot;">Shop All</a></li>
+<li><a href="'#&quot;">Buy 1 Get 1 50% Off</a></li>
+</ol></div>
+</li>
+</ul>
+	]]>		</code_template>
+	<name_image>menu2.jpg</name_image>	
+   </item>
+    <item>
+	<template_id>3</template_id>
+ 	<name_template>Brands</name_template>
+	<description>Show brands</description>
+    <code_template><![CDATA[
+	<ul class="brand">
+<li>
+<h1>Brands</h1>
+</li>
+<li><a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands2.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands3.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands2.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands3.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands2.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands3.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands2.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands3.gif"}}" alt="" /></a> <a href="#"><img src="{{media url="brands1.gif"}}" alt="" /></a></li>
+<li><a class="last" href="#">View more brands</a></li>
+</ul>
+	]]>		</code_template>
+	<name_image>menu3.jpg</name_image>	
+   </item>
+    <item>
+	<template_id>4</template_id>
+ 	<name_template>Simple</name_template>
+	<description>Simple Item</description>
+    <code_template><![CDATA[
+<ul class="simple">
+<li>
+<h1>Item List</h1>
+</li>
+<li><a href="#">Item 1</a></li>
+<li><a href="#">Item 2</a></li>
+<li><a href="#">Item 3</a></li>
+<li><a href="#">Item 1</a></li>
+<li><a href="#">Item 2</a></li>
+<li><a href="#">Item 3</a></li>
+</ul>
+		]]>		</code_template>
+	<name_image>menu4.jpg</name_image>	
+   </item>
+</items>

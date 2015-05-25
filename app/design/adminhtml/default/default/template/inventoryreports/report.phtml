@@ -1,0 +1,37 @@
+<div id="inventory_report" class="inventory_report">
+    <?php echo $this->getChildHtml(); ?>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    function filterForm()
+    {
+        var filters = new Array();
+        filters[0] = $('select_time');
+        if ($('select_time').value == 'range') {
+            filters[1] = $('date_from');
+            filters[2] = $('date_to');
+        }
+        filters[3] = $('report_radio_select');
+        if($('attribute_select')){
+            filters[4] = $('attribute_select');
+        }
+        if ($('warehouse_select')) {
+            filters[5] = $('warehouse_select');
+        }
+        if ($('supplier_select')) {
+            filters[6] = $('supplier_select');
+        }
+        var elements = [];
+        for (var i in filters) {
+            if (filters[i] && filters[i].value && filters[i].value.length && !filters[i].disabled)
+                elements.push(filters[i]);
+        }
+//        alert(elements.length);
+//        alert(Form.serializeElements(elements));
+        window.location.href = '<?php echo $url = $this->getUrl('inventoryreportsadmin/adminhtml_report/index', array('type_id' => $this->getRequest()->getParam('type_id'), 'key' => $this->getRequest()->getParam('key'))); ?>top_filter/' + encode_base64(Form.serializeElements(elements)) + '/';
+
+        return;
+    }
+
+    //]]>
+</script>

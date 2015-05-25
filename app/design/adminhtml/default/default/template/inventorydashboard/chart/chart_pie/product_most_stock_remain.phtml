@@ -1,0 +1,93 @@
+<?php
+    $series = array();
+    $product_name = array();
+    $total_remain = array();
+    $id = $this->getIdBox();
+    $requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+    $reportCode = $this->getReportCode();
+    if(empty($requestData)){
+        $requestData = array();
+        $resource = Mage::getSingleton('core/resource');
+        $readConnection = $resource->getConnection('core_read');
+        $installer = Mage::getModel('core/resource');
+        $sql = 'SELECT default_time_range
+        FROM '.$installer->getTableName("erp_inventory_dashboard_report_type").'
+        WHERE report_code = "'.$reportCode.'"';
+        $results = $readConnection->fetchAll($sql);
+        $requestData['report_radio_select'] = $reportCode;
+        foreach($results as $time){$requestData['select_time'] = $time['default_time_range'];}
+    }
+    $gettime = Mage::Helper('inventoryreports')->getTimeSelected($requestData);
+    $resource = Mage::getSingleton('core/resource');
+    $readConnection = $resource->getConnection('core_read');
+    $installer = Mage::getModel('core/resource');
+
+    $sql = 'SELECT f.name, SUM(w.total_qty) AS total_remain
+    FROM '.$installer->getTableName("erp_inventory_warehouse_product").' w
+    INNER JOIN '.$installer->getTableName("catalog_product_flat_1").' f
+    ON w.product_id = f.entity_id
+    WHERE w.created_at BETWEEN "'.$gettime['date_from'].'" AND "'.$gettime['date_to'].'"
+    GROUP BY w.product_id
+    ORDER BY total_remain DESC
+    ';
+    
+    $results = $readConnection->fetchAll($sql);
+    if(isset($results)){
+        $checkResult = 0;
+        foreach($results as $result){
+            if($checkResult > 7){
+                $limit = 7;
+                break;
+            }
+            if($result['total_remain'] == NULL || $result['total_remain'] <= 0){
+                $limit = $checkResult;
+                continue;
+            }
+            $checkResult++;
+        } 
+        if(isset($limit)){
+            $sql .= 'LIMIT '.$limit.'';
+            $results = $readConnection->fetchAll($sql);
+        }
+    }
+?>
+<?php
+    $series = '';
+    $i = 0;
+    foreach ($results as $result) {
+        if ($i != 0)
+            $series .= ',';
+                $series .= '[\'' . $result['name'] . ' (' . (int)$result['total_remain'] . ' items)\',' . (int)$result['total_remain'] . ']';
+        $i++;
+    }
+?>
+                        <!-- report by product pie -->
+<div class="chart-parent-div">
+        <script type="text/javascript">
+            $(function () {
+                $_('#<?php echo $id?>').highcharts({
+                    chart: {
+                        type: 'pie',
+                        options3d: {
+                            enabled: true,
+                            alpha: 50
+                        }
+                    },
+                    title: {
+                        text: '<?php echo $this->__('Qty. Remaining by Product') ?>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            depth: 30
+                        }
+                    },
+                    series: [{
+                        data: [
+                            <?php echo $series;?>
+                        ]
+                    }]
+                });
+            });
+        </script>
+    <div id="<?php echo $id?>" class="chart-child-div" ></div>
+</div>

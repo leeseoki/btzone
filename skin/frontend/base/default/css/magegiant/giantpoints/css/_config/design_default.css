@@ -1,0 +1,18 @@
+/*==== Slider Style ====*/
+#giantpoints-slider-container .button-action, .giantpoints-track-bottom {
+background-color: #3399cc;
+}
+
+.giantpoints-handle {
+box-shadow: 0px 0px 6px #3399cc;
+-moz-box-shadow: 0px 0px 6px #3399cc;
+-webkit-box-shadow: 0px 0px 1px #3399cc;
+}
+#giantpoints-slider{
+width: 150px;
+}
+/*==== /Slider Style ====*/
+
+/*==== Custom Style ====*/
+/*==== /Custom Style ====*/
+

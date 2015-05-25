@@ -1,0 +1,9 @@
+<?php if ($this->getPointsEarned()): ?>
+    <?php $_helper = Mage::helper('giantpoints') ?>
+    <span class="giantpoints-earning-msg">
+  <?php echo $this->getPointIcon(); ?>
+        <span class="giantpoints-message-<?php echo $this->getProduct()->getId()?>">
+    <?php echo $this->__('Earn %s', $_helper->addLabelForPoint($this->getPointsEarned())) ?>
+    </span>
+</span>
+<?php endif; ?>

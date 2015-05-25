@@ -1,0 +1,126 @@
+<?php
+$requestData = Mage::helper('adminhtml')->prepareFilterString($this->getRequest()->getParam('top_filter'));
+$reportcode = $requestData['report_radio_select'];
+$type_id = $this->getRequest()->getParam('type_id');
+$contentText = Mage::helper('inventoryreports')->getHeaderText();
+$dataCollection = Mage::helper('inventoryreports/order')->getOrderReportCollection($requestData);
+if (is_array($dataCollection)) {
+    $collection = $dataCollection['collection'];
+} else {
+    $collection = $dataCollection;
+}
+$pieData = $this->getChartPieData($collection, $requestData);
+$columnData = $this->getChartColumnData($collection, $requestData);
+?>
+<div class="entry-edit" id="test">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Chart Report') ?></h4>
+    </div>
+    <!DOCTYPE HTML>
+    <div>
+        <?php if ($columnData): ?>
+            <div style="width: 99%; float: left;">
+                <?php
+                $categories = $columnData['categories'];
+                $series = $columnData['series'];
+                ?>
+                <script type="text/javascript">
+                    $(function () {
+                    $_('#inventorybyorder_column').highcharts({
+                    chart: {
+                    type: 'column',
+                            margin: 70,
+                            options3d: {
+                            enabled: true,
+                                    alpha: 20,
+                                    beta: 1,
+                                    depth: 50
+                            }
+                    },
+                            title: {
+                            text: '<?php echo $contentText ?>'
+                            },
+                            plotOptions: {
+                            column: {
+                            depth: 30
+                            }
+                            },
+                            legend:{
+                            enabled:false,
+                            },
+                            xAxis: {
+                            categories: <?php echo $categories ?>
+                            },
+                            yAxis: {
+                            opposite: true
+                            },
+                            series: [{
+    <?php $count = 0; ?>
+    <?php foreach ($series as $serie): ?>
+        <?php if (!$count == 0) echo ','; ?>
+        <?php $count++; ?>
+
+
+                                data: <?php echo $serie['data']; ?>
+
+    <?php endforeach; ?>
+                            }]
+                    }
+                    );
+                    });</script>
+                <div id="inventorybyorder_column" style="min-width: 900px; height: 450px; margin: 0 auto"></div>
+            </div>
+        <?php endif; ?>
+
+        <!-- report by supplier pie -->
+        <?php if ($pieData): ?>
+            <div style="width: 99%; float: left;">
+                <?php
+                $seriesPie = $pieData['series'];
+                ?>
+                <script type="text/javascript">
+                            $(function () {
+                            $_('#inventorybyorder_pie').highcharts({
+                            chart: {
+                            type: 'pie',
+                                    options3d: {
+                                    enabled: true,
+                                            alpha: 50
+                                    }
+                            },
+                                    title: {
+                                    text: '<?php echo $contentText ?>'
+                                    },
+                                    plotOptions: {
+                                    pie: {
+                                            depth: 30
+                                    }
+                                    },
+                                    series: [{
+                                    type: 'pie',
+                                            data: [
+    <?php echo $seriesPie ?>
+                                            ]
+                                    }]
+                            });
+                            });</script>
+                <div id="inventorybyorder_pie" style="min-width: 900px; max-height: 450px; margin: 0 auto"></div>
+            </div>
+        <?php endif; ?>
+    </div>          
+</div>
+
+<script type="text/javascript" src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/_JSSettings.js"></script>
+<script src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/js_002"></script>
+<script src="<?php echo $this->getJsUrl() ?>magestore/adminhtml/inventory/dashboard/lib/dashboards"></script>
+
+<script type="text/javascript">
+    var saveViewPositions = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/saveviewposition') ?>';
+    var saveTabPositions = '<?php echo $this->getUrl('inventorydashboardadmin/adminhtml_inventorydashboard/savetabposition') ?>';
+    var form_key_dashboard = '<?php echo $this->getFormKey() ?>';</script>
+<script type="text/javascript">
+    var $sd = new InventoryDashboard.Views.Dashboards();
+    $sd.isShare = false;
+    $sd.backgroundColour = '#808080';
+    $sd.init();
+</script>

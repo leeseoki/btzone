@@ -1,0 +1,56 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+
+?>
+<?php
+$_rewardAccount = $this->getRewardAccount();
+?>
+<div id="dashboard-notification-box" class="box-account box-info">
+    <div class="box-head">
+        <h2><?php echo $this->__('Email Notification Settings') ?></h2>
+    </div>
+    <form action="<?php echo $this->getSettingAction() ?>" method="post" id="giant-form-validate">
+        <div>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <input type="checkbox" id="dashboard-subscription" class="checkbox" name="is_subscribed" value="1"
+                   title="<?php echo $this->__('Subscribe to balance update') ?>"<?php if ($_rewardAccount->getNotificationUpdate()): ?> checked="checked"<?php endif; ?>  />
+            <label for="dashboard-subscription">
+                <?php echo $this->__('Subscribe to balance update') ?>
+            </label>
+            <br/>
+            <input type="checkbox" id="dashboard-subscription_exp" class="checkbox" name="is_subscribed_exp" value="1"
+                   title="<?php echo $this->__('Subscribe to points expiration notification') ?>"<?php if ($_rewardAccount->getNotificationExpire()): ?> checked="checked"<?php endif; ?>  />
+            <label for="dashboard-subscription_exp">
+                <?php echo $this->__('Subscribe to points expiration notification') ?>
+            </label>
+        </div>
+
+        <div id="dashboard-button-to-subscribe">
+            <button type="submit" title="<?php echo $this->__('Save Subscription Settings') ?>" class="button">
+                    <span>
+                        <span>
+                            <?php echo $this->__('Save Subscription Settings') ?>
+                        </span>
+                    </span>
+            </button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,56 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the magegiant.com license that is
+ * available through the world-wide-web at this URL:
+ * http://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (http://magegiant.com/)
+ * @license     http://magegiant.com/license-agreement/
+ */
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel(); ?></td>
+    <?php if ($this->getDirection() == Magegiant_GiantPoints_Model_Rate::POINT_TO_MONEY): ?>
+        <td class="value">
+            <input id="rate-points" type="text" class="input-text required-entry validate-greater-than-zero"
+                   style="width:81px" name="points" value="<?php echo $this->getRate()->getPoints(); ?>"/>
+            <label for="rate-points"><?php echo Mage::helper('giantpoints/config')->getPointLabel() ?><span
+                    class="required">*</span>
+                <img src="<?php echo Mage::helper('giantpoints')->getConvertIconSrc() ?>"/>
+            </label>
+            <input id="rate-money" type="text" class="input-text required-entry validate-greater-than-zero"
+                   style="width:90px" name="money" value="<?php echo $this->getRate()->getMoney(); ?>"/>
+            <label
+                for="rate-money"><span
+                    class="required">*</span></label><?php echo Mage::getStoreConfig(Mage_Directory_Model_Currency::XML_PATH_CURRENCY_BASE); ?>
+
+        </td>
+    <?php else: ?>
+        <td class="value">
+            <input id="rate-money" type="text" class="input-text required-entry validate-greater-than-zero"
+                   style="width:90px" name="money" value="<?php echo $this->getRate()->getMoney(); ?>"/>
+            <label
+                for="rate-money"> <span class="required">*</span>
+                <?php echo Mage::getStoreConfig(Mage_Directory_Model_Currency::XML_PATH_CURRENCY_BASE); ?>
+
+                <img src="<?php echo Mage::helper('giantpoints')->getConvertIconSrc() ?>"/>
+
+            </label>
+            <input id="rate-points" type="text" class="input-text required-entry validate-greater-than-zero"
+                   style="width:87px" name="points" value="<?php echo $this->getRate()->getPoints(); ?>"/>
+            <label for="rate-points"><span
+                    class="required">*</span><?php echo Mage::helper('giantpoints/config')->getPointLabel() ?></label>
+        </td>
+    <?php endif; ?>
+</tr>

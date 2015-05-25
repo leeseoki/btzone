@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <!-- System -->
+    <default>
+        <!-- Add CSS and Javascript -->
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magegiant/giantpoints/style.css</stylesheet>
+            </action>
+            <action method="addCss">
+                <stylesheet helper="giantpoints/generator_css/getDesignFile"/>
+            </action>
+            <!--Add Giant Points Core JS-->
+            <action method="addJs">
+                <script>magegiant/giantpoints/giantpoints.js</script>
+            </action>
+        </reference>
+        <!-- Add to top link -->
+        <reference name="top.links">
+            <block type="giantpoints/toplinks_label" name="giantpoints.toplinks.label" as="giantpoints_toplinks_label"/>
+        </reference>
+        <!-- Show on MiniCart -->
+        <reference name="cart_sidebar.extra_actions">
+            <block type="giantpoints/checkout_sidebar_action" before="-" name="giantpoints.cart_sidebar.earning" template="magegiant/giantpoints/checkout/sidebar/action.phtml"/>
+        </reference>
+    </default>
+    <!-- Catalog Product View -->
+    <catalog_product_view>
+        <!--For CE 1.9-->
+        <reference name="product.info.extrahint">
+            <block type="giantpoints/catalog_product_view_points" name="catalog.product.points"
+                   template="magegiant/giantpoints/catalog/product/view/points.phtml" after="-">
+                <block type="giantpoints/catalog_product_view_points_earning" name="giantpoints.product.view.points.earned" as="giantpoints_catalogrule_earning"
+                       template="magegiant/giantpoints/catalog/product/view/points/earning.phtml"/>
+            </block>
+        </reference>
+    </catalog_product_view>
+    <default>
+        <reference name="giantpoints_catalog_product_list_points">
+            <block type="giantpoints/catalog_product_list_points_earning" template="magegiant/giantpoints/catalog/product/list/points/earning.phtml" name="giantpoints.catalog.product.list.points.earning" priority="20"/>
+        </reference>
+    </default>
+    <!--/Catalog Product List-->
+    <!--GiantPoints slider default-->
+    <giantpoints_slider_default>
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>css/magegiant/giantpoints/slider.css</stylesheet>
+            </action>
+            <action method="addJs">
+                <script>magegiant/giantpoints/slider.js</script>
+            </action>
+            <action method="addJs">
+                <script>magegiant/giantpoints/spending.js</script>
+            </action>
+        </reference>
+    </giantpoints_slider_default>
+    <!--/GiantPoints slider default-->
+    <!-- Checkout using Giant Points -->
+    <checkout_cart_index>
+        <update handle="giantpoints_slider_default"/>
+        <reference name="checkout.cart.coupon">
+            <block type="giantpoints/checkout_cart_spending" name="checkout.cart.spending" as="checkout_cart_spending" template="magegiant/giantpoints/checkout/cart/spending.phtml"/>
+        </reference>
+        <reference name="content">
+            <block type="giantpoints/checkout_cart_earning" name="checkout.cart.earning"
+                   template="magegiant/giantpoints/checkout/cart/earning.phtml" before="-">
+            </block>
+        </reference>
+    </checkout_cart_index>
+    <checkout_onepage_index>
+        <update handle="giantpoints_slider_default"/>
+    </checkout_onepage_index>
+    <!--=====Intergrate====== -->
+    <opc_index_index>
+        <update handle="giantpoints_slider_default"/>
+    </opc_index_index>
+    <!--=======/Intergrate======-->
+    <checkout_onepage_paymentmethod>
+        <reference name="root">
+            <block type="giantpoints/checkout_onepage_payment_spending" name="checkout.payment.spending"
+                   template="magegiant/giantpoints/checkout/onepage/payment/spending.phtml">
+            </block>
+        </reference>
+    </checkout_onepage_paymentmethod>
+    <!-- Intergrate Magegiant Onestepcheckout -->
+    <onestepcheckout_index_index>
+        <update handle="giantpoints_slider_default"/>
+    </onestepcheckout_index_index>
+    <!-- /Intergrate Magegiant Onestepcheckout-->
+    <!-- /Checkout using Giant Points -->
+    <!-- Order View -->
+    <sales_order_view>
+        <reference name="order_totals">
+            <block type="giantpoints/totals_order_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_view>
+    <sales_order_print>
+        <reference name="order_totals">
+            <block type="giantpoints/totals_order_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_print>
+    <sales_email_order_items>
+        <reference name="order_totals">
+            <block type="giantpoints/totals_order_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_email_order_items>
+
+    <sales_order_invoice>
+        <reference name="invoice_totals">
+            <block type="giantpoints/totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_invoice>
+    <sales_order_printinvoice>
+        <reference name="invoice_totals">
+            <block type="giantpoints/totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_printinvoice>
+    <sales_email_order_invoice_items>
+        <reference name="invoice_totals">
+            <block type="giantpoints/totals_invoice_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_email_order_invoice_items>
+
+    <sales_order_creditmemo>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_creditmemo>
+    <sales_order_printcreditmemo>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_order_printcreditmemo>
+    <sales_email_order_creditmemo_items>
+        <reference name="creditmemo_totals">
+            <block type="giantpoints/totals_creditmemo_point" name="giantpoints.total.point"/>
+        </reference>
+    </sales_email_order_creditmemo_items>
+
+    <!-- Customer account -->
+
+    <customer_account>
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="giantpoints" ifconfig="giantpoints/general/enable">
+                <name>giantpoints_customer</name>
+                <path>giantpoints/index</path>
+                <label helper="giantpoints/config/getDashboardLabel"/>
+            </action>
+        </reference>
+        <reference name="cart_sidebar">
+            <block type="core/text_list" name="cart_sidebar.extra_actions" as="extra_actions">
+                <block type="giantpoints/checkout_sidebar_action" name="giantpoints.cart_sidebar.earning" template="magegiant/giantpoints/checkout/sidebar/action.phtml"/>
+            </block>
+        </reference>
+    </customer_account>
+    <customer_account_index>
+        <reference name="customer_account_dashboard_top">
+            <block type="giantpoints/customer_account_summary" name="giant.points.customer.summary"
+                   as="giant_points_summary" before="customer_account_dashboard_top"/>
+        </reference>
+    </customer_account_index>
+
+    <!-- Giant Points -->
+    <giantpoints_index_index>
+        <reference name="head">
+            <action method="addCss">
+                <script>css/magegiant/giantpoints/grid-magegiant.css</script>
+            </action>
+        </reference>
+        <update handle="customer_account"/>
+        <reference name="content">
+            <block type="giantpoints/customer_account_dashboard" name="giantpoints.dashboard" template="magegiant/giantpoints/customer/account/dashboard.phtml">
+                <block type="giantpoints/abstract" name="dashboard.current.exchange" as="dashboard_current_exchange" template="magegiant/giantpoints/customer/account/dashboard/exchange.phtml">
+                    <block type="giantpoints/customer_account_dashboard_spend" name="dashboard.spend" as="dashboard_spend" template="magegiant/giantpoints/customer/account/dashboard/spend.phtml"/>
+                    <block type="giantpoints/customer_account_dashboard_earn" name="dashboard.earn" as="dashboard_earn" template="magegiant/giantpoints/customer/account/dashboard/earn.phtml"/>
+                </block>
+                <block type="core/template" name="dashboard.addition" as="dashboard_addition" template="magegiant/giantpoints/customer/account/dashboard/addition.phtml"></block>
+                <block type="giantpoints/customer_account_dashboard_transactions" name="dashboard.transactions" as="dashboard_transactions" template="magegiant/giantpoints/customer/account/dashboard/transactions.phtml"/>
+                <block type="giantpoints/customer_account_dashboard_limit" name="dashboard.limit" as="dashboard_limit" template="magegiant/giantpoints/customer/account/dashboard/limit.phtml"/>
+                <block type="giantpoints/customer_account_dashboard_settings" name="dashboard.settings" as="dashboard_setting"
+                       template="magegiant/giantpoints/customer/account/dashboard/settings.phtml"/>
+            </block>
+        </reference>
+    </giantpoints_index_index>
+    <giantpoints_index_infopage>
+        <update handle="customer_account"/>
+    </giantpoints_index_infopage>
+    <giantpoints_earning_head>
+        <reference name="head">
+            <action method="addJs">
+                <script>magegiant/tinybox2.js</script>
+            </action>
+            <action method="addCss">
+                <stylesheet helper="giantpoints/getTinyboxCss"/>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="giantpoints/social_earning" name="behavior.social.earning" as="behavior_social_earning" before="-" template="magegiant/giantpoints/social/earning.phtml"/>
+        </reference>
+    </giantpoints_earning_head>
+    <cms_index_index>
+        <update handle="giantpoints_earning_head"/>
+    </cms_index_index>
+    <catalog_category_default>
+        <update handle="giantpoints_earning_head"/>
+    </catalog_category_default>
+    <catalog_category_layered>
+        <update handle="giantpoints_earning_head"/>
+    </catalog_category_layered>
+    <catalog_product_view>
+        <update handle="giantpoints_tinybox"/>
+    </catalog_product_view>
+</layout>

@@ -1,0 +1,51 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+* https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?>
+<?php
+$helperConfig = Mage::helper('giantpoints/config');
+?>
+<div>
+    <?php if ($this->getPoints() > 0): ?>
+        <ul class="giant-messages">
+            <li class="giantpoints-notice-msg">
+                <ul>
+                    <li>
+                        <?php echo $this->__('Checkout now and earn %s %s !', $this->getPoints(), $helperConfig->getPointLabel()) ?>
+                        <?php echo $this->getChildHtml('infopage.link') ?>
+                    </li>
+                    <?php if ($this->customerIsGuest()): ?>
+                        <li>
+                            <?php echo $this->__('Applies only to registered customers, may vary when logged in.') ?>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </li>
+        </ul>
+    <?php endif; ?>
+    <?php foreach ($this->getAppliedRules() as $rule): ?>
+        <div>
+            <?php foreach ($this->getStaticBlocks($rule) as $block): ?>
+                <?php echo $block ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endforeach; ?>
+</div>
+

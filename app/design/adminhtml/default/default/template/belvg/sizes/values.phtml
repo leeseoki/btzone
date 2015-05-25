@@ -1,0 +1,1 @@
+<?php echo implode(', ', Mage::getModel('sizes/standardsvalues')->getCollection()->addFieldToFilter('standard_id', $this->getStandardId())->setOrder('sort_order', 'asc')->getColumnValues('value')); ?>

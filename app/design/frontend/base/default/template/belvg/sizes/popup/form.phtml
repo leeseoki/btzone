@@ -1,0 +1,81 @@
+<?php
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+/**********************************************
+ *        MAGENTO EDITION USAGE NOTICE        *
+ **********************************************/
+/* This package designed for Magento COMMUNITY edition
+ * BelVG does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BelVG does not provide extension support in case of
+ * incorrect edition usage.
+/**********************************************
+ *        DISCLAIMER                          *
+ **********************************************/
+/* Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future.
+ **********************************************
+ * @category   Belvg
+ * @package    Belvg_Sizes
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+?>
+<?php $helper = Mage::helper('sizes'); ?>
+<?php $dems = $this->getDems(); ?>
+<?php $params = $this->getRequest()->getParams() ?>
+<form id="sizes_fields" enctype="multipart/form-data" method="post" action="<?php echo $this->getUrl() ?>sizes/front/result/">
+<input style="display:none" value="<?php echo $params['product_id'] ?>" type="text" name="product_id">
+<table class="sizes_dem_table">
+    <tbody>
+        <tr>
+            <td class="sizes_dem_tr" style="text-align: center;" colspan="3">
+               <h2><?php echo $this->__($this->getCategoryLabel()) ?></h2>
+            </td>
+        </tr>
+<?php foreach ($dems as $key=>$dem): ?>
+        <tr class="sizes_dem_tr">
+            <td class="sizes_dem_label">
+                <label for="dem_<?php echo $key ?>"><?php echo $this->__($dem['label']) ?></label>
+            </td>
+            <td class="sizes_dem_input">
+                <input class="dems" id="dem_<?php echo $key ?>" class="required-digits required-entry" type="text" name="sizes[<?php echo $dem['dem_id'] ?>]" readonly="readonly">
+            </td>
+            <td class="sizes_dem_slider">
+                <div id="dem_slider_<?php echo $key ?>"></div>
+            </td>
+            <script type="text/javascript">
+                <?php $limits = $this->getLimits($dem['dem_id']); ?>
+                jQblvg("#dem_slider_<?php echo $key ?>" ).slider({
+                    range: "min",
+                    value: <?php if (isset($params['sizes'][$dem['dem_id']])) echo $params['sizes'][$dem['dem_id']]; else echo (($limits['min'] + $limits['max'])/2); ?>,
+                    min: <?php echo $limits['min'] ?>,
+                    max: <?php echo $limits['max'] ?>,
+                    step: <?php echo $limits['step'] ?>,
+                    slide: function( event, ui ) {
+                        jQblvg( "#dem_<?php echo $key ?>" ).val( ui.value );
+                    }
+                });
+                jQblvg( "#dem_<?php echo $key ?>" ).val( jQblvg( "#dem_slider_<?php echo $key ?>" ).slider( "value" ) );            
+            </script>
+        </tr>
+<?php endforeach; ?>
+        <tr>
+            <td class="sizes_dem_tr" style="text-align: center;" colspan="3">
+               <?php echo $this->__('All values are in') . ' ' . $this->__($helper->getUnitSizes()) ?>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</form>
+<div class="sizes_image">
+    <img src="<?php echo $this->getCatImageUrl() ?>" height="300" width="230" />    
+</div>

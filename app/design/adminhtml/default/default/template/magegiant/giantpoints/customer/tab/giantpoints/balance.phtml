@@ -1,0 +1,39 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the magegiant.com license that is
+ * available through the world-wide-web at this URL:
+ * http://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (http://magegiant.com/)
+ * @license     http://magegiant.com/license-agreement/
+ */
+?><div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-customer-view"><?php echo Mage::helper('giantpoints')->__('Reward Point Balance') ?></h4></div>
+    <fieldset>
+
+        <?php
+        $balanceLimit = $this->getBalanceLimit();
+        $pointsConvertedIntoMoney = $this->getCurrentBalanceInCurrency();
+        ?>
+
+        <?php if ($balanceLimit): ?>
+            <?php echo Mage::helper('giantpoints')->__('Points Balance Limit: <strong> %s </strong>', $balanceLimit); ?>
+            <br/>
+        <?php endif; ?>
+
+        <?php echo Mage::helper('giantpoints')->__('Current Balance: <strong> %s %s </strong>', $this->getCurrentBalanceInPoints(), $pointsConvertedIntoMoney ? "($pointsConvertedIntoMoney)" : "" ) ?>
+
+    </fieldset>
+</div>

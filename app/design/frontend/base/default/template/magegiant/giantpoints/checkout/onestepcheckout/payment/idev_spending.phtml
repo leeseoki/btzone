@@ -1,0 +1,230 @@
+<?php
+/**
+ * Magegiant
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magegiant.com license that is
+ * available through the world-wide-web at this URL:
+ * https://magegiant.com/license-agreement/
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magegiant
+ * @package     Magegiant_GiantPoints
+ * @copyright   Copyright (c) 2014 Magegiant (https://magegiant.com/)
+ * @license     https://magegiant.com/license-agreement/
+ */
+?><?php if ($this->allowSpending()): ?>
+    <dl class="sp-methods" id="giantpoints-checkout-payment-method-load">
+    <?php
+    $_sliderRules = $this->getSliderRules();
+    $_checkboxRules = $this->getCheckboxRules();
+    $_helper = Mage::helper('giantpoints');
+    $_helperConfig = Mage::helper('giantpoints/config');
+    $_pointLabelPosition = $_helperConfig->getPointLabelPosition();
+    $_pointLabel = $_helperConfig->getPluralPointLabel();
+    ?>
+
+    <?php if (count($_sliderRules) || (count($_checkboxRules))): ?>
+        <div id="giantpoints-spending-form">
+            <dt>
+            <div class="giant-points-message-container" style="overflow:hidden;height:0px;"></div>
+            <input id="giantpoints_payment_method" type="checkbox" name="is_used_point" class="checkbox"
+                   title="<?php echo $this->__('Spend Your Points') ?>" <?php if ($this->isUsedPoint()): ?> checked="checked"<?php endif ?>
+                />
+            <label for="giantpoints_payment_method"><?php echo $this->__('Spend Your Points') ?>
+                <?php echo '(' . $this->__('You have ') . $this->formatPointBalance() . ')' ?>
+            </label>
+            </dt>
+            <dd>
+                <dl class="form-list rewards-sales-rules">
+                    <?php if (count($_sliderRules)): ?>
+                        <?php $_sliderData = $this->getSliderData() ?>
+                        <dd id="rewards-sales-rules-container">
+                            <?php if (count($_sliderRules) == 1): ?>
+                                <?php $_rule = current($_sliderRules) ?>
+                                <input id="reward_sales_rule" name="reward_sales_rule" type="hidden"
+                                       value="<?php echo $_rule->getId() ?>"/>
+                                <span>
+                                        <?php if ($_rule->getId() == 'rate'): ?>
+                                            <?php echo $this->__('Each of %s gets %s discount', $_helper->addLabelForPoint($_rule->getPointAmount()), $this->formatDiscount($_rule)) ?>
+                                        <?php else: ?>
+                                            <?php echo $this->escapeHtml($_rule->getName()) ?>
+                                            (<?php echo $this->__('With %s', $_helper->addLabelForPoint($_rule->getPointAmount())) ?>)
+                                        <?php endif ?>
+                                    </span>
+                            <?php else: ?>
+                                <div class="reward-rules">
+                                    <span><?php echo $this->__('Use Your Points') ?>:</span>
+                                    <select id="reward_sales_rule" name="reward_sales_rule" class="input-select">
+                                        <?php foreach ($_sliderRules as $_rule): ?>
+                                            <option
+                                                value="<?php echo $_rule->getId() ?>"<?php if ($_rule->getId() == $_sliderData->getRuleId()): ?> selected="selected"<?php endif ?>>
+                                                <?php if ($_rule->getId() == 'rate'): ?>
+                                                    <?php echo $this->__('Each of %s gets %s discount', $_helper->addLabelForPoint($_rule->getPointAmount()), $this->formatDiscount($_rule)) ?>
+                                                <?php else: ?>
+                                                    <?php echo $this->escapeHtml($_rule->getName()) ?>
+                                                    (<?php echo $this->__('With %s', $_helper->addLabelForPoint($_rule->getPointAmount())) ?>)
+                                                <?php endif ?>
+                                            </option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                            <?php endif ?>
+                            <div id="giantpoints-needmore-msg" style="display: none;">
+                                <?php echo $this->__('You need to earn more') ?>
+                                <span id="giantpoints-needmore-points">100</span>
+                                <?php echo $this->__(' to use this rule,') ?>
+                                <a target="_blank"
+                                   href="<?php echo $this->getUrl('giantpoints/index/infopage') ?>"><?php echo $this->__('learn more') ?></a>.
+                            </div>
+                            <div id="giantpoints-slider-container" style="display: none;">
+                                <div id="giantpoints-slider">
+                                    <a href="javascript:void(0);" id="giantpoints-slider-zoom-out"
+                                       class="button-action zoom-out"
+                                       title="<?php echo $this->__('Zoom Out') ?>"><?php echo $this->__('Zoom Out') ?></a>
+
+                                    <div id="giantpoints-track" class="giantpoints-track">
+                                        <div id="giantpoints-track-bottom" class="giantpoints-track-bottom"></div>
+                                        <div id="giantpoints-handle" class="giantpoints-handle"></div>
+                                    </div>
+                                    <a href="javascript:void(0);" id="giantpoints-slider-zoom-in"
+                                       class="button-action zoom-in"
+                                       title="<?php echo $this->__('Zoom In') ?>"><?php echo $this->__('Zoom In') ?></a>
+                                </div>
+                                <div class="clear"></div>
+                                <div class="giantpoints-slider-input">
+                                    <div class="input-box input-point">
+                                        <label for="reward_sales_point">
+                                            <?php echo $this->__('You will spend') ?>
+                                        </label>
+                                        <?php if ($_pointLabelPosition == 1): ?>
+                                            <input type="text" class="input-text" id="reward_sales_point"
+                                                   name="reward_sales_point"
+                                                   value="0"/>
+                                            <label for="reward_sales_point">
+                                                <?php echo $_pointLabel ?>
+                                            </label>
+                                        <?php else: ?>
+                                            <label for="reward_sales_point">
+                                                <?php echo $_pointLabel ?>
+                                            </label>
+                                            <input type="text" class="input-text" id="reward_sales_point"
+                                                   name="reward_sales_point"
+                                                   value="0"/>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="input-box input-max">
+                                        <input type="checkbox" name="reward_max_points_used"
+                                               id="reward_max_points_used" class="checkbox"/>
+                                        <label for="reward_max_points_used">
+                                            <?php echo $this->__('Maximize my discount with points') ?>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </dd>
+                        <script type="text/javascript">
+                            var rewardSliderRules = <?php echo $this->getRulesJson($_sliderRules) ?>;
+                            var currentRuleOptions = {};
+                            function changeRewardSalesRule(el) {
+                                var ruleId = el.value;
+                                if (ruleId) {
+                                    currentRuleOptions = rewardSliderRules[ruleId];
+                                    switch (currentRuleOptions.optionType) {
+                                        case 'needPoint':
+                                            showRewardInfo('giantpoints-needmore-msg');
+                                            $('giantpoints-needmore-points').innerHTML = currentRuleOptions.needPoint;
+                                            break;
+                                        case 'slider':
+                                            showRewardInfo('giantpoints-slider-container');
+                                            rewardSlider.applyOptions(currentRuleOptions.sliderOption);
+                                            break;
+                                    }
+                                } else {
+                                    showRewardInfo('');
+                                }
+                            }
+                            var currentPointUsed = <?php echo $_sliderData->getPointAmount() ? $_sliderData->getPointAmount() : '0' ?>;
+                            var currentRuleUsed = $('reward_sales_rule').value;
+                            var disableRewardAjax = true;
+                            function showRewardInfo(elId) {
+                                var elIds = ['giantpoints-needmore-msg', 'giantpoints-slider-container'];
+                                for (var i = 0; i < 2; i++) {
+                                    if (elIds[i] == elId) {
+                                        $(elId).show();
+                                    } else {
+                                        $(elIds[i]).hide();
+                                    }
+                                }
+                            }
+                            // Initial Variables
+                            $('giantpoints-slider-container').show();
+                            var giantPointsPaymentSpending = new MagegiantGiantPointsSliderSpending({
+                                containerSelector: '#giantpoints-spending-form',
+                                rewardRuleContainer: '#rewards-sales-rules-container',
+                                usePointCheckbox: 'giantpoints_payment_method',
+                                applyPointsUrl: <?php echo Zend_Json::encode($this->getUrl('giantpoints/ajax/applyPointIdevOnestep',array('_secure' => true)));?>,
+                            });
+                            var rewardSlider = new GiantPointsSlider(
+                                'reward_sales_point',
+                                'reward_max_points_used',
+                                <?php echo $_sliderData->getPointAmount() ? $_sliderData->getPointAmount() : '0' ?>,
+                                'giantpoints-track-bottom',
+                                'giantpoints-handle',
+                                'giantpoints-slider-zoom-out',
+                                'giantpoints-slider-zoom-in',
+                                ''
+                            );
+                            giantPointsPaymentSpending.initRewardRule();
+                            changeRewardSalesRule($('reward_sales_rule'));
+                            $('reward_sales_rule').observe('change', function (evt) {
+                                var el = evt.target;
+                                changeRewardSalesRule(el);
+                            })
+                            rewardSlider.applyPointCallback = function (points) {
+                                if (points == rewardSlider.maxPoints) {
+                                    $('reward_max_points_used').checked = true;
+                                } else {
+                                    $('reward_max_points_used').checked = false;
+                                }
+                                if (currentPointUsed == rewardSlider.slider.value
+                                    && currentRuleUsed == $('reward_sales_rule').value
+                                    ) {
+                                    return false;
+                                }
+                                currentPointUsed = rewardSlider.slider.value;
+                                currentRuleUsed = $('reward_sales_rule').value;
+                                giantPointsPaymentSpending.applyPoint();
+                            };
+                        </script>
+                    <?php endif ?>
+                    <?php echo $this->getSpendingChildHtml(); ?>
+                </dl>
+                <script>
+                    //<![CDATA[
+                    MagegiantGiantPointsCore.updater.setConfig({
+                        loaderConfig: {
+                            '48px': 'giantpoints-overlay giantpoints-overlay-48',
+                            '24px': 'giantpoints-overlay giantpoints-overlay-24',
+                            '16px': 'giantpoints-overlay giantpoints-overlay-16'
+                        },
+                        map: <?php echo Zend_Json::encode($this->getBlockMap());?>,
+                        blocks: [
+                            ['review_payment', '#checkout-payment-method-load'],
+                            ['review_cart', '.onestepcheckout-summary'],
+                        ],
+                        loaderToBlockCssClass: 'giantpoints-add-loader-into-this-block'
+                    });
+                    //]]>
+                </script>
+            </dd>
+        </div>
+    <?php endif; ?>
+    </dl>
+    <div class="clear"></div>
+<?php endif; ?>
