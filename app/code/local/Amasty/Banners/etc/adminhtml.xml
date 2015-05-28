@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2015 Amasty (https://www.amasty.com)
+ * @package Amasty_Banners
+ */
+-->
+<config>
+    <translate>
+        <modules>
+            <Amasty_Banners>
+                <files>
+                    <default>Amasty_Banners.csv</default>
+                </files>
+            </Amasty_Banners>
+        </modules>
+    </translate>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <ambanners translate="title" module="ambanners">
+                                        <title>Amasty Promo Banners</title>
+                                    </ambanners>
+                                </children>
+                            </config>
+                            <ambanners_adminsetting translate="title" module="ambanners">
+                                <title>Amasty Promo Banners</title>
+                            </ambanners_adminsetting>
+                        </children>
+                    </system> 
+                 </children>
+            </admin> 
+        </resources>
+    </acl>
+</config>
