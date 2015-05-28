@@ -1,0 +1,44 @@
+# magento db config #
+####################
+app/etc/local.xml
+
+# magento folder #
+#####################
+.htaccess
+media/*
+downloader/*
+var/*
+!var/.htaccess
+vendor/
+
+# wordpress #
+#############
+blog/wp-content/uploads/*
+blog/wp-config.php
+blog/wp-content/themes/canvas/cache/*
+
+# OS generated files #
+######################
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# eclipse file #
+##############
+nbproject/*
+.buildpath
+.project
+.setting/*
+
+# PHP storm config files #
+##############
+.idea/
+
+# modman folder #
+##############
+.modman
+
+# post image symbol link #
+##############
+skin/adminhtml/default/default/images/post_images

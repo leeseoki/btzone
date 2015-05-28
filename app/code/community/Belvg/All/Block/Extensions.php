@@ -21,9 +21,8 @@ class Belvg_All_Block_Extensions extends Mage_Adminhtml_Block_System_Config_Form
                 continue;
             }
 
-            $html .= $this->_getFieldHtml($element, $moduleName);
+            $html.= $this->_getFieldHtml($element, $moduleName);
         }
-
         $html .= $this->_getFooterHtml($element);
 
         return $html;
@@ -35,16 +34,14 @@ class Belvg_All_Block_Extensions extends Mage_Adminhtml_Block_System_Config_Form
         if (empty($this->_fieldRenderer)) {
             $this->_fieldRenderer = Mage::getBlockSingleton('adminhtml/system_config_form_field');
         }
-
         return $this->_fieldRenderer;
     }
 
     protected function _getFieldHtml($fieldset, $moduleCode)
     {
         $currentVer = Mage::getConfig()->getModuleConfig($moduleCode)->version;
-        if (!$currentVer) {
+        if (!$currentVer)
             return '';
-        }
 
         $moduleName = substr($moduleCode, strpos($moduleCode, '_') + 1); // in case we have no data in the RSS
 
@@ -88,7 +85,6 @@ class Belvg_All_Block_Extensions extends Mage_Adminhtml_Block_System_Config_Form
                 $version += ($v * pow(10, max(0, (3 - $k))));
             }
         }
-
         return $version;
     }
 
