@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BelVG LLC.
  *
@@ -24,11 +25,19 @@
  * versions in the future.
  *****************************************************
  * @category   Belvg
- * @package    Belvg_All
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @package    Belvg_Gifts
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
-
-class Belvg_All_Helper_Data extends Mage_Core_Helper_Abstract{
-
+ 
+class Belvg_Gifts_Block_Adminhtml_Gifts extends Mage_Adminhtml_Block_Widget_Grid_Container
+{
+  public function __construct()
+  {
+    $this->_controller = 'adminhtml_gifts';
+    $this->_blockGroup = 'gifts';
+    $this->_headerText = Mage::helper('gifts')->__('Rules Manager');
+    $this->_addButtonLabel = Mage::helper('gifts')->__('Add Rule');
+    parent::__construct();
+  }
 }

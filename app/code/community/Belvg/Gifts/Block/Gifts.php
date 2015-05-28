@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BelVG LLC.
  *
@@ -24,11 +25,34 @@
  * versions in the future.
  *****************************************************
  * @category   Belvg
- * @package    Belvg_All
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @package    Belvg_Gifts
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
+ 
+class Belvg_Gifts_Block_Gifts extends Mage_Core_Block_Template {
 
-class Belvg_All_Helper_Data extends Mage_Core_Helper_Abstract{
-
+    public function _prepareLayout()
+    {
+        return parent::_prepareLayout();
+    }
+    
+    public function getQuoteQty() {
+        return Mage::helper('gifts')->getQuoteQty();
+    }
+    
+    public function getQuoteTotal() {
+        return Mage::helper('gifts')->getQuoteTotal();
+    }
+    
+    public function getGiftProducts(){
+    	$ids = Mage::helper('gifts')->getGiftsIds();
+    	$products = array();
+    	if(is_array($ids) && count($ids)){
+    		foreach($ids as $id){
+    			array_push($products, Mage::getModel('catalog/product')->load($id));
+    		}
+    	}
+    	return $products;
+    }    
 }

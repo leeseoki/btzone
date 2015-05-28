@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BelVG LLC.
  *
@@ -24,11 +25,16 @@
  * versions in the future.
  *****************************************************
  * @category   Belvg
- * @package    Belvg_All
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @package    Belvg_Gifts
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 
-class Belvg_All_Helper_Data extends Mage_Core_Helper_Abstract{
-
+class Belvg_Gifts_Model_Product extends Mage_Core_Model_Abstract
+{
+    public function _construct()
+    {
+        parent::_construct();
+        $this->_init('gifts/product');
+    }
 }

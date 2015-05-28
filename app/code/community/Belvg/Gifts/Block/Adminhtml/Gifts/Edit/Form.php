@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BelVG LLC.
  *
@@ -24,11 +25,26 @@
  * versions in the future.
  *****************************************************
  * @category   Belvg
- * @package    Belvg_All
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @package    Belvg_Gifts
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
+ 
+class Belvg_Gifts_Block_Adminhtml_Gifts_Edit_Form extends Mage_Adminhtml_Block_Widget_Form {
 
-class Belvg_All_Helper_Data extends Mage_Core_Helper_Abstract{
+    protected function _prepareForm()
+    {
+        $form = new Varien_Data_Form(array(
+                        'id' => 'edit_form',
+                        'action' => $this->getUrl('*/*/save', array('id' => $this->getRequest()->getParam('id'))),
+                        'method' => 'post',
+                        'enctype' => 'multipart/form-data'
+                        )
+        );
+
+        $form->setUseContainer(true);
+        $this->setForm($form);
+        return parent::_prepareForm();
+    }
 
 }

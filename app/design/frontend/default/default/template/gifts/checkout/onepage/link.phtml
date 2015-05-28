@@ -24,11 +24,18 @@
  * versions in the future.
  *****************************************************
  * @category   Belvg
- * @package    Belvg_All
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @package    Belvg_Gifts
+ * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
+ ?>
+ 
+<?php if ($this->isPossibleOnepageCheckout()):?>
+	<button type="button" title="<?php echo $this->__('Proceed to Checkout') ?>" class="button btn-proceed-checkout btn-checkout<?php if ($this->isDisabled()):?> no-checkout<?php endif; ?>"<?php if ($this->isDisabled()):?> disabled="disabled"<?php endif; ?> onclick="window.location='<?php echo $this->getCheckoutUrl() ?>';"><span><span><?php echo $this->__('Proceed to Checkout') ?></span></span></button>
+<?php endif?>
 
-class Belvg_All_Helper_Data extends Mage_Core_Helper_Abstract{
-
-}
+<?php if(is_array(Mage::helper('gifts')->getGiftsIds()) && count(Mage::helper('gifts')->getGiftsIds()) && !Mage::helper('gifts')->isGiftUsed()):?>
+	<div class="gifts-link-wrapper">
+		<a href="javascript:;" onclick="$('gifts_popup').show()" class="gifts-link"><?php echo $this->__('Please select a gift') ?></a>
+	</div>
+<?php endif;?>

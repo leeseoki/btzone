@@ -33,7 +33,7 @@
 <config>
     <modules>
         <Belvg_All>
-            <version>1.0.5</version>
+            <version>1.0.0</version>
         </Belvg_All>
     </modules>
     <global>
@@ -47,65 +47,5 @@
                 <class>Belvg_All_Helper</class>
             </belvgall>
         </helpers>
-        <models>
-            <belvgall>
-                <class>Belvg_All_Model</class>
-            </belvgall>
-        </models>        
-        <resources>
-            <belvgall_setup>
-                <setup>
-                    <module>Belvg_All</module>
-                </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
-            </belvgall_setup>
-            <belvgall_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
-            </belvgall_write>
-            <belvgall_read>
-                <connection>
-                    <use>core_read</use>
-                </connection>
-            </belvgall_read>
-        </resources>        
     </global>
-    <adminhtml>
-        <acl>
-            <resources>
-                <all>
-                    <title>Allow Everything</title>
-                </all>
-                <admin>
-                    <children>
-                        <system>
-                            <children>
-                                <config>
-                                    <children>
-                                        <belvgall>
-                                            <title>Belvg - Extensions</title>
-                                        </belvgall>
-                                    </children>
-                                </config>
-                            </children>
-                        </system>
-                    </children>
-                </admin>
-            </resources>
-        </acl>
-        <events>
-            <controller_action_predispatch>
-                <observers>
-                    <ambase_upds>
-                        <type>singleton</type>
-                        <class>belvgall/feed</class>
-                        <method>check</method>
-                    </ambase_upds>
-                </observers>
-            </controller_action_predispatch>
-        </events> 
-    </adminhtml>    
 </config>
