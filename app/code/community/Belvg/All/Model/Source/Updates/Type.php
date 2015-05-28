@@ -42,7 +42,6 @@ class Belvg_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribut
                 return $v['label'];
             }
         }
-        
         return '';
     }
 
@@ -57,7 +56,6 @@ class Belvg_All_Model_Source_Updates_Type extends Mage_Eav_Model_Entity_Attribut
         foreach ($items as $item) {
             $out[$item['value']] = $item['label'];
         }
-        
         return $out;
     }
 

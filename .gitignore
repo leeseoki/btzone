@@ -42,3 +42,4 @@ nbproject/*
 # post image symbol link #
 ##############
 skin/adminhtml/default/default/images/post_images
+var/

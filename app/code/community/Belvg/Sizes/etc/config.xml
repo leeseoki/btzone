@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!--
-/**
  * BelVG LLC.
  *
  * NOTICE OF LICENSE
@@ -13,15 +12,15 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @version    1.0.0
  * @copyright  Copyright (c) 2010 - 2013 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
- */
  -->
 <config>
     <modules>
         <Belvg_Sizes>
-            <version>1.0.0</version>
+            <version>1.5.1</version>
+            <update>2014-12-04</update>
+            <desc>Stock Version</desc>
         </Belvg_Sizes>
     </modules>
     <frontend>
@@ -174,7 +173,7 @@
                 <events_speed>normal</events_speed>
             </popup>
             <messages>
-                <start><![CDATA[Please set all required dimensions<br>and click]]></start>
+                <!--<start><![CDATA[Please set all required dimensions<br>and click]]></start>-->
                 <result_success><![CDATA[Your optimal size is:]]></result_success>
                 <result_variants><![CDATA[Your optimal size is not defined<br>You can choose your optimal size<br>according to the following information:]]></result_variants>
                 <result_fail><![CDATA[Unfortunately there are no optimal sizes]]></result_fail>
@@ -182,7 +181,7 @@
             </messages>
             <calculation>
                 <tolerance>1</tolerance>
-                <qty>0</qty>
+                <!--<qty>0</qty>-->
             </calculation>
         </sizes>
     </default>
@@ -208,12 +207,11 @@
     <jquery>
         <compatibility>
             <Belvg_Sizes>
-                <!--<v1_7_1/>
-                <v1_7_2/>            
-                <v1_8_0/>
-                <v1_8_1/>
-                <v1_8_2/>-->
                 <v1_8_3/>
+                <v1_9_0/>
+                <v1_9_1/>
+                <v2_0_2/>
+                <v2_0_3/>
             </Belvg_Sizes>
         </compatibility>
     </jquery>

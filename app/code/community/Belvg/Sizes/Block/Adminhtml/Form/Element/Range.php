@@ -36,7 +36,7 @@ class Belvg_Sizes_Block_Adminhtml_Form_Element_Range extends Varien_Data_Form_El
     {
         parent::__construct($attributes);
         $this->setType('text');
-        $this->setLineCount(2);
+        $this->setLineCount(1);
     }
     
     public function getHtmlAttributes()
@@ -57,31 +57,41 @@ class Belvg_Sizes_Block_Adminhtml_Form_Element_Range extends Varien_Data_Form_El
     public function getElementHtml()
     {
         $html = '';
-        $lineCount = $this->getLineCount();
+        //$lineCount = $this->getLineCount();
         
-        for ($i = 0; $i < $lineCount; $i++) {
-            if ($i == 0 && $this->getRequired()) {
+        //for ($i = 0; $i < $lineCount; $i++) {
+            if ($this->getRequired()) {
                 $this->setClass('input-text required-entry validate-digits');
             } else {
                 $this->setClass('input-text validate-digits');
             }
             
-            $html .= '<div class="multi-input"><input id="' . $this->getHtmlId() . $i . '" name="' . $this->getName()
-                . '[' . $i . ']' . '" value="' . $this->getEscapedValue($i) . '" ';
-            if ($i == 0) {
-                $html .= 'style="text-align:right;" ';
+            if ($this->getFirst()) {
+               $i = 0;
+            } else {
+               $i = 1;
             }
             
-            $html .= $this->serialize($this->getHtmlAttributes()) . ' />' . "\n";
-            $html .= '</div>';
-            if ($i==0) {
-                $html .= $this->getAfterElementHtml();
-            }
+                $html .= '<div class="multi-input"><input id="' . $this->getHtmlId() . $i . '" name="' . $this->getName()
+                    . '[' . $i . ']' . '" value="' . $this->getEscapedValue(0) . '" ';
+                    
+                $html .= 'style="text-align:center;" ';
+                    
+                $html .= $this->serialize($this->getHtmlAttributes()) . ' />' . "\n";
+                $html .= '</div>'; 
+
+                /*if ($i == 0) {
+                    $html .= $this->getAfterElementHtml();
+                }*/
+                $this->setShowInput(TRUE);
             
-            if ($i==1) {
-                $html .= '<span style="float:left;">*</span>';
-            }
-        }
+                /*if (!$this->getFirst()) {
+                    $html .= '<div class="checkbox-input"><input class="checkbox" type="checkbox" value="1" name="' . $this->getHtmlId() . $i . 'dem[]"></div>' . '<span style="float:left;">*</span>';
+                }*/
+                if ($this->getFirst()) {
+                    $html .= '<span style="float:left;">(mm)</span>';
+                }
+        //}
         
         return $html;
     }

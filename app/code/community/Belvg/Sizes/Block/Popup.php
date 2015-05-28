@@ -9,28 +9,15 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
- /****************************************
- *    MAGENTO EDITION USAGE NOTICE       *
- *****************************************/
- /* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
- /****************************************
- *    DISCLAIMER                         *
- *****************************************/
- /* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- *****************************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @version    v1.0.0
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Sizes_Block_Popup extends Mage_Core_Block_Template
 {
+    protected $_catId;
     
     public function getDems()
     {
@@ -58,10 +45,15 @@ class Belvg_Sizes_Block_Popup extends Mage_Core_Block_Template
     
     public function getCatId()
     {
-        $product_id = $this->getRequest()->getParam('product_id');
-        return (int)Mage::getModel('sizes/products')->getCollection()
-                                                    ->addFieldToFilter('product_id', $product_id)
-                                                    ->getLastItem()->getCatId();
+        if (!$this->_catId) {
+            $product_id = $this->getRequest()->getParam('product_id');
+            $this->_catId = (int) Mage::getModel('sizes/products')
+                ->getCollection()
+                ->addFieldToFilter('product_id', $product_id)
+                ->getLastItem()->getCatId();
+        }
+        
+        return $this->_catId;
     }
     
     public function getCategoryLabel()
@@ -85,7 +77,6 @@ class Belvg_Sizes_Block_Popup extends Mage_Core_Block_Template
             return FALSE;
         }
     }
-    
     
     public function getCatImageUrl()
     {

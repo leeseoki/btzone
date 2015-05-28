@@ -9,24 +9,10 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
- /****************************************
- *    MAGENTO EDITION USAGE NOTICE       *
- *****************************************/
- /* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
- /****************************************
- *    DISCLAIMER                         *
- *****************************************/
- /* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- *****************************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @version    v1.0.0
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Sizes_Block_Adminhtml_Sizes extends  Mage_Adminhtml_Block_Template
@@ -53,9 +39,9 @@ implements Mage_Adminhtml_Block_Widget_Tab_Interface
     {
         if ($this->getRequest()->getParam('type')
         || ($id = $this->getRequest()->getParam('id'))) {
-            if (Mage::getModel('catalog/product')->load($id)->getVisibility() == 1) {
+            /*if ($id && Mage::getModel('catalog/product')->load($id)->getVisibility() == 1) {
                 return FALSE;
-            }         
+            }*/        
         
             return TRUE;
         } else {

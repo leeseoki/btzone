@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <!--
-/**
  * BelVG LLC.
  *
  * NOTICE OF LICENSE
@@ -13,127 +12,117 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_jQuery
- * @version    1.9.1.1
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @version    2.0.3.2
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
- */
  -->
 <config>
-    <modules>
-        <Belvg_Jquery>
-            <version>1.9.1.1</version>
-        </Belvg_Jquery>
-    </modules>
-    
-    <frontend>
-        <layout>
-            <updates>
-                <jquery>
-                    <file>belvg/jquery.xml</file>
-                </jquery>
-            </updates>
-        </layout>
-    </frontend>
-    
-    <adminhtml>
-        <translate>
-            <modules>
-                <Belvg_Jquery>
-                    <files>
-                        <default>Belvg_Jquery.csv</default>
-                    </files>
-                </Belvg_Jquery>
-            </modules>
-        </translate>
-        <layout>
-            <updates>
-                <jquery>
-                    <file>belvg/jquery.xml</file>
-                </jquery>
-            </updates>
-        </layout>
-    </adminhtml>
-    
-    <global>
-        <events>
-            <controller_action_layout_render_before>
-                <observers>
-                    <belvg_action_layout_render_before>
-                        <type>singleton</type>
-                        <class>jquery/observer</class>
-                        <method>addLibz</method>
-                    </belvg_action_layout_render_before>
-                </observers>
-            </controller_action_layout_render_before>
-        </events>
-        <models>
-            <jquery>
-                <class>Belvg_Jquery_Model</class>
-            </jquery>
-        </models>
-        <blocks>
-            <jquery>
-                <class>Belvg_Jquery_Block</class>
-            </jquery>
-        </blocks>
-        <helpers>
-            <jquery>
-                <class>Belvg_Jquery_Helper</class>
-            </jquery>
-        </helpers>
-    </global>
-    
-    <default>
+  <modules>
+    <Belvg_Jquery>
+      <version>2.0.3.2</version>
+    </Belvg_Jquery>
+  </modules>
+  <frontend>
+    <layout>
+      <updates>
         <jquery>
-            <settings>
-                <enabled>1</enabled>
-                <jq_version>v1_8_3</jq_version>
-            </settings>
+          <file>belvg/jquery.xml</file>
         </jquery>
-    </default>
-    
+      </updates>
+    </layout>
+    <routers>
+      <Jquery>
+        <use>standard</use>
+        <args>
+          <module>Belvg_Jquery</module>
+          <frontName>jquery</frontName>
+        </args>
+      </Jquery>
+    </routers>
+  </frontend>
+  <adminhtml>
+    <translate>
+      <modules>
+        <Belvg_Jquery>
+          <files>
+            <default>Belvg_Jquery.csv</default>
+          </files>
+        </Belvg_Jquery>
+      </modules>
+    </translate>
+    <layout>
+      <updates>
+        <jquery>
+          <file>belvg/jquery.xml</file>
+        </jquery>
+      </updates>
+    </layout>
+  </adminhtml>
+  <global>
+    <events>
+      <controller_action_layout_render_before>
+        <observers>
+          <belvg_action_layout_render_before>
+            <type>singleton</type>
+            <class>jquery/observer</class>
+            <method>addLibz</method>
+          </belvg_action_layout_render_before>
+        </observers>
+      </controller_action_layout_render_before>
+    </events>
+    <models>
+      <jquery>
+        <class>Belvg_Jquery_Model</class>
+      </jquery>
+    </models>
+    <blocks>
+      <jquery>
+        <class>Belvg_Jquery_Block</class>
+      </jquery>
+    </blocks>
+    <helpers>
+      <jquery>
+        <class>Belvg_Jquery_Helper</class>
+      </jquery>
+    </helpers>
+    <resources>
+      <jquery_setup>
+        <setup>
+          <module>Belvg_Jquery</module>
+        </setup>
+      </jquery_setup>
+    </resources>
+  </global>
+  <default>
     <jquery>
-        <versions>
-            <v1_6_3>
-                <label>1.6.3</label>
-                <lib>belvg/jquery/jquery-1.6.3.min.js</lib>
-            </v1_6_3>
-            <v1_6_4>
-                <label>1.6.4</label>
-                <lib>belvg/jquery/jquery-1.6.4.min.js</lib>
-            </v1_6_4>
-            <v1_7_1>
-                <label>1.7.1</label>
-                <lib>belvg/jquery/jquery-1.7.1.min.js</lib>
-            </v1_7_1>
-            <v1_7_2>
-                <label>1.7.2</label>
-                <lib>belvg/jquery/jquery-1.7.2.min.js</lib>
-            </v1_7_2>
-            <v1_8_0>
-                <label>1.8.0</label>
-                <lib>belvg/jquery/jquery-1.8.0.min.js</lib>
-            </v1_8_0>
-            <v1_8_1>
-                <label>1.8.1</label>
-                <lib>belvg/jquery/jquery-1.8.1.min.js</lib>
-            </v1_8_1>
-            <v1_8_2>
-                <label>1.8.2</label>
-                <lib>belvg/jquery/jquery-1.8.2.min.js</lib>
-            </v1_8_2>
-            <v1_8_3>
-                <label>1.8.3</label>
-                <lib>belvg/jquery/jquery-1.8.3.min.js</lib>
-            </v1_8_3>
-            <v1_9_0>
-                <label>1.9.0</label>
-                <lib>belvg/jquery/jquery-1.9.0.min.js</lib>
-            </v1_9_0>
-            <v1_9_1>
-                <label>1.9.1</label>
-                <lib>belvg/jquery/jquery-1.9.1.min.js</lib>
-            </v1_9_1>
-        </versions>
+      <settings>
+        <enabled>1</enabled>
+        <jq_version>v1_8_3</jq_version>
+      </settings>
     </jquery>
+  </default>
+  <jquery>
+    <versions>
+      <v1_8_3>
+        <label>1.8.3</label>
+        <lib>belvg/jquery/jquery-1.8.3.min.js</lib>
+      </v1_8_3>
+      <v1_9_0>
+        <label>1.9.0</label>
+        <lib>belvg/jquery/jquery-1.9.0.min.js</lib>
+      </v1_9_0>
+      <v1_9_1>
+        <label>1.9.1</label>
+        <lib>belvg/jquery/jquery-1.9.1.min.js</lib>
+      </v1_9_1>
+      <v2_0_2>
+        <label>2.0.2</label>
+        <lib>belvg/jquery/jquery-2.0.2.min.js</lib>
+      </v2_0_2>
+      <v2_0_3>
+        <label>2.0.3</label>
+        <lib>belvg/jquery/jquery-2.0.3.min.js</lib>
+      </v2_0_3>
+    </versions>
+  </jquery>
 </config>

@@ -39,7 +39,6 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
                 if ($date < $wasInstalled) {
                     continue;
                 }
-
                 if (!$this->isInteresting($item)) {
                     continue;
                 }
@@ -51,11 +50,10 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
                         'description' => (string) $item->description,
                         'url' => (string) $item->link,
                 );
-            }     
-            
+            }           
             if ($feedData) {
                 Mage::getModel('adminnotification/inbox')->parse($feedData);
-            }            
+            }
         }
 
         //load all available extensions in the cache
@@ -70,7 +68,6 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
                         'version' => (string) $item->version,
                 );
             }
-
             if ($feedData) {
                 Mage::app()->saveCache(serialize($feedData), 'belvgall_extensions');
             }
@@ -100,7 +97,6 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
         if (is_null($this->_feedUrl)) {
             $this->_feedUrl = self::URL_NEWS;
         }
-        
         $query = '?s=' . urlencode(Mage::getStoreConfig('web/unsecure/base_url'));
         return $this->_feedUrl . $query;
     }
@@ -120,18 +116,18 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
         $selfUpgrades = array_search(Belvg_All_Model_Source_Updates_Type::TYPE_INSTALLED_UPDATE, $types);
 
         foreach ($types as $type) {
-            if (array_search($type, $interests) !== FALSE) {
-                return TRUE;
+            if (array_search($type, $interests) !== false) {
+                return true;
             }
 
             if ($extenion && ($type == Belvg_All_Model_Source_Updates_Type::TYPE_UPDATE_RELEASE) && $selfUpgrades) {
                 if ($this->isExtensionInstalled($extenion)) {
-                    return TRUE;
+                    return true;
                 }
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     protected function isExtensionInstalled($code)
@@ -139,11 +135,11 @@ class Belvg_All_Model_Feed extends Mage_AdminNotification_Model_Feed {
         $modules = array_keys((array) Mage::getConfig()->getNode('modules')->children());
         foreach ($modules as $moduleName) {
             if ($moduleName == $code) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
 }

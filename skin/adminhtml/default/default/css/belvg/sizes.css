@@ -6,12 +6,18 @@
     float: left !important;
     margin-left: 5px !important;
     margin-right: 5px !important;
+    width: 90px;
 }
 
 .multi-input input,
-.adminhtml-sizes-categories-edit #design_tabs_values_content .form-list .label,
-.adminhtml-sizes-categories-edit #design_tabs_values_content .form-list .label label {
-    width: 60px !important;
+.adminhtml-sizes-categories-edit  .sizes-values .form-list .label,
+.adminhtml-sizes-categories-edit  .sizes-values .form-list .label label {
+    width: 80px !important;
+}
+
+.adminhtml-sizes-categories-edit  .sizes-values .checkbox-input {
+    width: 20px !important;
+    float: left !important;
 }
 
 .adminhtml-sizes-dimensions-edit .icon-head,
@@ -54,3 +60,15 @@
 .adminhtml-sizes-standards-edit #name.fieldset .label label {
     width: auto;
 }
+
+.adminhtml-sizes-categories-edit  .sizes-values .form-list .label {
+    position: relative;
+}
+.adminhtml-sizes-categories-edit  .sizes-values .form-list .label label {
+    font-weight: bold;
+    font-size: 18px;
+    position: absolute;
+    top: -15px;
+}
+
+.sizes-values-comment {padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;}

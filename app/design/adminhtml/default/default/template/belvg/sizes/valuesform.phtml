@@ -1,0 +1,7 @@
+<div class="entry-edit sizes-values">
+    <?php echo $this->getFormHtml();?>
+</div>
+<?php echo $this->getChildHtml('form_after');?>
+<script>
+   sizesFieldsets = sizesFieldsets.concat('<?php echo json_encode($this->getSizesFieldsets()) ?>'.evalJSON(true)); 
+</script>

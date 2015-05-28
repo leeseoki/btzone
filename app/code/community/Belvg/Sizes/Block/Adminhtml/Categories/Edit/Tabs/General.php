@@ -52,56 +52,29 @@ class Belvg_Sizes_Block_Adminhtml_Categories_Edit_Tabs_General extends Mage_Admi
         }
         
         $script = "<script type='text/javascript'>
+                      var sizesFieldsets = []; 
                       function saveAndContinueEdit(url) {
                           activeTab = $$('.tabs')[0].select('.active')[0].id;
                           editForm.submit(url+'tab/'+activeTab+'/');
                       }
-                      document.observe('dom:loaded', function() {
-                          function crossValues(type) {
-                              $$('#design_tabs_values_content .fieldset').each( function(el) {
-                                  var el_tmp = [];
-                                  el.select('input').each( function(el,i) {
-                                      el_tmp.push(el);
-                                  });
-                                  for (var i in el_tmp) {
-                                      if (!parseInt(el_tmp[i].value)) {
-                                          el_tmp[i].value = '';
-                                      }
-                                      if (i%2==1 && type=='even') {  //2
-                                          if (el_tmp[parseInt(i)+1]) {
-                                              if (parseInt(el_tmp[i].value)) {
-                                                  el_tmp[parseInt(i)+1].value = parseInt(el_tmp[i].value);
-                                              } else {
-                                                  el_tmp[i].value = '';
-                                                  el_tmp[parseInt(i)+1].value = '';
-                                              }
-                                          }
-                                      }
-                                      if (i%2==0 && type=='odd') {  //1
-                                          if (el_tmp[parseInt(i)-1]) {
-                                              if (parseInt(el_tmp[i].value)) {
-                                                  el_tmp[parseInt(i)-1].value = parseInt(el_tmp[i].value);
-                                              } else {
-                                                  el_tmp[i].value = '';
-                                                  el_tmp[parseInt(i)-1].value = '';
-                                              }
-                                          }
-                                      }
+                      function checkSizesValues() {
+                          sizesFieldsets.each( function(id){
+                              prev_val = 0;
+                              $(id).select('input.input-text').each( function(i, n){ 
+                                  current_val = parseInt(i.value);
+                                  if ((current_val < parseInt(prev_val)) 
+                                  || isNaN(current_val)) {
+                                      i.value = parseInt(prev_val)+1;
+                                      i.addClassName('changed')
                                   }
+                                  prev_val = i.value;
                               });
-                          };
-                          $$('#design_tabs_values_content input').each( function(el, i) {
-                              if (i%2==1) {
-                                  el.observe('change', function() {
-                                      crossValues('even'); //alert('even');   
-                                  });
-                              } else {
-                                  el.observe('change', function() {
-                                      crossValues('odd'); //alert('odd');
-                                  });
-                              }
-                          });  
-                          $$('.fieldset input').each( function(el) {
+                          }); 
+                      };
+                      
+                      
+                      document.observe('dom:loaded', function() {
+                          $$('.fieldset input.input-text').each( function(el) {
                               el.observe('change', function() {
                                   el.addClassName('changed');
                               });
@@ -111,7 +84,13 @@ class Belvg_Sizes_Block_Adminhtml_Categories_Edit_Tabs_General extends Mage_Admi
                               obj = $(tab);
                               design_tabsJsTabs.setSkipDisplayFirstTab();
                               design_tabsJsTabs.showTabContent(obj);
-                          }
+                          };
+                          $$('.sizes-values input.input-text').each( function(el) {
+                              el.observe('change', function() {
+                                  checkSizesValues();
+                              });
+                          });
+                          checkSizesValues();
                       });
                   </script>";
                   

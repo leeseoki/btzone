@@ -9,24 +9,10 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
- /****************************************
- *    MAGENTO EDITION USAGE NOTICE       *
- *****************************************/
- /* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
- /****************************************
- *    DISCLAIMER                         *
- *****************************************/
- /* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- *****************************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @version    v1.0.0
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Sizes_Model_Main extends Mage_Core_Model_Abstract
@@ -41,8 +27,10 @@ class Belvg_Sizes_Model_Main extends Mage_Core_Model_Abstract
     
     public function getSizes($cat_id, $standard_id, $dem)
     {
+        $helper = Mage::helper('sizes');
         if (isset($dem)) {
             foreach ($dem as $key=>$item) {
+                $helper->saveSizeInSession($key, $item);
                 $dem[$key] = $this->_recalculate($item, $mode = 'toDefUnits');
             }
         }
@@ -53,11 +41,14 @@ class Belvg_Sizes_Model_Main extends Mage_Core_Model_Abstract
         $fit = array();
         foreach ((array)$dem as $key=>$value) {
             $val_id = $this->_getValueId($cat_id, $key, $value);
-            $val_id = current($this->filterByStandard($standard_id, $val_id));
-            $val_id_gt = $this->_getValueId($cat_id, $key, $value + ($value*$it/100));
-            $val_id_gt = current($this->filterByStandard($standard_id, $val_id_gt));
-            $val_id_lt = $this->_getValueId($cat_id, $key, $value - ($value*$it/100));
-            $val_id_lt = current($this->filterByStandard($standard_id, $val_id_lt));
+            $val_id_gt = $tmp = $this->_getValueId($cat_id, $key, $value + ($value*$it/100));
+            $val_id_lt = $tmp = $this->_getValueId($cat_id, $key, $value - ($value*$it/100));
+            $val_id_gt = (!empty($val_id_gt))?$val_id_gt:$val_id;
+            $val_id_lt = (!empty($val_id_lt))?$val_id_lt:$val_id;
+            
+            $val_id = $this->filterByStandard($standard_id, $val_id);
+            $val_id_gt = $this->filterByStandard($standard_id, $val_id_gt);
+            $val_id_lt = $this->filterByStandard($standard_id, $val_id_lt);
             
             if ($val_id || $val_id_gt || $val_id_lt) {
                 $fit[$key] = array( 'eq' => $this->getSizeLabel($val_id),
@@ -77,57 +68,76 @@ class Belvg_Sizes_Model_Main extends Mage_Core_Model_Abstract
         return array_intersect($value_ids, $filter);
     }
     
+    protected function _defineEq($eqs)
+    {
+        foreach ($eqs as $key=>$eq) {
+            if (isset($prevKey)) {
+                if (isset($result)) {
+                    $result = array_intersect($result, $eqs[$key]); 
+                } else {
+                    $result = array_intersect($eqs[$prevKey], $eqs[$key]);
+                }
+            }
+            $prevKey = $key;
+        }
+    
+        return $result;
+    }
+    
     protected function _findOptimalSizes($fit, $num)
     {
         $dim_qty = (int)Mage::getStoreConfig('sizes/calculation/qty');
         $tmp = current($fit);
         $result = array();
+        /*$optimal = FALSE;*/
+        //$gt = FALSE;
+        //$lt = FALSE;
+        
         if (is_array($tmp)) {
-            foreach ($tmp as $key=>$value) {
                 foreach ($fit as $dim=>$row) {
-                    if ($t = array_search($value, $row)) {
-                        $result[$value][$dim] = $t;
+                    $eqs[$dim] = $row['eq'];
+                }
+                
+                if ($eq = $this->_defineEq($eqs)) {
+                    $optimal = current($eq);
+                } else {
+                    $optimal = FALSE;
+                }
+                
+                $array = $eqs;
+                foreach ($fit as $dim=>$row) {
+                    if (!isset($gt)) {
+                    $array[$dim] = $row['gt'];
+                        if ($eq = $this->_defineEq($array)) {
+                            foreach ($eq as $item) {
+                                if ($item != $optimal) {
+                                    $gt[] = array('value' => $item,
+                                                    'dim' => $this->getDemLabel($dim));
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (!isset($lt)) {                    
+                    $array[$dim] = $row['lt'];
+                        if ($eq = $this->_defineEq($array)) {
+                            foreach ($eq as $item) {
+                                if ($item != $optimal) {
+                                    $lt[] = array('value' => $item,
+                                                    'dim' => $this->getDemLabel($dim));
+                                }
+                            }
+                        }
                     }
                 }
                 
-                if (count($result[$value]) < $num) {
-                    unset($result[$value]);    
-                }
-            }
-      
-            $optimal = '';
-            $gt = $lt = array();
-            foreach ($result as $key=>$size) {
-                $tmp = array_count_values($size);
-                if (isset($tmp['eq'])) {
-                    if ($tmp['eq'] == $num) {
-                        $optimal = $key;  
-                    }
-                }
-
-                if (isset($tmp['gt']) && isset($tmp['eq'])) {
-                    if (($tmp['gt'] <= $dim_qty) && ($tmp['eq'] == ($num - $tmp['gt']))) {
-                        $gt[] = array( 'value' => $key,
-                                         'dim' => $this->getDemLabel(array_search('gt', $size)) );
-                    }
-                }
-                
-                if (isset($tmp['lt']) && isset($tmp['eq'])) {
-                    if (($tmp['lt'] <= $dim_qty) && ($tmp['eq'] == ($num - $tmp['lt']))) {
-                        $lt[] = array( 'value' => $key,
-                                         'dim' => $this->getDemLabel(array_search('lt', $size)) );
-                    }
-                }
-            }
-            
-            return array( 'optimal' => $optimal,
-                               'gt' => $gt,
-                               'lt' => $lt );
-        } else {
-            return array( 'optimal' => FALSE,
-                               'gt' => FALSE,
-                               'lt' => FALSE );
+                $gt = isset($gt)?$gt:FALSE;
+                $lt = isset($lt)?$lt:FALSE;
         }
+        
+        return array('optimal' => $optimal,
+                          'gt' => $gt,
+                          'lt' => $lt);
     }
     
     private function _getValueId($cat_id, $dem_id, $value)
@@ -142,7 +152,13 @@ class Belvg_Sizes_Model_Main extends Mage_Core_Model_Abstract
     
     public function getSizeLabel($id)
     {
-        return Mage::getModel('sizes/standardsvalues')->load($id)->getValue();
+        //print_r($id);die;
+        if (is_array($id)) {
+            return Mage::getModel('sizes/standardsvalues')->getCollection()
+                ->addFieldToFilter('value_id', $id)->getColumnValues('value');
+        } else {
+            return Mage::getModel('sizes/standardsvalues')->load($id)->getValue();
+        }
     }
     
     public function getDemLabel($id)

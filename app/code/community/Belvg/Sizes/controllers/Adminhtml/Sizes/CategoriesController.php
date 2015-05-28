@@ -9,24 +9,10 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
- /****************************************
- *    MAGENTO EDITION USAGE NOTICE       *
- *****************************************/
- /* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
- /****************************************
- *    DISCLAIMER                         *
- *****************************************/
- /* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- *****************************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @version    v1.0.0
- * @copyright  Copyright (c) 2010 - 2011 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Sizes_Adminhtml_Sizes_CategoriesController extends Mage_Adminhtml_Controller_Action
@@ -154,7 +140,8 @@ class Belvg_Sizes_Adminhtml_Sizes_CategoriesController extends Mage_Adminhtml_Co
         }
         
         //saving to sizes/main
-        $main = $this->getRequest()->getParam('main');
+        $main = $this->prepareMainData($this->getRequest()->getParam('main'));
+        
         if ($main) {
             if (!$redirect) {
                 $data = array();
@@ -251,6 +238,24 @@ class Belvg_Sizes_Adminhtml_Sizes_CategoriesController extends Mage_Adminhtml_Co
         }
         
         $this->_redirect('*/*/');
+    }
+    
+    public function prepareMainData($main)
+    {
+        foreach ($main as &$dim) {
+            foreach ($dim as $key=>&$value) {
+                if (!isset($value[0])) {
+                    if ($value[1] == $dim[$tmp][1]) {
+                        $value[0] = $dim[$tmp][0];
+                    } else {
+                        $value[0] = $dim[$tmp][1];
+                    }
+                }
+                $tmp = $key;
+            }
+        }
+        
+        return $main;
     }
     
 }

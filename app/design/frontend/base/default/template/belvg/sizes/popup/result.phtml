@@ -9,55 +9,35 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
-/**********************************************
- *        MAGENTO EDITION USAGE NOTICE        *
- **********************************************/
-/* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
-/**********************************************
- *        DISCLAIMER                          *
- **********************************************/
-/* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- **********************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
-
 $sizes = $this->getSizes();
 $helper = Mage::helper('sizes');
-
 ?>
+<h1>
+    <?php echo $this->__($this->getCategoryLabel()) ?>
+</h1>
 <div id="sizes_result_calculate">
-    <?php if($sizes): ?>
-    <div id="sizes_result_buttons">
-        <button class="button" title="Calculate Size" type="button" id="sizes_calculate">
-            <span>
-                <span><?php echo $this->__('Calculate your size') ?></span>
-            </span>
-        </button>
-    </div>
-    <div id="sizes_result_text">
-        <?php if($sizes['optimal']): ?>
-            <?php echo $helper->getMessage('result_success') ?><br><br>
+    <?php if ($sizes): ?>
+    <!--<div id="sizes_result_text">-->
+        <?php if ($sizes['optimal']): ?>
+            <?php echo $helper->getMessage('result_success') ?>
         <button class="button optimal_sizes" title="<?php echo $sizes['optimal'] ?>" type="button" id="optimal_size">
             <span>
                 <span><?php echo $sizes['optimal'] ?></span>
             </span>
         </button><br><br>
         <?php echo $helper->getMessage('notice') ?>
-        <br><br>
+        
         <?php endif; ?>
         
-        <?php if($sizes['gt'] || $sizes['lt']): ?>
+        <?php if ($sizes['gt'] || $sizes['lt']): ?>
             <?php echo $helper->getMessage('result_variants') ?><br><br>
-            
-        <?php if($sizes['gt']): ?>
+        <?php if ($sizes['gt']): ?>
         <?php foreach($sizes['gt'] as $size): ?>
         <button class="button optimal_sizes" title="<?php echo $size['value'] ?>" type="button" id="optimal_size">
             <span>
@@ -67,7 +47,7 @@ $helper = Mage::helper('sizes');
         <?php endforeach; ?>
         <?php endif; ?>
         
-        <?php if($sizes['lt']): ?>
+        <?php if ($sizes['lt']): ?>
         <?php foreach($sizes['lt'] as $size): ?>
         <button class="button optimal_sizes" title="<?php echo $size['value'] ?>" type="button" id="optimal_size">
             <span>
@@ -76,14 +56,14 @@ $helper = Mage::helper('sizes');
         </button><?php echo $this->__(' may be a bit smaller in the ') . $this->__($size['dim']) ?><br>
         <?php endforeach; ?>
         <?php endif; ?>
-        
-        <br><br><?php echo $helper->getMessage('notice') ?>
+        <br>
+        <?php echo $helper->getMessage('notice') ?>
         <?php endif; ?>
         
         <?php if(!$sizes['optimal'] && !$sizes['gt'] && !$sizes['lt']): ?>
-        <br><br><?php echo $helper->getMessage('result_fail') ?>
+            <?php echo $helper->getMessage('result_fail') ?>
         <?php endif; ?>
-    </div>    
+    <!--</div>-->    
         
         
         
@@ -91,19 +71,27 @@ $helper = Mage::helper('sizes');
     <div id="sizes_result_text">
         <?php echo $helper->getMessage('start') ?>
     </div>
-    <div id="sizes_result_buttons">
+    <!--<div id="sizes_result_buttons">
         <button class="button" title="Calculate Size" type="button" id="sizes_calculate">
             <span>
                 <span><?php echo $this->__('Calculate your size') ?></span>
             </span>
         </button>
-    </div>
+    </div>-->
     <?php endif; ?>
-    </div>
+    <!--</div>-->
+</div>
+<div id="sizes_result_buttons">
+    <button class="button" title="Resize" type="button" onclick="sizesTabActive('sizes-form');">
+        <span>
+            <span><?php echo $this->__('Resize Again') ?></span>
+        </span>
+    </button>
 </div>
 <script type="text/javascript">
     jQblvg('#sizes_calculate').click( function() {
-        jQblvg('#sizes_result_calculate').addClass('loading').html('Loading');
+        jQblvg('#sizes_result_calculate').addClass('loading').html('');
+        jQblvg('#sizes_content').addClass('loading');
         jQblvg.ajax({
             type: 'POST',
             url: '<?php echo $this->getUrl("sizes/front/popup/") ?>',
@@ -111,21 +99,25 @@ $helper = Mage::helper('sizes');
             cache: false,
             success: function (result){
                 jQblvg('#sizesPopup').html(result);
+                sizesTabActive('sizes-result');
             }
         });
+        return false;
     });
     jQblvg('.optimal_sizes').click( function() {
         jQblvg.fancybox.close();
         value = jQblvg(this).attr('title'); //console.log(value);
         if (typeof attr_id == 'string') {
             jQblvg('#attribute'+attr_id+' option').each( function(){
-                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == value ) {
+                val = jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1").split(" ");
+                if (val[0] == value ) {
                     tmp_el = jQblvg(this); 
                 }
             });
         } else {
             jQblvg('#select_'+opt_id+' option').each( function(){
-                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == value ) {
+                val = jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1").split(" ");
+                if (val[0] == value ) {
                     tmp_el = jQblvg(this);
                 }
             });
@@ -148,19 +140,21 @@ $helper = Mage::helper('sizes');
         tmp_el.addClass('disabled').attr('disabled','disabled');
         if (typeof attr_id == 'string') {
             jQblvg('#attribute'+attr_id+' option').each( function() { 
-                if (jQblvg(this).text() == tmp_el.attr('title')) {
+                val = jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1").split(" ");            
+                if (val[0] == tmp_el.attr('title')) {
                     tmp_el.removeClass('disabled').removeAttr('disabled');
                 }                                
             });
         } else {
             jQblvg('#select_'+opt_id+' option').each( function() { 
-                if (jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1") == tmp_el.attr('title')) {
+                val = jQblvg(this).text().replace(/((\s*\S+)*)\s*/, "$1").split(" ");
+                if (val[0] == tmp_el.attr('title')) {
                     tmp_el.removeClass('disabled').removeAttr('disabled');
                 }                                
             });
         }
     });
-
+    
 ;(function(){
   
   var eventMatchers = {

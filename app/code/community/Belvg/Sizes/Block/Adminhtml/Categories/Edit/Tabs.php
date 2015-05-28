@@ -31,11 +31,21 @@ class Belvg_Sizes_Block_Adminhtml_Categories_Edit_Tabs extends Mage_Adminhtml_Bl
         ));
         
         if ($this->_isDims()) {
-            $this->addTab('values', array(
+            /*$this->addTab('values', array(
                 'label'     => Mage::helper('sizes')->__('Sizes Values'),
                 'title'     => Mage::helper('sizes')->__('Sizes Values'),
                 'content'   => $this->getLayout()->createBlock('sizes/adminhtml_categories_edit_tabs_values')->toHtml(),
-            ));
+            ));*/
+            $standards = Mage::getModel('sizes/standards')->getCollection();
+            //print_r($standards);die;
+            foreach ($standards as $standard) {
+                $label = Mage::helper('sizes')->__('Sizes Values') . ': ' . $standard->getName();
+                $this->addTab('values_' . $standard->getName(), array(
+                    'label'     => $label,
+                    'title'     => $label,
+                    'content'   => $this->getLayout()->createBlock('sizes/adminhtml_categories_edit_tabs_values')->setStandardId($standard->getStandardId())->toHtml($standard),
+                ));
+            }
         }
 
         return parent::_prepareLayout();

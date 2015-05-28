@@ -12,24 +12,25 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_jQuery
- * @version    1.9.1.1
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @version    2.0.3.2
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Jquery_Block_Head extends Mage_Adminhtml_Block_Template
 {
-    
     protected $_libz   = array();
     protected $_jsurlz = array();
     
     public function addLib($libname)
     {
         $this->_libz[] = $libname;
+        return $this;
     }
     
     public function addJs($jsurl)
     {
         $this->_jsurlz[] = $jsurl;
+        return $this;
     }
     
     public function getLibz()
@@ -41,5 +42,4 @@ class Belvg_Jquery_Block_Head extends Mage_Adminhtml_Block_Template
     {
         return $this->_jsurlz;
     }
-    
 }

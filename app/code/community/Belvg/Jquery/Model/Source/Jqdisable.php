@@ -12,18 +12,17 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_jQuery
- * @version    1.9.1.1
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @version    2.0.3.2
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Jquery_Model_Source_Jqdisable
 {
-    
     /**
      * Getting array for select
      */
     public function toOptionArray()
-    {    
+    {
         $tmp = Mage::getConfig()->getNode('jquery/compatibility');
         if (!empty($tmp)) {
             return array('1' => 'Enable');
@@ -31,7 +30,5 @@ class Belvg_Jquery_Model_Source_Jqdisable
             return array('1' => 'Enable',
                          '0' => 'Disable');
         }
-        
     }
-    
 }

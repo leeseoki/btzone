@@ -1,4 +1,20 @@
 <?php
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+ *******************************************************************
+ * @category   Belvg
+ * @package    Belvg_Sizes
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
 class Belvg_Sizes_Helper_Data extends Mage_Core_Helper_Data 
 {
     
@@ -49,13 +65,15 @@ class Belvg_Sizes_Helper_Data extends Mage_Core_Helper_Data
         $result .= "openEffect:'" . $tmp . "',closeEffect:'" . $tmp . "',prevEffect:'" . $tmp . "',nextEffect:'" . $tmp . "',";
         //settings events speed
         $tmp = Mage::getStoreConfig('sizes/popup/events_speed');
-        $result .= "openSpeed:'" . $tmp . "',closeSpeed:'" . $tmp . "',prevSpeed:'" . $tmp . "',nextSpeed:'" . $tmp . "'";
+        $result .= "openSpeed:'" . $tmp . "',closeSpeed:'" . $tmp . "',prevSpeed:'" . $tmp . "',nextSpeed:'" . $tmp . "',";
+        
+        $result .= 'helpers:{overlay:{locked:false}}';
         
         $result .= '}';
         return $result;
     }
     
-    public function getMessage($mess='start')
+    public function getMessage($mess = 'start')
     {   
         return $tmp = Mage::getStoreConfig('sizes/messages/' . $mess);
     }
@@ -112,6 +130,37 @@ class Belvg_Sizes_Helper_Data extends Mage_Core_Helper_Data
     public function getImageExtensions()
     {
         return array('png', 'gif', 'jpg');
+    }
+    
+    public function isChartsTab()
+    {
+        return Mage::getStoreConfigFlag('sizes/popup/charts_tab');
+    }
+    
+    public function getChartsDirection()
+    {
+        return Mage::getStoreConfig('sizes/popup/charts_direction');
+    }
+    
+    public function saveSizeInSession($dim_id, $value)
+    {
+        if (Mage::getStoreConfigFlag('sizes/settings/save_in_session')) {
+            $values = Mage::getSingleton('core/session')->getSizesValue();
+            $values[$dim_id] = $value;
+            Mage::getSingleton('core/session')->setSizesValue($values);
+        } else {
+            Mage::getSingleton('core/session')->setSizesValue(NULL);
+        }
+    }
+   
+    public function getStoredValue($dim_id, $limits)
+    {
+        $val = Mage::getSingleton('core/session')->getSizesValue();
+        if (isset($val[$dim_id])) {
+            return $val[$dim_id];
+        }
+        
+        return (int)($limits['min'] + $limits['max'])/2;
     }
     
 }

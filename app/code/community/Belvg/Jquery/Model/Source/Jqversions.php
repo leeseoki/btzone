@@ -12,13 +12,12 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_jQuery
- * @version    1.9.1.1
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @version    2.0.3.2
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Jquery_Model_Source_Jqversions
 {
-    
     /**
      * Getting array for select
      */
@@ -38,5 +37,4 @@ class Belvg_Jquery_Model_Source_Jqversions
         
         return $result;
     }
-    
 }

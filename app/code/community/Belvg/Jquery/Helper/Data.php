@@ -12,24 +12,29 @@
  *******************************************************************
  * @category   Belvg
  * @package    Belvg_jQuery
- * @version    1.9.1.1
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @version    2.0.3.2
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 class Belvg_Jquery_Helper_Data extends Mage_Core_Helper_Data
 {
-    
     public function getUrl($lib)
     {
+        $return = '';
         switch ($lib) {
             case 'jquery': 
                 $version = (array)Mage::getConfig()->getNode('jquery/versions/' . Mage::getStoreConfig('jquery/settings/jq_version'));
-                return $version['lib']; 
+                $return  = $version['lib'];
+                break;
+                
             case 'noconflict':
-                return 'belvg/jquery/jquery.noconflict.js'; 
+                $return  = 'belvg/jquery/jquery.noconflict.js'; 
+                break;
+                
             default:
                 break;
         }
+        
+        return $return;
     }
-    
 }

@@ -9,37 +9,51 @@
  * It is also available through the world-wide-web at this URL:
  * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  *
-/**********************************************
- *        MAGENTO EDITION USAGE NOTICE        *
- **********************************************/
-/* This package designed for Magento COMMUNITY edition
- * BelVG does not guarantee correct work of this extension
- * on any other Magento edition except Magento COMMUNITY edition.
- * BelVG does not provide extension support in case of
- * incorrect edition usage.
-/**********************************************
- *        DISCLAIMER                          *
- **********************************************/
-/* Do not edit or add to this file if you wish to upgrade Magento to newer
- * versions in the future.
- **********************************************
+ *******************************************************************
  * @category   Belvg
  * @package    Belvg_Sizes
- * @copyright  Copyright (c) 2010 - 2012 BelVG LLC. (http://www.belvg.com)
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
  * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
  */
 ?>
-<table class="sizes_main_table">
-    <tbody>
-        <tr>
-            <td id="sizes_form">
-                <?php echo $this->getChildHtml('form_sizes'); ?>
-            </td>
-            <td id="sizes_separate">
-            </td>
-            <td id="sizes_result">
-                <?php echo $this->getChildHtml('result_sizes'); ?>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<?php $helper = Mage::helper('sizes'); ?>
+<ul id="sizes-tabs" class="<?php echo $helper->isChartsTab()?'tabs3':'tabs2'; ?>">
+    <li class="sizes_tab selected" id="sizes-form-tab" onclick="sizesTabActive('sizes-form', this);">
+        <?php echo $this->__('Your Sizes'); ?>
+    </li>
+    <li class="sizes_tab disabled" id="sizes-result-tab" onclick="sizesTabActive('sizes-result', this);">
+        <?php echo $this->__('Results'); ?>
+    </li>
+    <?php if ($helper->isChartsTab()): ?>
+    <li class="sizes_tab" id="sizes-charts-tab" onclick="sizesTabActive('sizes-charts', this);">
+        <?php echo $this->__('Size Charts'); ?>
+    </li>
+    <?php endif; ?>
+</ul>
+<div id="sizes-content">
+    <div id="sizes-form" class="content">
+        <?php echo $this->getChildHtml('form_sizes'); ?>
+    </div>
+    <div id="sizes-result" class="content">
+        <?php echo $this->getChildHtml('result_sizes'); ?>
+    </div>
+    <?php if ($helper->isChartsTab()): ?>
+    <div id="sizes-charts" class="content">
+        <?php echo $this->getChildHtml('charts_sizes'); ?>
+    </div>
+    <?php endif; ?>
+</div>
+<script type="text/javascript">
+refreshSizepopup();
+function sizesTabActive(selector, obj)
+{  
+    if (!jQblvg(obj).hasClass('disabled') 
+    && !jQblvg(obj).hasClass('selected')) {
+        jQblvg('#sizes-tabs .sizes_tab').removeClass('selected');
+        jQblvg('#sizes-tabs #'+selector+'-tab').addClass('selected').removeClass('disabled');
+        jQblvg('#sizes-content .content').slideUp('slow');
+        jQblvg('#'+selector).slideDown('slow');
+    }
+}
+
+</script>

@@ -1,0 +1,44 @@
+<?php
+/**
+ * BelVG LLC.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ *
+ *******************************************************************
+ * @category   Belvg
+ * @package    Belvg_Sizes
+ * @copyright  Copyright (c) 2010 - 2014 BelVG LLC. (http://www.belvg.com)
+ * @license    http://store.belvg.com/BelVG-LICENSE-COMMUNITY.txt
+ */
+?>
+<h1>
+    <?php echo $this->__($this->getCategoryLabel()) ?>
+</h1>
+<table class="sizes_charts">
+    <thead>
+        <th>
+            <?php //echo $this->__('Size \ Dimension'); ?>
+        </th>
+        <?php foreach ($this->getTableHead() as $item): ?>
+        <th>
+            <?php echo $item->getPreparedLabel(); ?>
+        </th>
+        <?php endforeach; ?>
+    </thead>
+    <tbody>
+        <?php foreach ($this->getChartTableBody() as $val_label=>$val): ?>
+        <tr>
+            <td><?php echo $val_label ?></td>
+            <?php foreach ($val as $dim_label=>$range): ?>
+            <td><?php echo $range ?></td>
+            <?php endforeach; ?>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+<?php //print_r($this->getChartTableBody()); ?>
